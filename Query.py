@@ -5,7 +5,7 @@ import faiss
 import pickle
 import numpy as np
 
-model_path = "VietAI/gpt-neo-1.3B-vietnamese-news"
+model_path = "NKhanh/NK106_bid_law_model"
 
 bi_model = SentenceTransformer("bkai-foundation-models/vietnamese-bi-encoder",
                                device='cuda')
@@ -35,7 +35,8 @@ def ask_sth(query):
     contexts = search_faiss(query, top_k=3)
     context_text = "\n".join(contexts)
 
-    prompt = f"""### Hãy trả lời câu hỏi ngắn gọn và đủ ý với ngữ cảnh:
+    prompt = f"""### Với ngữ cảnh sau, hãy trả lời ngắn gọn, súc tích,
+    không sao chép nguyên văn mà diễn đạt lại bằng lời văn tự nhiên,kết thúc bằng một câu kết luận rõ ràng, không được bỏ dở:
 {context_text}
 
 ### Câu hỏi:
@@ -45,7 +46,7 @@ def ask_sth(query):
 
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
     gen_tokens = model.generate(**inputs,
-                                max_length=1250,
+                                max_new_tokens=800,
                                 do_sample=True,
                                 temperature=0.9,
                                 top_k=20,
