@@ -32,6 +32,9 @@ pdf2image>=1.16.3
 pyvi>=0.1.1  # Hoặc
 # underthesea>=1.3.0  # Hoặc cả hai
 
+# BM25 optimization
+rank-bm25>=0.2.2  # Fast BM25 implementation with inverted index
+
 # Data processing
 numpy>=1.24.0
 pandas>=2.0.0

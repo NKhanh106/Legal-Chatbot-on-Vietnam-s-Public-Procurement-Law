@@ -756,20 +756,29 @@ class EmbeddingSystem:
         # Điều chỉnh số clusters dựa trên số lượng vectors
         optimal_clusters = min(N_CLUSTERS, max(4, n_vectors // 10))
         
+        # QUAN TRỌNG: Embeddings đã được normalize, nên dùng Inner Product (IP) thay vì L2
+        # Normalize + IP = cosine similarity chuẩn (tối ưu nhất)
+        # L2 + normalize = gần đúng nhưng không tối ưu
+        
         # Quyết định loại index dựa trên kích thước dataset
         if n_vectors < 1000:
-            # Small dataset: sử dụng IndexFlatL2 (exact search, nhanh cho datasets nhỏ)
-            print("   Sử dụng IndexFlatL2 (exact search - phù hợp cho datasets nhỏ)")
-            index = faiss.IndexFlatL2(dimension)
+            # Small dataset: sử dụng IndexFlatIP (exact search, nhanh cho datasets nhỏ)
+            print("   Sử dụng IndexFlatIP (Inner Product - exact search, phù hợp cho datasets nhỏ)")
+            print("   ⚡ Tối ưu: Normalize + IP = cosine similarity chuẩn")
+            index = faiss.IndexFlatIP(dimension)
             index.add(embeddings.astype('float32'))
-            print("   ✅ IndexFlatL2 đã được tạo")
+            print("   ✅ IndexFlatIP đã được tạo")
         elif USE_COMPRESSED_INDEX and n_vectors > 100000:
             # Very large dataset (>100k): sử dụng IndexIVFPQ (compressed, tiết kiệm memory)
+            # Lưu ý: IndexIVFPQ có thể không hỗ trợ Inner Product tốt, cần kiểm tra
             print(f"   Sử dụng IndexIVFPQ (compressed index - phù hợp cho datasets rất lớn >100k)")
             print(f"   PQ parameters: m={PQ_M}, bits={PQ_BITS}")
+            print("   ⚠️  Lưu ý: IndexIVFPQ với IP có thể không tối ưu, cân nhắc dùng IndexIVFFlat với IP")
             
-            quantizer = faiss.IndexFlatL2(dimension)
+            # Vẫn dùng IP quantizer cho consistency
+            quantizer = faiss.IndexFlatIP(dimension)
             index = faiss.IndexIVFPQ(quantizer, dimension, optimal_clusters, PQ_M, PQ_BITS)
+            index.metric_type = faiss.METRIC_INNER_PRODUCT
             
             # Train index
             print("   🔄 Đang train index...")
@@ -781,14 +790,16 @@ class EmbeddingSystem:
             # Tự động điều chỉnh nprobe
             index.nprobe = min(optimal_clusters // 4, 50)
             
-            print(f"   ✅ IndexIVFPQ đã được tạo và train (nprobe={index.nprobe})")
+            print(f"   ✅ IndexIVFPQ đã được tạo và train (nprobe={index.nprobe}, metric=INNER_PRODUCT)")
             print(f"   💾 Memory: ~{n_vectors * dimension * PQ_BITS / 8 / (1024**2):.1f} MB (compressed)")
         elif use_ivf and n_vectors > optimal_clusters * 10:
-            # Medium to large dataset: sử dụng IndexIVFFlat (cân bằng tốt)
+            # Medium to large dataset: sử dụng IndexIVFFlat với Inner Product (cân bằng tốt)
             print(f"   Sử dụng IndexIVFFlat với {optimal_clusters} clusters (phù hợp cho datasets vừa và lớn)")
+            print("   ⚡ Tối ưu: Normalize + IP = cosine similarity chuẩn")
             
-            quantizer = faiss.IndexFlatL2(dimension)
-            index = faiss.IndexIVFFlat(quantizer, dimension, optimal_clusters)
+            # Sử dụng Inner Product quantizer và metric
+            quantizer = faiss.IndexFlatIP(dimension)
+            index = faiss.IndexIVFFlat(quantizer, dimension, optimal_clusters, faiss.METRIC_INNER_PRODUCT)
             
             # Train index
             print("   🔄 Đang train index...")
@@ -804,13 +815,14 @@ class EmbeddingSystem:
             else:
                 index.nprobe = min(optimal_clusters // 4, 50)  # Large dataset: balance speed/accuracy
             
-            print(f"   ✅ IndexIVFFlat đã được tạo và train (nprobe={index.nprobe})")
+            print(f"   ✅ IndexIVFFlat đã được tạo và train (nprobe={index.nprobe}, metric=INNER_PRODUCT)")
         else:
-            # Fallback: IndexFlatL2
-            print("   Sử dụng IndexFlatL2 (exact search)")
-            index = faiss.IndexFlatL2(dimension)
+            # Fallback: IndexFlatIP
+            print("   Sử dụng IndexFlatIP (Inner Product - exact search)")
+            print("   ⚡ Tối ưu: Normalize + IP = cosine similarity chuẩn")
+            index = faiss.IndexFlatIP(dimension)
             index.add(embeddings.astype('float32'))
-            print("   ✅ IndexFlatL2 đã được tạo")
+            print("   ✅ IndexFlatIP đã được tạo")
         
         return index
     

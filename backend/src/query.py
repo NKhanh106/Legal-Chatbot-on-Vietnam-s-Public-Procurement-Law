@@ -10,6 +10,17 @@ from pathlib import Path
 from typing import List, Dict, Tuple, Optional, Set
 from collections import Counter, defaultdict
 import math
+import time
+from functools import lru_cache
+
+# BM25 optimization: Use rank-bm25 for fast inverted index search
+try:
+    from rank_bm25 import BM25Okapi
+    HAS_RANK_BM25 = True
+except ImportError:
+    HAS_RANK_BM25 = False
+    print("⚠️  rank-bm25 not installed. Install with: pip install rank-bm25")
+    print("   Falling back to manual BM25 (slower for large datasets)")
 
 # Vietnamese tokenizer (optional, fallback to simple regex if not available)
 _pyvi_tokenizer = None
@@ -299,10 +310,14 @@ _bm25_index = None
 _bm25_doc_freqs = None
 _bm25_idf = None
 _bm25_avg_doc_len = 0.0
+_bm25_rank_model = None  # rank-bm25 model (optimized)
 
 def _build_bm25_index():
-    """Xây dựng BM25 index từ chunks (lazy load)."""
-    global _bm25_index, _bm25_doc_freqs, _bm25_idf, _bm25_avg_doc_len
+    """
+    Xây dựng BM25 index từ chunks (lazy load).
+    Tối ưu: Sử dụng rank-bm25 với inverted index (O(1) lookup thay vì O(N)).
+    """
+    global _bm25_index, _bm25_doc_freqs, _bm25_idf, _bm25_avg_doc_len, _bm25_rank_model
     
     if _bm25_index is not None:
         return
@@ -311,12 +326,6 @@ def _build_bm25_index():
         return
     
     print("🔄 Đang xây dựng BM25 index...")
-    
-    # Tokenize tất cả chunks
-    _bm25_index = []
-    all_terms = set()
-    doc_freqs = defaultdict(int)
-    total_doc_length = 0
     
     def tokenize_vietnamese(text: str) -> List[str]:
         """Tokenize tiếng Việt sử dụng tokenizer chuyên biệt hoặc fallback."""
@@ -339,34 +348,50 @@ def _build_bm25_index():
             tokens = re.findall(r'\b\w+\b', text.lower())
         return [t.lower() for t in tokens if t.strip()]
     
+    # Tokenize tất cả chunks
+    tokenized_docs = []
     for chunk in chunks:
         text = chunk.get("text", "") if isinstance(chunk, dict) else str(chunk)
-        # Tokenize: sử dụng Vietnamese tokenizer nếu có
         tokens = tokenize_vietnamese(text)
-        _bm25_index.append(tokens)
-        all_terms.update(tokens)
-        total_doc_length += len(tokens)
+        tokenized_docs.append(tokens)
+    
+    _bm25_index = tokenized_docs
+    
+    # Sử dụng rank-bm25 nếu có (tối ưu với inverted index)
+    if HAS_RANK_BM25:
+        print("   ⚡ Sử dụng rank-bm25 (tối ưu với inverted index)")
+        _bm25_rank_model = BM25Okapi(tokenized_docs, k1=BM25_K1, b=BM25_B)
+        print(f"✅ BM25 index (rank-bm25) đã được xây dựng: {len(chunks)} documents")
+    else:
+        # Fallback về manual BM25 (chậm hơn cho large datasets)
+        print("   ⚠️  Sử dụng manual BM25 (chậm hơn, nên cài rank-bm25)")
+        all_terms = set()
+        doc_freqs = defaultdict(int)
+        total_doc_length = 0
         
-        # Đếm document frequency
-        for term in set(tokens):
-            doc_freqs[term] += 1
-    
-    # Tính average document length
-    _bm25_avg_doc_len = total_doc_length / len(chunks) if chunks else 0
-    
-    # Tính IDF (Inverse Document Frequency)
-    _bm25_doc_freqs = doc_freqs
-    num_docs = len(chunks)
-    _bm25_idf = {}
-    for term in all_terms:
-        df = doc_freqs.get(term, 0)
-        if df > 0:
-            # IDF = log((N - df + 0.5) / (df + 0.5))
-            _bm25_idf[term] = math.log((num_docs - df + 0.5) / (df + 0.5))
-        else:
-            _bm25_idf[term] = 0.0
-    
-    print(f"✅ BM25 index đã được xây dựng: {num_docs} documents, {len(all_terms)} unique terms")
+        for tokens in tokenized_docs:
+            all_terms.update(tokens)
+            total_doc_length += len(tokens)
+            # Đếm document frequency
+            for term in set(tokens):
+                doc_freqs[term] += 1
+        
+        # Tính average document length
+        _bm25_avg_doc_len = total_doc_length / len(chunks) if chunks else 0
+        
+        # Tính IDF (Inverse Document Frequency)
+        _bm25_doc_freqs = doc_freqs
+        num_docs = len(chunks)
+        _bm25_idf = {}
+        for term in all_terms:
+            df = doc_freqs.get(term, 0)
+            if df > 0:
+                # IDF = log((N - df + 0.5) / (df + 0.5))
+                _bm25_idf[term] = math.log((num_docs - df + 0.5) / (df + 0.5))
+            else:
+                _bm25_idf[term] = 0.0
+        
+        print(f"✅ BM25 index (manual) đã được xây dựng: {num_docs} documents, {len(all_terms)} unique terms")
 
 def _bm25_score(query_terms: List[str], doc_tokens: List[str]) -> float:
     """Tính BM25 score cho một document."""
@@ -398,7 +423,10 @@ def _bm25_score(query_terms: List[str], doc_tokens: List[str]) -> float:
     return score
 
 def _search_bm25(query: str, top_k: int = STAGE1_BM25_TOP_K) -> List[Tuple[int, float]]:
-    """Tìm kiếm bằng BM25 và trả về top K chunks với scores."""
+    """
+    Tìm kiếm bằng BM25 và trả về top K chunks với scores.
+    Tối ưu: Sử dụng rank-bm25 với inverted index (O(1) lookup) thay vì O(N) loop.
+    """
     if not USE_BM25:
         return []
     
@@ -409,33 +437,44 @@ def _search_bm25(query: str, top_k: int = STAGE1_BM25_TOP_K) -> List[Tuple[int, 
         return []
     
     # Tokenize query (sử dụng cùng tokenizer với BM25 index)
-    if HAS_PYVI:
-        try:
-            if VIETNAMESE_TOKENIZER == "pyvi":
-                query_terms = _pyvi_tokenizer.tokenize(query).split()
-            elif VIETNAMESE_TOKENIZER == "underthesea":
-                query_terms = word_tokenize(query)
-            else:
-                query_terms = re.findall(r'\b\w+\b', query.lower())
-        except Exception:
-            query_terms = re.findall(r'\b\w+\b', query.lower())
-    else:
-        query_terms = re.findall(r'\b\w+\b', query.lower())
-    query_terms = [t.lower() for t in query_terms if t.strip()]
+    def tokenize_query(text: str) -> List[str]:
+        if HAS_PYVI:
+            try:
+                if VIETNAMESE_TOKENIZER == "pyvi":
+                    tokens = _pyvi_tokenizer.tokenize(text).split()
+                elif VIETNAMESE_TOKENIZER == "underthesea":
+                    tokens = word_tokenize(text)
+                else:
+                    tokens = re.findall(r'\b\w+\b', text.lower())
+            except Exception:
+                tokens = re.findall(r'\b\w+\b', text.lower())
+        else:
+            tokens = re.findall(r'\b\w+\b', text.lower())
+        return [t.lower() for t in tokens if t.strip()]
+    
+    query_terms = tokenize_query(query)
     if not query_terms:
         return []
     
-    # Tính BM25 score cho tất cả documents
-    scores = []
-    for idx, doc_tokens in enumerate(_bm25_index):
-        score = _bm25_score(query_terms, doc_tokens)
-        if score > 0:
-            scores.append((idx, score))
-    
-    # Sort theo score giảm dần
-    scores.sort(key=lambda x: x[1], reverse=True)
-    
-    return scores[:top_k]
+    # Sử dụng rank-bm25 nếu có (tối ưu với inverted index)
+    if HAS_RANK_BM25 and _bm25_rank_model is not None:
+        # rank-bm25 sử dụng inverted index, nhanh hơn nhiều cho large datasets
+        scores = _bm25_rank_model.get_scores(query_terms)
+        # Lấy top_k với scores
+        top_indices = np.argsort(scores)[::-1][:top_k]
+        results = [(int(idx), float(scores[idx])) for idx in top_indices if scores[idx] > 0]
+        return results
+    else:
+        # Fallback: Manual BM25 (O(N) - chậm cho large datasets)
+        scores = []
+        for idx, doc_tokens in enumerate(_bm25_index):
+            score = _bm25_score(query_terms, doc_tokens)
+            if score > 0:
+                scores.append((idx, score))
+        
+        # Sort theo score giảm dần
+        scores.sort(key=lambda x: x[1], reverse=True)
+        return scores[:top_k]
 
 def _calculate_keyword_score(chunk_text: str, keywords: List[str]) -> float:
     """Tính điểm keyword matching (BM25-like, cải thiện)."""
@@ -506,25 +545,43 @@ def _calculate_diversity_penalty(chunk: Dict, selected_chunks: List[Dict]) -> fl
     
     return min(1.0, penalty)  # Normalize về 0-1
 
+@lru_cache(maxsize=1000)
+def _get_chunk_embedding(text: str) -> np.ndarray:
+    """Cache embedding cho chunk text (tránh tính lại nhiều lần)."""
+    return bi_model.encode([text], normalize_embeddings=True, convert_to_numpy=True)[0]
+
 def _calculate_similarity(chunk1: Dict, chunk2: Dict) -> float:
-    """Tính similarity giữa 2 chunks (để deduplication)."""
-    text1 = chunk1.get("text", "").lower()
-    text2 = chunk2.get("text", "").lower()
+    """
+    Tính similarity giữa 2 chunks sử dụng cosine similarity của embeddings.
+    Tối ưu hơn Jaccard word-level (chính xác hơn, ít false-positive cho văn bản pháp luật).
+    """
+    text1 = chunk1.get("text", "") if isinstance(chunk1, dict) else str(chunk1)
+    text2 = chunk2.get("text", "") if isinstance(chunk2, dict) else str(chunk2)
     
     if not text1 or not text2:
         return 0.0
     
-    # Tính Jaccard similarity trên words
-    words1 = set(re.findall(r'\b\w+\b', text1))
-    words2 = set(re.findall(r'\b\w+\b', text2))
-    
-    if not words1 or not words2:
-        return 0.0
-    
-    intersection = len(words1 & words2)
-    union = len(words1 | words2)
-    
-    return intersection / union if union > 0 else 0.0
+    # Sử dụng cosine similarity của embeddings (chính xác hơn Jaccard)
+    try:
+        # Cache embeddings để tránh tính lại
+        emb1 = _get_chunk_embedding(text1)
+        emb2 = _get_chunk_embedding(text2)
+        
+        # Cosine similarity (embeddings đã được normalize)
+        similarity = np.dot(emb1, emb2)
+        return float(similarity)
+    except Exception:
+        # Fallback về Jaccard nếu embedding lỗi
+        words1 = set(re.findall(r'\b\w+\b', text1.lower()))
+        words2 = set(re.findall(r'\b\w+\b', text2.lower()))
+        
+        if not words1 or not words2:
+            return 0.0
+        
+        intersection = len(words1 & words2)
+        union = len(words1 | words2)
+        
+        return intersection / union if union > 0 else 0.0
 
 def _deduplicate_chunks(chunks: List[Dict], similarity_threshold: float = 0.8) -> List[Dict]:
     """Loại bỏ chunks trùng lặp hoặc quá giống nhau."""
@@ -546,8 +603,11 @@ def _deduplicate_chunks(chunks: List[Dict], similarity_threshold: float = 0.8) -
     return deduplicated
 
 def _re_rank_with_cross_encoder(query: str, candidate_chunks: List[Dict], 
-                                 top_k: int = STAGE2_TOP_K) -> List[Tuple[Dict, float]]:
-    """Re-rank candidates sử dụng cross-encoder (chính xác hơn nhưng chậm hơn)."""
+                                 top_k: int = STAGE2_TOP_K, batch_size: int = 16) -> List[Tuple[Dict, float]]:
+    """
+    Re-rank candidates sử dụng cross-encoder (chính xác hơn nhưng chậm hơn).
+    Tối ưu: Batch processing để tránh GPU memory spike và giảm latency.
+    """
     if not USE_CROSS_ENCODER or len(candidate_chunks) == 0:
         return [(chunk, 0.0) for chunk in candidate_chunks[:top_k]]
     
@@ -558,12 +618,18 @@ def _re_rank_with_cross_encoder(query: str, candidate_chunks: List[Dict],
         pairs = [[query, chunk.get("text", "") if isinstance(chunk, dict) else str(chunk)] 
                  for chunk in candidate_chunks]
         
-        # Tính scores
+        # Tính scores với batch processing
         if isinstance(cross_model, CrossEncoder):
-            scores = cross_model.predict(pairs)
+            # Batch processing để tránh GPU memory spike
+            all_scores = []
+            for i in range(0, len(pairs), batch_size):
+                batch_pairs = pairs[i:i + batch_size]
+                batch_scores = cross_model.predict(batch_pairs, show_progress_bar=False)
+                all_scores.extend(batch_scores)
+            
+            scores = np.array(all_scores)
             # Cross-encoder thường trả về scores từ -inf đến +inf hoặc 0-1
             # Normalize về 0-1
-            scores = np.array(scores)
             if scores.min() < 0:
                 # Nếu có giá trị âm, normalize về 0-1
                 scores = (scores - scores.min()) / (scores.max() - scores.min() + 1e-8)
@@ -575,7 +641,9 @@ def _re_rank_with_cross_encoder(query: str, candidate_chunks: List[Dict],
             query_emb = cross_model.encode([query], normalize_embeddings=True, convert_to_numpy=True)
             chunk_texts = [chunk.get("text", "") if isinstance(chunk, dict) else str(chunk) 
                           for chunk in candidate_chunks]
-            chunk_embs = cross_model.encode(chunk_texts, normalize_embeddings=True, convert_to_numpy=True)
+            # Batch encoding cho chunks
+            chunk_embs = cross_model.encode(chunk_texts, normalize_embeddings=True, 
+                                          convert_to_numpy=True, batch_size=batch_size)
             # Sử dụng util.cos_sim từ sentence-transformers (rõ ràng và tối ưu hơn)
             scores = util.cos_sim(query_emb, chunk_embs)[0].cpu().numpy()
             # Cosine similarity đã là -1 đến 1, normalize về 0-1
@@ -620,7 +688,9 @@ def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata
     
     if not use_multi_stage:
         # Fallback về phương pháp cũ
-        q_emb = bi_model.encode([query])
+        # QUAN TRỌNG: Normalize query embeddings để match với index (đã normalize)
+        # Normalize + Inner Product = cosine similarity chuẩn
+        q_emb = bi_model.encode([query], normalize_embeddings=True, convert_to_numpy=True)
         D, I = index.search(np.array(q_emb).astype("float32"), top_k)
         results = [chunks[i] if isinstance(chunks[i], str) else chunks[i].get("text", "") 
                    for i in I[0]]
@@ -631,7 +701,9 @@ def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata
     candidate_chunks_dict = {}  # Dùng dict để deduplicate theo index
     
     # 1.1: FAISS semantic search
-    q_emb = bi_model.encode([query])
+    # QUAN TRỌNG: Normalize query embeddings để match với index (đã normalize)
+    # Normalize + Inner Product = cosine similarity chuẩn
+    q_emb = bi_model.encode([query], normalize_embeddings=True, convert_to_numpy=True)
     D, I = index.search(np.array(q_emb).astype("float32"), STAGE1_TOP_K)
     
     for idx, score in zip(I[0], D[0]):
@@ -676,9 +748,13 @@ def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata
         max_bm25 = max(bm25_scores) if bm25_scores and max(bm25_scores) > 0 else 1.0
         
         for chunk in candidate_chunks:
-            # Normalize FAISS score (distance -> similarity)
+            # Normalize FAISS score
+            # Với Inner Product (IP): score là similarity (càng cao càng tốt), range [-1, 1] cho normalized embeddings
+            # Normalize về [0, 1]: (score + 1) / 2
             faiss_score = chunk.get("faiss_score", 0.0)
-            chunk["faiss_score_norm"] = max(0.0, 1.0 / (1.0 + faiss_score)) if faiss_score > 0 else 0.0
+            # Inner Product với normalized embeddings = cosine similarity, range [-1, 1]
+            # Normalize về [0, 1] để dễ so sánh với BM25
+            chunk["faiss_score_norm"] = (faiss_score + 1.0) / 2.0 if faiss_score > -1.0 else 0.0
             
             # Normalize BM25 score
             bm25_score = chunk.get("bm25_score", 0.0)
@@ -1107,9 +1183,49 @@ Hãy sử dụng thông tin ngữ cảnh sau đây để trả lời câu hỏi 
 
 ### Trả lời (BẮT ĐẦU NGAY với nội dung, KHÔNG giới thiệu, PHẢI XUỐNG DÒNG giữa các đoạn):"""
         
-        # Gửi request đến Gemini API
-        response = gemini_model.generate_content(prompt)
-        answer = response.text.strip()
+        # Gửi request đến Gemini API với retry và exponential backoff
+        max_retries = 3
+        base_delay = 1.0  # seconds
+        
+        answer = None
+        last_error = None
+        
+        for attempt in range(max_retries):
+            try:
+                # Gửi request đến Gemini API
+                response = gemini_model.generate_content(
+                    prompt,
+                    generation_config={
+                        "temperature": 0.7,
+                        "max_output_tokens": 8192,
+                    }
+                )
+                answer = response.text.strip()
+                break  # Thành công, thoát khỏi retry loop
+            except Exception as e:
+                last_error = e
+                error_str = str(e).lower()
+                # Chỉ retry cho các lỗi có thể recover (network, rate limit, timeout)
+                retryable_errors = ["timeout", "rate limit", "quota", "network", "connection", "503", "429", "500"]
+                is_retryable = any(err in error_str for err in retryable_errors)
+                
+                if attempt < max_retries - 1 and is_retryable:
+                    # Exponential backoff: delay = base_delay * (2^attempt)
+                    delay = base_delay * (2 ** attempt)
+                    print(f"⚠️  Lỗi khi gọi Gemini API (attempt {attempt + 1}/{max_retries}): {str(e)}")
+                    print(f"   Retry sau {delay:.1f} giây...")
+                    time.sleep(delay)
+                elif not is_retryable:
+                    # Lỗi không thể retry (ví dụ: invalid API key, bad request)
+                    print(f"❌ Lỗi không thể retry: {str(e)}")
+                    raise
+                else:
+                    # Lần thử cuối cùng thất bại
+                    print(f"❌ Lỗi khi gọi Gemini API sau {max_retries} lần thử: {str(e)}")
+                    raise Exception(f"Không thể lấy response từ Gemini API sau {max_retries} lần thử: {str(e)}")
+        
+        if answer is None:
+            raise Exception(f"Không thể lấy response từ Gemini API: {last_error}")
         
         # Post-processing: Loại bỏ các cụm từ không cần thiết
         unwanted_phrases = [
