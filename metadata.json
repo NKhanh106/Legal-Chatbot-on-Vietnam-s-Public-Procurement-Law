@@ -1,0 +1,7 @@
+{
+  "name": "Luật Đấu Thầu Chatbot",
+  "description": "A ChatGPT-styled AI assistant specialized in Vietnamese Bid Law (Luật đấu thầu).",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

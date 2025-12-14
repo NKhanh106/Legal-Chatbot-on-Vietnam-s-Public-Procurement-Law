@@ -1,0 +1,46 @@
+# Core dependencies for RAG
+sentence-transformers>=2.2.0  # For semantic search embeddings
+faiss-cpu>=1.7.4  # For vector search
+# For GPU support, use: faiss-gpu>=1.7.4
+
+# Gemini API
+google-generativeai>=0.3.0
+
+# Streamlit for deployment
+streamlit>=1.28.0
+
+# Flask API Server
+flask>=3.0.0
+flask-cors>=4.0.0
+
+# PDF processing with docling (modern OCR solution)
+docling>=1.0.0
+Pillow>=10.0.0
+
+# Word document processing
+python-docx>=1.1.0  # For reading .docx files (REQUIRED)
+docx2txt>=0.8  # For reading .doc files (REQUIRED for .doc support)
+# Note: textract is optional but requires system dependencies, so commented out
+# textract>=1.6.0  # Alternative for .doc files (optional, fallback)
+
+# OCR với pytesseract (hỗ trợ tiếng Việt tốt hơn)
+pytesseract>=0.3.10
+pdf2image>=1.16.3
+
+# Vietnamese tokenizer (optional, cho BM25 tốt hơn)
+# Chọn một trong hai:
+pyvi>=0.1.1  # Hoặc
+# underthesea>=1.3.0  # Hoặc cả hai
+
+# Data processing
+numpy>=1.24.0
+pandas>=2.0.0
+tqdm>=4.65.0  # Progress bars
+
+# Environment variables
+python-dotenv>=1.0.0  # Load .env.local files
+
+# Jupyter notebook
+jupyter>=1.0.0
+ipykernel>=6.25.0
+

@@ -1,0 +1,45 @@
+name: legal-chatbot
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - numpy>=1.24.0
+  - pandas>=2.0.0
+  - pillow>=10.0.0
+  - tesseract>=5.5.0  # System dependency cho pytesseract
+  - poppler  # System dependency cho pdf2image
+  - pip:
+    # Core dependencies for RAG
+    - sentence-transformers>=2.2.0
+    - faiss-cpu>=1.7.4  # Hoặc faiss-gpu nếu có GPU
+    # For GPU support, uncomment:
+    # - faiss-gpu>=1.7.4
+    
+    # Gemini API
+    - google-generativeai>=0.3.0
+    
+    # Streamlit for deployment
+    - streamlit>=1.28.0
+    
+    # Flask API Server
+    - flask>=3.0.0
+    - flask-cors>=4.0.0
+    
+    # PDF processing
+    - docling>=1.0.0
+    - pytesseract>=0.3.10
+    - pdf2image>=1.16.3
+    
+    # Vietnamese tokenizer (optional)
+    - pyvi>=0.1.1
+    # Hoặc: underthesea>=1.3.0
+    
+    # Progress bars
+    - tqdm>=4.65.0
+    
+    # Jupyter notebook
+    - jupyter>=1.0.0
+    - ipykernel>=6.25.0
+

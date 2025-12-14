@@ -1,0 +1,13 @@
+# Configuration file for API keys
+# IMPORTANT: Copy this file to config.py and add your API key
+# The config.py file is in .gitignore to keep your API key secure
+
+# Gemini API Configuration
+GEMINI_API_KEY = "YOUR_API_KEY_HERE"  # Thay bằng API key của bạn
+
+# Model dùng cho RAG / trả lời truy vấn
+GEMINI_MODEL_NAME = "gemini-2.5-pro"  # Hoặc "gemini-1.5-pro", "gemini-pro"
+
+# Model chuyên cho OCR correction (sửa lỗi text sau OCR) trong correction.py
+GEMINI_MODEL_NAME_CORRECTION = "gemma-3-27b-it"
+
