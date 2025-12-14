@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Message, LoadingState } from '../types';
 import { WelcomeScreen } from './WelcomeScreen';
 import { User, Copy, ThumbsUp, ThumbsDown } from 'lucide-react';
@@ -13,17 +13,83 @@ interface ChatAreaProps {
 
 export const ChatArea: React.FC<ChatAreaProps> = ({ messages, loadingState, onSend }) => {
   const bottomRef = useRef<HTMLDivElement>(null);
+  // Track like/dislike status for each message (by message id)
+  const [messageFeedback, setMessageFeedback] = useState<Record<string, 'like' | 'dislike' | null>>({});
+  // Track copy notification
+  const [showCopyNotification, setShowCopyNotification] = useState(false);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loadingState]);
+
+  const handleLike = (messageId: string) => {
+    setMessageFeedback(prev => {
+      const current = prev[messageId];
+      // Nếu đang like thì tắt, nếu không thì bật like và tắt dislike
+      if (current === 'like') {
+        return { ...prev, [messageId]: null };
+      } else {
+        return { ...prev, [messageId]: 'like' };
+      }
+    });
+  };
+
+  const handleDislike = (messageId: string) => {
+    setMessageFeedback(prev => {
+      const current = prev[messageId];
+      // Nếu đang dislike thì tắt, nếu không thì bật dislike và tắt like
+      if (current === 'dislike') {
+        return { ...prev, [messageId]: null };
+      } else {
+        return { ...prev, [messageId]: 'dislike' };
+      }
+    });
+  };
+
+  const handleCopy = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      // Hiển thị thông báo
+      setShowCopyNotification(true);
+      // Tự động ẩn sau 2 giây
+      setTimeout(() => {
+        setShowCopyNotification(false);
+      }, 2000);
+    } catch (err) {
+      console.error('Failed to copy text:', err);
+      // Fallback cho trình duyệt cũ
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.opacity = '0';
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        // Hiển thị thông báo
+        setShowCopyNotification(true);
+        setTimeout(() => {
+          setShowCopyNotification(false);
+        }, 2000);
+      } catch (fallbackErr) {
+        console.error('Fallback copy failed:', fallbackErr);
+      }
+      document.body.removeChild(textArea);
+    }
+  };
 
   if (messages.length === 0) {
     return <WelcomeScreen onSuggestionClick={onSend} />;
   }
 
   return (
-    <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 w-full">
+    <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 w-full relative">
+      {/* Copy notification toast */}
+      {showCopyNotification && (
+        <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-[#2f2f2f] text-white px-4 py-2 rounded-lg shadow-lg z-50 animate-fade-in">
+          <span className="text-sm">Đã sao chép thành công</span>
+        </div>
+      )}
       <div className="max-w-3xl mx-auto px-4 py-6 md:py-10">
         {messages.map((msg) => (
           <div
@@ -34,7 +100,7 @@ export const ChatArea: React.FC<ChatAreaProps> = ({ messages, loadingState, onSe
           >
              {/* Model Avatar */}
             {msg.role === 'model' && (
-              <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center flex-shrink-0 self-center border border-white/10">
+              <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center flex-shrink-0 self-start border border-white/10">
                  <img src="/logo.png" className="w-5 h-5" alt="Logo" />
               </div>
             )}
@@ -89,9 +155,35 @@ export const ChatArea: React.FC<ChatAreaProps> = ({ messages, loadingState, onSe
                                 
                                 {/* Action buttons for model response */}
                                 <div className="flex items-center gap-2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <button className="p-1 text-gray-500 hover:text-gray-300 rounded"><Copy className="w-4 h-4" /></button>
-                                    <button className="p-1 text-gray-500 hover:text-gray-300 rounded"><ThumbsUp className="w-4 h-4" /></button>
-                                    <button className="p-1 text-gray-500 hover:text-gray-300 rounded"><ThumbsDown className="w-4 h-4" /></button>
+                                    <button 
+                                        onClick={() => handleCopy(msg.content)}
+                                        className="p-1 text-gray-500 hover:text-gray-300 rounded transition-colors"
+                                        title="Copy to clipboard"
+                                    >
+                                        <Copy className="w-4 h-4" />
+                                    </button>
+                                    <button 
+                                        onClick={() => handleLike(msg.id)}
+                                        className={`p-1 rounded transition-colors ${
+                                            messageFeedback[msg.id] === 'like' 
+                                                ? 'text-white' 
+                                                : 'text-gray-500 hover:text-gray-300'
+                                        }`}
+                                        title="Like this response"
+                                    >
+                                        <ThumbsUp className={`w-4 h-4 ${messageFeedback[msg.id] === 'like' ? 'fill-current' : ''}`} />
+                                    </button>
+                                    <button 
+                                        onClick={() => handleDislike(msg.id)}
+                                        className={`p-1 rounded transition-colors ${
+                                            messageFeedback[msg.id] === 'dislike' 
+                                                ? 'text-white' 
+                                                : 'text-gray-500 hover:text-gray-300'
+                                        }`}
+                                        title="Dislike this response"
+                                    >
+                                        <ThumbsDown className={`w-4 h-4 ${messageFeedback[msg.id] === 'dislike' ? 'fill-current' : ''}`} />
+                                    </button>
                                 </div>
                             </>
                         ) : null}

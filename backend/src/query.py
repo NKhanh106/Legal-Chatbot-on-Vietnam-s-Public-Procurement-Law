@@ -525,17 +525,48 @@ def _calculate_metadata_score(chunk: Dict, references: Dict) -> float:
     
     return min(1.0, score)  # Normalize về 0-1
 
-def _calculate_diversity_penalty(chunk: Dict, selected_chunks: List[Dict]) -> float:
-    """Tính penalty nếu chunk quá giống với các chunks đã chọn (để tăng diversity)."""
+def _check_diversity_constraints(chunk: Dict, selected_chunks: List[Dict]) -> Tuple[bool, float]:
+    """
+    Kiểm tra diversity constraints với hard constraint và soft constraint.
+    
+    Hard constraint: Nếu đã có >= 2 chunks từ cùng điều khoản → skip (return True)
+    Soft constraint: Nếu cosine similarity > 0.85 → skip (return True)
+    
+    Returns:
+        (should_skip: bool, penalty: float)
+        - should_skip: True nếu vi phạm hard/soft constraint (nên skip chunk này)
+        - penalty: Penalty score (0.0 - 1.0) để giảm score nếu cần
+    """
     if not USE_DIVERSITY_FILTER or not selected_chunks:
-        return 0.0
+        return False, 0.0
     
     chunk_article = chunk.get("article_number")
     chunk_chapter = chunk.get("chapter", "")
     
+    # ========== HARD CONSTRAINT: Đếm số chunks từ cùng điều khoản ==========
+    same_article_count = 0
+    for selected in selected_chunks:
+        if chunk_article and selected.get("article_number") == chunk_article:
+            same_article_count += 1
+    
+    # Hard constraint: Nếu đã có >= 2 chunks từ cùng điều khoản → skip
+    if same_article_count >= 2:
+        return True, 1.0  # Skip chunk này
+    
+    # ========== SOFT CONSTRAINT: Cosine similarity với chunks đã chọn ==========
+    max_similarity = 0.0
+    for selected in selected_chunks:
+        similarity = _calculate_similarity(chunk, selected)
+        max_similarity = max(max_similarity, similarity)
+    
+    # Soft constraint: Nếu cosine similarity > 0.85 → skip
+    if max_similarity > 0.85:
+        return True, max_similarity  # Skip chunk này
+    
+    # ========== SOFT PENALTY: Giảm score nếu có penalty nhỏ ==========
     penalty = 0.0
     for selected in selected_chunks:
-        # Penalty nếu cùng điều khoản
+        # Penalty nếu cùng điều khoản (nhưng chưa đủ 2 để hard skip)
         if chunk_article and selected.get("article_number") == chunk_article:
             penalty += 0.3
         
@@ -543,12 +574,36 @@ def _calculate_diversity_penalty(chunk: Dict, selected_chunks: List[Dict]) -> fl
         if chunk_chapter and selected.get("chapter", "") == chunk_chapter:
             penalty += 0.1
     
-    return min(1.0, penalty)  # Normalize về 0-1
+    return False, min(1.0, penalty)  # Không skip, nhưng có penalty
 
-@lru_cache(maxsize=1000)
-def _get_chunk_embedding(text: str) -> np.ndarray:
-    """Cache embedding cho chunk text (tránh tính lại nhiều lần)."""
-    return bi_model.encode([text], normalize_embeddings=True, convert_to_numpy=True)[0]
+# Cache embeddings theo chunk_id để tránh rủi ro RAM với text dài
+_embedding_cache = {}  # {chunk_id: embedding}
+
+def _get_chunk_embedding_optimized(chunk: Dict) -> np.ndarray:
+    """
+    Lấy embedding cho chunk với cache tối ưu.
+    Tối ưu: Cache theo chunk_id thay vì text để tránh rủi ro RAM với text dài.
+    """
+    # Ưu tiên: Cache theo chunk_id (nếu có trong metadata)
+    chunk_id = chunk.get("chunk_idx") or chunk.get("id")
+    
+    if chunk_id is not None and chunk_id in _embedding_cache:
+        return _embedding_cache[chunk_id]
+    
+    # Encode text
+    text = chunk.get("text", "") if isinstance(chunk, dict) else str(chunk)
+    embedding = bi_model.encode([text], normalize_embeddings=True, convert_to_numpy=True)[0]
+    
+    # Cache theo chunk_id nếu có
+    if chunk_id is not None:
+        # Giới hạn cache size (1000 entries)
+        if len(_embedding_cache) >= 1000:
+            # Xóa entry cũ nhất (FIFO)
+            oldest_key = next(iter(_embedding_cache))
+            del _embedding_cache[oldest_key]
+        _embedding_cache[chunk_id] = embedding
+    
+    return embedding
 
 def _calculate_similarity(chunk1: Dict, chunk2: Dict) -> float:
     """
@@ -563,9 +618,13 @@ def _calculate_similarity(chunk1: Dict, chunk2: Dict) -> float:
     
     # Sử dụng cosine similarity của embeddings (chính xác hơn Jaccard)
     try:
-        # Cache embeddings để tránh tính lại
-        emb1 = _get_chunk_embedding(text1)
-        emb2 = _get_chunk_embedding(text2)
+        # Tối ưu: Sử dụng chunk objects để có thể cache theo chunk_id
+        chunk1_dict = chunk1 if isinstance(chunk1, dict) else {"text": str(chunk1)}
+        chunk2_dict = chunk2 if isinstance(chunk2, dict) else {"text": str(chunk2)}
+        
+        # Cache embeddings để tránh tính lại (tối ưu với chunk_id)
+        emb1 = _get_chunk_embedding_optimized(chunk1_dict)
+        emb2 = _get_chunk_embedding_optimized(chunk2_dict)
         
         # Cosine similarity (embeddings đã được normalize)
         similarity = np.dot(emb1, emb2)
@@ -584,12 +643,44 @@ def _calculate_similarity(chunk1: Dict, chunk2: Dict) -> float:
         return intersection / union if union > 0 else 0.0
 
 def _deduplicate_chunks(chunks: List[Dict], similarity_threshold: float = 0.8) -> List[Dict]:
-    """Loại bỏ chunks trùng lặp hoặc quá giống nhau."""
+    """
+    Loại bỏ chunks trùng lặp hoặc quá giống nhau.
+    Tối ưu: Dedup theo article_number trước để giảm O(N²) complexity.
+    """
     if not USE_DEDUPLICATION or len(chunks) <= 1:
         return chunks
     
-    deduplicated = []
+    # Tối ưu: Nhóm chunks theo article_number trước (giảm số lượng so sánh)
+    chunks_by_article = defaultdict(list)
+    chunks_without_article = []
+    
     for chunk in chunks:
+        article_num = chunk.get("article_number") if isinstance(chunk, dict) else None
+        if article_num is not None:
+            chunks_by_article[article_num].append(chunk)
+        else:
+            chunks_without_article.append(chunk)
+    
+    deduplicated = []
+    
+    # Dedup trong từng nhóm article (giảm complexity)
+    for article_num, article_chunks in chunks_by_article.items():
+        article_dedup = []
+        for chunk in article_chunks:
+            is_duplicate = False
+            for existing in article_dedup:
+                similarity = _calculate_similarity(chunk, existing)
+                if similarity >= similarity_threshold:
+                    is_duplicate = True
+                    break
+            
+            if not is_duplicate:
+                article_dedup.append(chunk)
+        
+        deduplicated.extend(article_dedup)
+    
+    # Dedup chunks không có article_number
+    for chunk in chunks_without_article:
         is_duplicate = False
         for existing in deduplicated:
             similarity = _calculate_similarity(chunk, existing)
@@ -603,13 +694,17 @@ def _deduplicate_chunks(chunks: List[Dict], similarity_threshold: float = 0.8) -
     return deduplicated
 
 def _re_rank_with_cross_encoder(query: str, candidate_chunks: List[Dict], 
-                                 top_k: int = STAGE2_TOP_K, batch_size: int = 16) -> List[Tuple[Dict, float]]:
+                                 top_k: int = STAGE2_TOP_K, batch_size: int = 16) -> List[Tuple[Dict, float, bool]]:
     """
     Re-rank candidates sử dụng cross-encoder (chính xác hơn nhưng chậm hơn).
     Tối ưu: Batch processing để tránh GPU memory spike và giảm latency.
+    
+    Returns:
+        List[Tuple[Dict, float, bool]]: (chunk, score, is_cross_encoder)
+        - is_cross_encoder: True nếu dùng cross-encoder thật, False nếu fallback bi-encoder
     """
     if not USE_CROSS_ENCODER or len(candidate_chunks) == 0:
-        return [(chunk, 0.0) for chunk in candidate_chunks[:top_k]]
+        return [(chunk, 0.0, False) for chunk in candidate_chunks[:top_k]]
     
     try:
         cross_model = _load_cross_encoder()
@@ -619,7 +714,9 @@ def _re_rank_with_cross_encoder(query: str, candidate_chunks: List[Dict],
                  for chunk in candidate_chunks]
         
         # Tính scores với batch processing
+        is_cross_encoder = False
         if isinstance(cross_model, CrossEncoder):
+            is_cross_encoder = True
             # Batch processing để tránh GPU memory spike
             all_scores = []
             for i in range(0, len(pairs), batch_size):
@@ -628,16 +725,25 @@ def _re_rank_with_cross_encoder(query: str, candidate_chunks: List[Dict],
                 all_scores.extend(batch_scores)
             
             scores = np.array(all_scores)
-            # Cross-encoder thường trả về scores từ -inf đến +inf hoặc 0-1
-            # Normalize về 0-1
-            if scores.min() < 0:
-                # Nếu có giá trị âm, normalize về 0-1
-                scores = (scores - scores.min()) / (scores.max() - scores.min() + 1e-8)
-            else:
-                # Nếu đã là 0-1, chỉ cần đảm bảo trong range
-                scores = np.clip(scores, 0, 1)
+            # QUAN TRỌNG: Không normalize cross-encoder scores theo min-max (làm méo ranking)
+            # Cross-encoder đã là relative scorer, normalize per-query làm chunk "trung bình" trông tốt giả
+            # Chỉ dùng sigmoid để đưa về [0, 1] mà không làm méo relative ranking
+            try:
+                import torch
+                # Sigmoid: giữ nguyên relative ranking, chỉ scale về [0, 1]
+                scores = torch.sigmoid(torch.from_numpy(scores)).numpy()
+            except ImportError:
+                # Fallback: nếu không có torch, dùng scipy hoặc không normalize
+                try:
+                    from scipy.special import expit  # expit = sigmoid
+                    scores = expit(scores)
+                except ImportError:
+                    # Nếu không có cả hai, chỉ clip về [0, 1] (không normalize)
+                    # Cross-encoder scores thường đã trong range hợp lý
+                    scores = np.clip(scores, 0, 1)
         else:
             # Fallback: sử dụng bi-encoder (cosine similarity)
+            is_cross_encoder = False
             query_emb = cross_model.encode([query], normalize_embeddings=True, convert_to_numpy=True)
             chunk_texts = [chunk.get("text", "") if isinstance(chunk, dict) else str(chunk) 
                           for chunk in candidate_chunks]
@@ -650,15 +756,15 @@ def _re_rank_with_cross_encoder(query: str, candidate_chunks: List[Dict],
             scores = (scores + 1) / 2
         
         # Sort theo score giảm dần
-        scored_chunks = list(zip(candidate_chunks, scores))
+        scored_chunks = list(zip(candidate_chunks, scores, [is_cross_encoder] * len(candidate_chunks)))
         scored_chunks.sort(key=lambda x: x[1], reverse=True)
         
         return scored_chunks[:top_k]
     
     except Exception as e:
         print(f"⚠️  Lỗi khi re-rank với cross-encoder: {e}")
-        # Fallback: trả về top_k đầu tiên
-        return [(chunk, 0.0) for chunk in candidate_chunks[:top_k]]
+        # Fallback: trả về top_k đầu tiên với flag False
+        return [(chunk, 0.0, False) for chunk in candidate_chunks[:top_k]]
 
 def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata=False):
     """
@@ -736,34 +842,54 @@ def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata
                     chunk_dict["chunk_idx"] = idx
                 candidate_chunks_dict[idx] = chunk_dict
     
-    # Convert dict về list và normalize scores
+    # Convert dict về list
     candidate_chunks = list(candidate_chunks_dict.values())
     
-    # Normalize FAISS và BM25 scores
+    # ========== RECIPROCAL RANK FUSION (RRF) ==========
+    # Thay vì normalize và weighted sum (bị bias theo query), dùng RRF để kết hợp ranks
+    # RRF: rrf_score = 1/(k + rank_faiss) + 1/(k + rank_bm25)
+    # Ưu điểm: Ổn định giữa các query, không phụ thuộc vào score distribution
+    
     if candidate_chunks:
-        faiss_scores = [c.get("faiss_score", 0.0) for c in candidate_chunks]
-        bm25_scores = [c.get("bm25_score", 0.0) for c in candidate_chunks]
-        
-        max_faiss = max(faiss_scores) if faiss_scores and max(faiss_scores) > 0 else 1.0
-        max_bm25 = max(bm25_scores) if bm25_scores and max(bm25_scores) > 0 else 1.0
+        # Tách chunks có FAISS score và BM25 score
+        faiss_chunks = []
+        bm25_chunks = []
         
         for chunk in candidate_chunks:
-            # Normalize FAISS score
-            # Với Inner Product (IP): score là similarity (càng cao càng tốt), range [-1, 1] cho normalized embeddings
-            # Normalize về [0, 1]: (score + 1) / 2
-            faiss_score = chunk.get("faiss_score", 0.0)
-            # Inner Product với normalized embeddings = cosine similarity, range [-1, 1]
-            # Normalize về [0, 1] để dễ so sánh với BM25
-            chunk["faiss_score_norm"] = (faiss_score + 1.0) / 2.0 if faiss_score > -1.0 else 0.0
+            if chunk.get("faiss_score") is not None:
+                faiss_chunks.append(chunk)
+            if chunk.get("bm25_score") is not None:
+                bm25_chunks.append(chunk)
+        
+        # Sort và gán rank cho FAISS
+        faiss_chunks.sort(key=lambda x: x.get("faiss_score", -999), reverse=True)
+        for rank, chunk in enumerate(faiss_chunks, start=1):
+            chunk["faiss_rank"] = rank
+        
+        # Sort và gán rank cho BM25
+        bm25_chunks.sort(key=lambda x: x.get("bm25_score", 0.0), reverse=True)
+        for rank, chunk in enumerate(bm25_chunks, start=1):
+            chunk["bm25_rank"] = rank
+        
+        # Tính RRF score cho mỗi chunk
+        RRF_K = 60  # Constant cho RRF (thường dùng 60)
+        for chunk in candidate_chunks:
+            rrf_score = 0.0
             
-            # Normalize BM25 score
-            bm25_score = chunk.get("bm25_score", 0.0)
-            chunk["bm25_score_norm"] = bm25_score / max_bm25 if max_bm25 > 0 else 0.0
+            # RRF từ FAISS rank
+            if "faiss_rank" in chunk:
+                rrf_score += 1.0 / (RRF_K + chunk["faiss_rank"])
             
-            # Hybrid score: 60% FAISS + 40% BM25
-            chunk["hybrid_score"] = 0.6 * chunk["faiss_score_norm"] + 0.4 * chunk["bm25_score_norm"]
+            # RRF từ BM25 rank
+            if "bm25_rank" in chunk:
+                rrf_score += 1.0 / (RRF_K + chunk["bm25_rank"])
+            
+            chunk["hybrid_score"] = rrf_score
+            # Lưu lại scores gốc để debug
+            chunk["faiss_score_norm"] = (chunk.get("faiss_score", 0.0) + 1.0) / 2.0 if chunk.get("faiss_score", -1.0) > -1.0 else 0.0
+            chunk["bm25_score_norm"] = chunk.get("bm25_score", 0.0)
     
-    # Sort theo hybrid score và lấy top K
+    # Sort theo RRF score và lấy top K
     candidate_chunks.sort(key=lambda x: x.get("hybrid_score", 0.0), reverse=True)
     candidate_chunks = candidate_chunks[:STAGE1_HYBRID_TOP_K]
     
@@ -779,13 +905,13 @@ def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata
     
     # Tính các loại scores
     scored_chunks = []
-    for chunk, cross_score in re_ranked:
+    for chunk, cross_score, is_cross_encoder in re_ranked:
         chunk_text = chunk.get("text", "")
         
         # Cross-encoder score đã được normalize trong _re_rank_with_cross_encoder
         cross_score_norm = float(cross_score) if isinstance(cross_score, (int, float)) else 0.5
         
-        # Hybrid score (FAISS + BM25)
+        # Hybrid score (FAISS + BM25) - từ RRF
         hybrid_score = chunk.get("hybrid_score", 0.0)
         
         # Keyword score
@@ -799,23 +925,35 @@ def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata
             metadata_score = _calculate_metadata_score(chunk, references)
         
         # Stage 3 score: Combine tất cả
+        # QUAN TRỌNG: Điều chỉnh weight dựa trên is_cross_encoder
+        # Nếu fallback về bi-encoder, giảm weight của cross_score vì không chính xác bằng
+        if is_cross_encoder:
+            # Cross-encoder thật: weight cao
+            cross_weight = 0.45 if references["article_numbers"] else 0.50
+        else:
+            # Fallback bi-encoder: giảm weight (không chính xác bằng cross-encoder)
+            cross_weight = 0.20 if references["article_numbers"] else 0.25
+        
         # Adaptive weights: nếu có mention điều khoản, tăng metadata weight
         if references["article_numbers"]:
             # Có mention điều khoản: metadata quan trọng hơn
             stage3_score = (
-                0.45 * cross_score_norm +
+                cross_weight * cross_score_norm +
                 0.25 * hybrid_score +
                 0.10 * keyword_score +
-                0.20 * metadata_score  # Tăng từ 5% lên 20%
+                0.20 * metadata_score
             )
         else:
             # Không có mention điều khoản: semantic quan trọng hơn
             stage3_score = (
-                0.50 * cross_score_norm +
+                cross_weight * cross_score_norm +
                 0.30 * hybrid_score +
                 0.15 * keyword_score +
                 0.05 * metadata_score
             )
+        
+        # Lưu flag để debug
+        chunk["is_cross_encoder"] = is_cross_encoder
         
         chunk["stage3_score"] = stage3_score
         chunk["cross_score"] = cross_score_norm
@@ -831,23 +969,35 @@ def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata
     
     # ========== STAGE 4: Diversity Filtering ==========
     # Lọc để tránh nhiều chunks từ cùng điều khoản
-    diverse_chunks = []
+    # QUAN TRỌNG: Sử dụng hard constraint và soft constraint
     selected_chunks = []
     
     for chunk, score in scored_chunks:
-        diversity_penalty = _calculate_diversity_penalty(chunk, selected_chunks)
-        # Giảm score nếu quá giống với chunks đã chọn
-        final_score = score * (1.0 - diversity_penalty * 0.3)  # Giảm tối đa 30%
+        # Kiểm tra xem đã đủ số lượng chưa
+        if len(selected_chunks) >= STAGE4_TOP_K:
+            break
+        
+        # Kiểm tra diversity constraints (hard + soft)
+        should_skip, penalty = _check_diversity_constraints(chunk, selected_chunks)
+        
+        # Hard/Soft constraint: Skip chunk này nếu vi phạm
+        if should_skip:
+            continue  # Skip chunk này, không append
+        
+        # Soft penalty: Giảm score nếu có penalty nhỏ (nhưng vẫn append)
+        if penalty > 0.0:
+            final_score = score * (1.0 - penalty * 0.3)  # Giảm tối đa 30%
+        else:
+            final_score = score
         
         chunk["final_score"] = final_score
-        chunk["diversity_penalty"] = diversity_penalty
+        chunk["diversity_penalty"] = penalty
         
-        diverse_chunks.append((chunk, final_score))
+        # CHỈ APPEND KHI ĐÃ PASS DIVERSITY CHECK
         selected_chunks.append(chunk)
     
-    # Sort lại theo final score sau diversity filtering
-    diverse_chunks.sort(key=lambda x: x[1], reverse=True)
-    diverse_chunks = diverse_chunks[:STAGE4_TOP_K]
+    # selected_chunks đã được sort theo score ban đầu và filtered, không cần sort lại
+    diverse_chunks = [(chunk, chunk.get("final_score", 0.0)) for chunk in selected_chunks]
     
     # ========== STAGE 5: Deduplication ==========
     # Loại bỏ chunks trùng lặp
@@ -945,9 +1095,68 @@ def _calculate_confidence_score(contexts_metadata: List[Dict], query: str) -> fl
     
     return min(1.0, max(0.0, confidence))
 
+# ========== SYSTEM PROMPT (CACHE - Gửi 1 lần hoặc session-level) ==========
+SYSTEM_PROMPT = """Bạn là trợ lý AI chuyên tư vấn Luật Đấu thầu Việt Nam.
+
+Nguyên tắc:
+- Trả lời trực tiếp, không xã giao, không tự giới thiệu.
+- Diễn đạt chính xác, đúng thuật ngữ pháp lý.
+- Không bịa thông tin ngoài ngữ cảnh được cung cấp.
+- Ưu tiên rõ ràng, logic, dễ đọc.
+
+Phong cách:
+- Markdown: **bold** cho thuật ngữ, - cho danh sách, ## cho tiêu đề.
+- Đoạn văn cách nhau 1 dòng trống.
+- Không xuống dòng trong cùng một gạch đầu dòng.
+- Diễn đạt lại, không sao chép nguyên văn."""
+
+# ========== STYLE RULES (CACHE - Rút gọn từ 30 dòng xuống ~6 dòng) ==========
+STYLE_RULES = """Quy ước trình bày:
+- Không chào hỏi, không nhắc vai trò, không dẫn nhập.
+- Không sao chép nguyên văn, phải diễn đạt lại.
+- Không xuống dòng giữa các câu trong cùng một gạch đầu dòng.
+- Nếu thiếu thông tin, nói rõ là không có trong ngữ cảnh."""
+
+def _get_task_instruction(query_type: Dict) -> str:
+    """
+    Tạo task-specific instruction ngắn gọn dựa trên query type.
+    Rút gọn từ nhiều dòng xuống 1-2 dòng meta-instruction.
+    """
+    instructions = []
+    
+    if query_type.get("is_definition"):
+        instructions.append("Đưa ra định nghĩa rõ ràng, so sánh nếu có nhiều định nghĩa.")
+    
+    if query_type.get("is_procedure"):
+        instructions.append("Trình bày quy trình từng bước, nêu điều kiện ở mỗi bước.")
+    
+    if query_type.get("is_comparison"):
+        instructions.append("So sánh chi tiết điểm giống/khác, có ví dụ minh họa.")
+    
+    if query_type.get("is_condition"):
+        instructions.append("Liệt kê đầy đủ điều kiện, phân loại rõ ràng.")
+    
+    if query_type.get("is_prohibition"):
+        instructions.append("Liệt kê hành vi bị nghiêm cấm, nêu hậu quả pháp lý.")
+    
+    if query_type.get("is_requirement"):
+        instructions.append("Liệt kê yêu cầu, phân loại theo mức độ bắt buộc.")
+    
+    if query_type.get("is_article_specific"):
+        instructions.append("Tập trung vào điều khoản được đề cập, giải thích chi tiết.")
+    
+    return " ".join(instructions) if instructions else "Trình bày theo quy trình, liệt kê điều kiện nếu có."
+
 def _create_dynamic_prompt(query: str, contexts_metadata: List[Dict], 
                           query_type: Dict, conversation_history: List[Dict] = None) -> str:
-    """Tạo prompt động dựa trên loại câu hỏi, context, và conversation history."""
+    """
+    Tạo prompt động theo nguyên tắc 3 lớp:
+    1. System Prompt (cache) - đã định nghĩa ở trên
+    2. Style Rules (cache) - đã định nghĩa ở trên
+    3. Task Prompt (động) - chỉ phần này thay đổi mỗi query
+    
+    Tối ưu token economics: Giảm từ ~200 tokens xuống ~80 tokens cho phần cố định.
+    """
     
     # Xây dựng context với citation
     context_parts = []
@@ -970,96 +1179,29 @@ def _create_dynamic_prompt(query: str, contexts_metadata: List[Dict],
     context_text = "\n\n".join(context_parts)
     
     # Format conversation history nếu có
-    history_text = ""
+    history_section = ""
     if conversation_history:
         history_text = _format_conversation_history(conversation_history, max_messages=8)
+        if history_text:
+            history_section = f"\n### Lịch sử cuộc trò chuyện:\n{history_text}\n"
     
-    # Tạo system prompt dựa trên query type
-    # Lưu ý: KHÔNG khuyến khích AI tự giới thiệu trong response
-    system_prompt = "Bạn là một chuyên gia tư vấn về Luật Đấu thầu Việt Nam. Trả lời trực tiếp, không cần giới thiệu bản thân hay vai trò."
+    # Task-specific instruction (rút gọn từ nhiều dòng xuống 1-2 dòng)
+    task_instruction = _get_task_instruction(query_type)
     
-    # Thêm hướng dẫn cụ thể dựa trên loại câu hỏi
-    instructions = []
-    
-    if query_type["is_definition"]:
-        instructions.append("- Đưa ra định nghĩa rõ ràng, chính xác dựa trên văn bản pháp luật")
-        instructions.append("- Nếu có nhiều định nghĩa, hãy so sánh và làm rõ")
-    
-    if query_type["is_procedure"]:
-        instructions.append("- Trình bày quy trình theo từng bước rõ ràng, logic")
-        instructions.append("- Nêu rõ các điều kiện, yêu cầu ở mỗi bước")
-    
-    if query_type["is_comparison"]:
-        instructions.append("- So sánh chi tiết các điểm giống và khác nhau")
-        instructions.append("- Đưa ra ví dụ cụ thể để minh họa")
-    
-    if query_type["is_condition"]:
-        instructions.append("- Liệt kê đầy đủ các điều kiện, trường hợp")
-        instructions.append("- Phân loại rõ ràng các trường hợp")
-    
-    if query_type["is_prohibition"]:
-        instructions.append("- Liệt kê rõ ràng các hành vi bị nghiêm cấm")
-        instructions.append("- Nêu rõ hậu quả pháp lý nếu vi phạm")
-    
-    if query_type["is_requirement"]:
-        instructions.append("- Liệt kê đầy đủ các yêu cầu, điều kiện")
-        instructions.append("- Phân loại theo mức độ bắt buộc (bắt buộc/khuyến nghị)")
-    
-    if query_type["is_article_specific"]:
-        instructions.append("- Tập trung vào điều khoản được đề cập")
-        instructions.append("- Giải thích chi tiết nội dung của điều khoản đó")
-    
-    # Instructions mặc định
-    default_instructions = [
-        "- Trả lời TRỰC TIẾP, KHÔNG giới thiệu bản thân, KHÔNG nói 'Chào bạn', 'với vai trò', 'xin trả lời', 'tôi là'",
-        "- Bắt đầu ngay với nội dung trả lời, không cần nhắc lại câu hỏi hoặc nói 'dựa trên thông tin được cung cấp'",
-        "- Diễn đạt bằng lời văn tự nhiên, dễ hiểu",
-        "- Không sao chép nguyên văn mà diễn đạt lại",
-        "- Sử dụng thuật ngữ pháp lý chính xác",
-        "- Sử dụng định dạng Markdown để trình bày rõ ràng: **bold** cho thuật ngữ quan trọng, - list cho danh sách, ## cho tiêu đề phụ",
-        "- QUAN TRỌNG: Phải xuống dòng (dùng 2 dòng trống \\n\\n) giữa các đoạn văn để dễ đọc. Mỗi đoạn văn phải cách nhau bằng 2 dòng trống.",
-        "- KHÔNG xuống dòng sau dấu chấm trong cùng một câu hoặc trong danh sách markdown (gạch đầu dòng).",
-        "- Sử dụng tiêu đề Markdown (##) để phân chia các phần lớn",
-        "- Nếu không có thông tin trong ngữ cảnh, hãy nói rõ"
-    ]
-    
-    all_instructions = instructions + default_instructions
-    
-    # Format prompt với conversation history
-    history_section = ""
-    if history_text:
-        history_section = f"""
-### Lịch sử cuộc trò chuyện (để hiểu ngữ cảnh):
-{history_text}
+    # Task Prompt (NGẮN - ĐỘNG) - chỉ phần này gửi mỗi query
+    # Giảm từ ~200 tokens xuống ~80 tokens cho phần cố định
+    prompt = f"""{SYSTEM_PROMPT}
 
-"""
-    
-    prompt = f"""{system_prompt}
+{STYLE_RULES}
 
-### Ngữ cảnh (từ các văn bản pháp luật):
-{context_text}
-{history_section}### Câu hỏi hiện tại:
+### Ngữ cảnh pháp luật:
+{context_text}{history_section}### Câu hỏi:
 {query}
 
-### Yêu cầu trả lời:
-{chr(10).join(f"- {inst}" for inst in all_instructions)}
+### Yêu cầu:
+{task_instruction}
 
-### Định dạng trả lời (QUAN TRỌNG - Phải tuân thủ):
-- Bắt đầu NGAY với nội dung trả lời, KHÔNG giới thiệu, KHÔNG nói "Chào bạn", "với vai trò", "xin trả lời", "tôi là"
-- KHÔNG nói "dựa trên thông tin", "theo ngữ cảnh", "với vai trò là chuyên gia"
-- Sử dụng Markdown để format: **bold** cho thuật ngữ, - cho list, ## cho tiêu đề phụ
-- **PHẢI XUỐNG DÒNG**: Mỗi đoạn văn phải cách nhau bằng 2 dòng trống (\\n\\n). Ví dụ:
-  Đoạn 1 nội dung...
-
-  Đoạn 2 nội dung...
-
-  Đoạn 3 nội dung...
-- Sử dụng tiêu đề ## để phân chia các phần lớn (ví dụ: ## Giải thích chi tiết, ## Kết luận)
-- Sau đó giải thích chi tiết nếu cần
-- Kết thúc bằng một câu kết luận rõ ràng
-- Nếu có thể, đề cập đến điều khoản/chương liên quan
-
-### Trả lời (BẮT ĐẦU NGAY với nội dung, KHÔNG giới thiệu, PHẢI XUỐNG DÒNG giữa các đoạn):"""
+### Trả lời:"""
     
     return prompt
 
@@ -1363,4 +1505,3 @@ Hãy sử dụng thông tin ngữ cảnh sau đây để trả lời câu hỏi 
                 "error": str(e)
             }
         return error_msg
-
