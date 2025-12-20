@@ -276,8 +276,121 @@ def _load_cross_encoder():
                 cross_encoder_model = bi_model
     return cross_encoder_model
 
+def _extract_numbers_from_query(query: str) -> List[str]:
+    """
+    Extract số liệu từ query (ví dụ: "330.000đ", "330000", "330,000").
+    Quan trọng cho legal documents có nhiều số liệu (phí, mức phạt, etc.).
+    
+    Returns:
+        List các số đã được normalize (loại bỏ dấu chấm, phẩy, đ)
+    """
+    numbers = []
+    
+    # Pattern cho số tiền Việt Nam: "330.000đ", "330,000đ", "330000đ"
+    patterns = [
+        r'(\d{1,3}(?:[.,]\d{3})*)\s*đ',  # Có đ
+        r'(\d{1,3}(?:[.,]\d{3})+)',  # Không có đ nhưng có dấu phân cách
+    ]
+    
+    for pattern in patterns:
+        matches = re.findall(pattern, query)
+        for match in matches:
+            # Normalize: loại bỏ dấu chấm, phẩy, đ
+            normalized = match.replace('.', '').replace(',', '').replace('đ', '').strip()
+            if normalized and normalized not in numbers:
+                numbers.append(normalized)
+    
+    return numbers
+
+def _extract_temporal_references(query: str) -> Dict:
+    """
+    Trích xuất thông tin temporal từ query (năm, "mới nhất", "hiện hành").
+    
+    Returns:
+        Dict với keys:
+        - wants_latest: bool - Query có yêu cầu văn bản mới nhất không
+        - min_year: int hoặc None - Năm tối thiểu
+        - specific_year: int hoặc None - Năm cụ thể được mention
+    """
+    temporal_refs = {
+        "wants_latest": False,
+        "min_year": None,
+        "specific_year": None
+    }
+    
+    query_lower = query.lower()
+    
+    # Phát hiện "mới nhất", "hiện hành", "đang áp dụng"
+    if re.search(r'mới nhất|hiện hành|đang áp dụng|quy định mới|theo quy định mới nhất', query_lower):
+        temporal_refs["wants_latest"] = True
+        # Lấy năm hiện tại hoặc năm gần nhất (2024-2025)
+        from datetime import datetime
+        current_year = datetime.now().year
+        temporal_refs["min_year"] = max(2024, current_year - 1)  # Ít nhất 2024
+    
+    # Phát hiện năm cụ thể: "năm 2024", "theo quy định năm 2024"
+    year_match = re.search(r'năm\s+(\d{4})', query_lower)
+    if year_match:
+        try:
+            year = int(year_match.group(1))
+            temporal_refs["specific_year"] = year
+            temporal_refs["min_year"] = year
+        except ValueError:
+            pass
+    
+    # Phát hiện "từ năm X", "sau năm X"
+    from_year_match = re.search(r'(?:từ|sau)\s+năm\s+(\d{4})', query_lower)
+    if from_year_match:
+        try:
+            year = int(from_year_match.group(1))
+            temporal_refs["min_year"] = year
+        except ValueError:
+            pass
+    
+    return temporal_refs
+
+def _expand_legal_query(query: str) -> str:
+    """
+    Mở rộng query với synonyms pháp luật Việt Nam.
+    Cải thiện recall bằng cách thêm các từ đồng nghĩa pháp lý.
+    
+    Returns:
+        Query đã được expand với synonyms
+    """
+    # Legal domain synonyms cho tiếng Việt
+    legal_synonyms = {
+        'đấu thầu': ['mua sắm công', 'đấu thầu công khai', 'chọn thầu', 'mời thầu'],
+        'nhà thầu': ['bên dự thầu', 'nhà cung cấp', 'người dự thầu', 'bên tham gia đấu thầu'],
+        'chủ đầu tư': ['bên mời thầu', 'chủ thể mời thầu', 'bên mua', 'người mua'],
+        'hồ sơ dự thầu': ['hồ sơ mời thầu', 'hồ sơ đấu thầu', 'tài liệu đấu thầu'],
+        'giá dự thầu': ['giá đề nghị', 'giá chào', 'giá dự kiến'],
+        'trúng thầu': ['trúng gói thầu', 'được chọn', 'thắng thầu'],
+        'thông báo': ['thông cáo', 'công bố', 'thông tin'],
+        'quy định': ['quy chế', 'quy tắc', 'điều lệ'],
+        'nghị định': ['nghị quyết', 'thông tư', 'quyết định'],
+    }
+    
+    expanded_query = query
+    query_lower = query.lower()
+    
+    # Tìm và expand các từ khóa pháp luật
+    for term, synonyms in legal_synonyms.items():
+        if term in query_lower:
+            # Thêm synonyms vào query (chỉ thêm nếu chưa có trong query)
+            for synonym in synonyms:
+                if synonym not in query_lower:
+                    expanded_query += ' ' + synonym
+    
+    return expanded_query.strip()
+
 def _extract_legal_references(query: str) -> Dict:
-    """Trích xuất thông tin về điều khoản, chương từ query."""
+    """
+    Trích xuất thông tin về điều khoản, chương từ query.
+    TỐI ƯU: Sử dụng expanded query để tìm keywords tốt hơn.
+    """
+    # Expand query với legal synonyms trước khi extract
+    expanded_query = _expand_legal_query(query)
+    
     references = {
         "article_numbers": [],
         "chapter_numbers": [],
@@ -285,23 +398,30 @@ def _extract_legal_references(query: str) -> Dict:
         "keywords": []
     }
     
-    # Tìm Điều
+    # Tìm Điều (chỉ trong query gốc, không expand)
     articles = re.findall(r'Điều\s+(\d+)', query, re.IGNORECASE)
     references["article_numbers"] = [int(a) for a in articles]
     
-    # Tìm Chương
+    # Tìm Chương (chỉ trong query gốc)
     chapters = re.findall(r'Chương\s+(\d+)', query, re.IGNORECASE)
     references["chapter_numbers"] = [int(c) for c in chapters]
     
-    # Tìm Khoản
+    # Tìm Khoản (chỉ trong query gốc)
     clauses = re.findall(r'Khoản\s+(\d+)', query, re.IGNORECASE)
     references["clause_numbers"] = [int(c) for c in clauses]
     
-    # Tìm từ khóa quan trọng (loại bỏ stop words)
+    # Tìm từ khóa quan trọng (sử dụng expanded query để có nhiều keywords hơn)
     stop_words = {'và', 'của', 'cho', 'với', 'từ', 'đến', 'trong', 'là', 'có', 'được', 'theo', 'về', 'nào', 'gì', 'thế', 'như'}
-    words = re.findall(r'\b\w+\b', query.lower())
+    words = re.findall(r'\b\w+\b', expanded_query.lower())
     keywords = [w for w in words if len(w) > 3 and w not in stop_words]
-    references["keywords"] = keywords[:10]  # Giới hạn 10 từ khóa
+    # Loại bỏ duplicates nhưng giữ thứ tự
+    seen = set()
+    unique_keywords = []
+    for w in keywords:
+        if w not in seen:
+            seen.add(w)
+            unique_keywords.append(w)
+    references["keywords"] = unique_keywords[:15]  # Tăng từ 10 lên 15 vì có expanded query
     
     return references
 
@@ -369,11 +489,14 @@ def _build_bm25_index():
         doc_freqs = defaultdict(int)
         total_doc_length = 0
         
+        # TỐI ƯU: Cache set(tokens) để tránh tính lại nhiều lần
         for tokens in tokenized_docs:
             all_terms.update(tokens)
             total_doc_length += len(tokens)
             # Đếm document frequency
-            for term in set(tokens):
+            # TỐI ƯU: Cache set(tokens) để tránh tính lại trong loop
+            unique_tokens = set(tokens)
+            for term in unique_tokens:
                 doc_freqs[term] += 1
         
         # Tính average document length
@@ -476,18 +599,51 @@ def _search_bm25(query: str, top_k: int = STAGE1_BM25_TOP_K) -> List[Tuple[int, 
         scores.sort(key=lambda x: x[1], reverse=True)
         return scores[:top_k]
 
-def _calculate_keyword_score(chunk_text: str, keywords: List[str]) -> float:
-    """Tính điểm keyword matching (BM25-like, cải thiện)."""
+def _calculate_keyword_score(chunk_text: str, keywords: List[str], query: str = None) -> float:
+    """
+    Tính điểm keyword matching với context awareness.
+    Cải thiện: Phát hiện và penalty các context sai (ví dụ: "xử phạt đấu thầu" khi query là "đấu thầu là gì").
+    """
     if not keywords:
         return 0.0
     
     chunk_lower = chunk_text.lower()
+    query_lower = query.lower() if query else ""
     keyword_counts = Counter()
+    
+    # Phát hiện intent từ query
+    is_definition_query = any(word in query_lower for word in ['là gì', 'định nghĩa', 'khái niệm', 'nghĩa là']) if query else False
+    is_procedure_query = any(word in query_lower for word in ['quy trình', 'cách', 'như thế nào', 'thực hiện']) if query else False
     
     for keyword in keywords:
         # Tìm exact match và partial match
         count = chunk_lower.count(keyword.lower())
-        keyword_counts[keyword] = count
+        if count == 0:
+            continue
+        
+        # Context-aware penalty
+        context_penalty = 0.0
+        
+        # Nếu là definition query, penalty nếu keyword xuất hiện trong context sai
+        if is_definition_query:
+            # Tìm vị trí của keyword trong chunk
+            keyword_pos = chunk_lower.find(keyword.lower())
+            if keyword_pos >= 0:
+                # Kiểm tra context xung quanh keyword (100 ký tự trước)
+                context_before = chunk_lower[max(0, keyword_pos - 100):keyword_pos]
+                # Penalty nếu có từ "xử phạt", "vi phạm", "nghiêm cấm" gần keyword
+                if re.search(r'xử phạt|vi phạm|nghiêm cấm|chế tài|phạt', context_before):
+                    context_penalty = 0.5  # Giảm 50% score
+        
+        # Nếu là procedure query, penalty nếu có từ "xử phạt", "vi phạm"
+        elif is_procedure_query:
+            keyword_pos = chunk_lower.find(keyword.lower())
+            if keyword_pos >= 0:
+                context_before = chunk_lower[max(0, keyword_pos - 100):keyword_pos]
+                if re.search(r'xử phạt|vi phạm|nghiêm cấm', context_before):
+                    context_penalty = 0.3  # Giảm 30% score
+        
+        keyword_counts[keyword] = count * (1 - context_penalty)
     
     # Tính điểm: tổng số lần xuất hiện / số từ khóa (cải thiện)
     total_matches = sum(keyword_counts.values())
@@ -496,10 +652,11 @@ def _calculate_keyword_score(chunk_text: str, keywords: List[str]) -> float:
     
     # Normalize: điểm từ 0 đến 1 (cải thiện formula)
     # Sử dụng log để tránh quá phụ thuộc vào số lần xuất hiện
-    score = min(1.0, math.log(1 + total_matches) / (len(keywords) * 1.5))
+    # Tăng denominator từ 1.5 lên 2.0 để giảm bias keyword
+    score = min(1.0, math.log(1 + total_matches) / (len(keywords) * 2.0))
     return score
 
-def _calculate_metadata_score(chunk: Dict, references: Dict) -> float:
+def _calculate_metadata_score(chunk: Dict, references: Dict, temporal_refs: Dict = None) -> float:
     """Tính điểm dựa trên metadata (điều khoản, chương) - cải thiện cho legal documents."""
     score = 0.0
     
@@ -523,14 +680,33 @@ def _calculate_metadata_score(chunk: Dict, references: Dict) -> float:
             if f"Khoản {cl_num}" in clause:
                 score += 0.3  # Tăng từ 0.2 lên 0.3
     
+    # Boost nếu chunk có năm phù hợp với temporal references
+    if temporal_refs:
+        chunk_year = chunk.get("year")
+        if temporal_refs.get("wants_latest") and chunk_year:
+            # Nếu query yêu cầu "mới nhất" và chunk có năm >= 2024, boost
+            if chunk_year >= 2024:
+                score += 0.2
+        elif temporal_refs.get("specific_year") and chunk_year:
+            # Nếu query mention năm cụ thể và chunk khớp, boost mạnh
+            if chunk_year == temporal_refs["specific_year"]:
+                score += 0.3
+    
     return min(1.0, score)  # Normalize về 0-1
 
-def _check_diversity_constraints(chunk: Dict, selected_chunks: List[Dict]) -> Tuple[bool, float]:
+def _check_diversity_constraints(chunk: Dict, selected_chunks: List[Dict], 
+                                 selected_embeddings: Dict = None) -> Tuple[bool, float]:
     """
     Kiểm tra diversity constraints với hard constraint và soft constraint.
+    TỐI ƯU: Pre-compute embeddings để tránh tính lại nhiều lần.
     
     Hard constraint: Nếu đã có >= 2 chunks từ cùng điều khoản → skip (return True)
     Soft constraint: Nếu cosine similarity > 0.85 → skip (return True)
+    
+    Args:
+        chunk: Chunk cần kiểm tra
+        selected_chunks: List chunks đã được chọn
+        selected_embeddings: Dict {chunk_id: embedding} - pre-computed embeddings (optional)
     
     Returns:
         (should_skip: bool, penalty: float)
@@ -554,9 +730,23 @@ def _check_diversity_constraints(chunk: Dict, selected_chunks: List[Dict]) -> Tu
         return True, 1.0  # Skip chunk này
     
     # ========== SOFT CONSTRAINT: Cosine similarity với chunks đã chọn ==========
+    # TỐI ƯU: Pre-compute embeddings nếu chưa có
+    # Sử dụng chunk_idx (stable) thay vì id() để tránh cache miss khi object bị recreate
+    if selected_embeddings is None:
+        selected_embeddings = {}
+        for selected in selected_chunks:
+            # Ưu tiên dùng chunk_idx (stable identifier), fallback về id()
+            chunk_id = selected.get("chunk_idx") or id(selected)
+            if chunk_id not in selected_embeddings:
+                # Tận dụng global cache nếu có (thông qua _get_chunk_embedding_optimized)
+                selected_embeddings[chunk_id] = _get_chunk_embedding_optimized(selected)
+    
+    # Tính similarity với chunk hiện tại (chỉ encode 1 lần)
+    # Tận dụng global cache nếu có
+    chunk_emb = _get_chunk_embedding_optimized(chunk)
     max_similarity = 0.0
-    for selected in selected_chunks:
-        similarity = _calculate_similarity(chunk, selected)
+    for sel_emb in selected_embeddings.values():
+        similarity = float(np.dot(chunk_emb, sel_emb))  # Cosine similarity (đã normalize)
         max_similarity = max(max_similarity, similarity)
     
     # Soft constraint: Nếu cosine similarity > 0.85 → skip
@@ -564,15 +754,21 @@ def _check_diversity_constraints(chunk: Dict, selected_chunks: List[Dict]) -> Tu
         return True, max_similarity  # Skip chunk này
     
     # ========== SOFT PENALTY: Giảm score nếu có penalty nhỏ ==========
+    # TỐI ƯU: Cache article/chapter info để tránh .get() nhiều lần
     penalty = 0.0
-    for selected in selected_chunks:
-        # Penalty nếu cùng điều khoản (nhưng chưa đủ 2 để hard skip)
-        if chunk_article and selected.get("article_number") == chunk_article:
-            penalty += 0.3
-        
-        # Penalty nếu cùng chương
-        if chunk_chapter and selected.get("chapter", "") == chunk_chapter:
-            penalty += 0.1
+    if chunk_article or chunk_chapter:
+        for selected in selected_chunks:
+            # Penalty nếu cùng điều khoản (nhưng chưa đủ 2 để hard skip)
+            if chunk_article:
+                selected_article = selected.get("article_number")
+                if selected_article == chunk_article:
+                    penalty += 0.3
+            
+            # Penalty nếu cùng chương
+            if chunk_chapter:
+                selected_chapter = selected.get("chapter", "")
+                if selected_chapter == chunk_chapter:
+                    penalty += 0.1
     
     return False, min(1.0, penalty)  # Không skip, nhưng có penalty
 
@@ -792,11 +988,15 @@ def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata
             "   Vui lòng chạy: python backend/src/embedding.py để tạo index"
         )
     
+    # TỐI ƯU: Expand query với legal synonyms để cải thiện recall
+    expanded_query = _expand_legal_query(query)
+    
     if not use_multi_stage:
         # Fallback về phương pháp cũ
         # QUAN TRỌNG: Normalize query embeddings để match với index (đã normalize)
         # Normalize + Inner Product = cosine similarity chuẩn
-        q_emb = bi_model.encode([query], normalize_embeddings=True, convert_to_numpy=True)
+        # Sử dụng expanded_query để có recall tốt hơn
+        q_emb = bi_model.encode([expanded_query], normalize_embeddings=True, convert_to_numpy=True)
         D, I = index.search(np.array(q_emb).astype("float32"), top_k)
         results = [chunks[i] if isinstance(chunks[i], str) else chunks[i].get("text", "") 
                    for i in I[0]]
@@ -809,7 +1009,8 @@ def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata
     # 1.1: FAISS semantic search
     # QUAN TRỌNG: Normalize query embeddings để match với index (đã normalize)
     # Normalize + Inner Product = cosine similarity chuẩn
-    q_emb = bi_model.encode([query], normalize_embeddings=True, convert_to_numpy=True)
+    # Sử dụng expanded_query để có recall tốt hơn
+    q_emb = bi_model.encode([expanded_query], normalize_embeddings=True, convert_to_numpy=True)
     D, I = index.search(np.array(q_emb).astype("float32"), STAGE1_TOP_K)
     
     for idx, score in zip(I[0], D[0]):
@@ -824,8 +1025,9 @@ def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata
         candidate_chunks_dict[idx] = chunk_dict
     
     # 1.2: BM25 keyword search
+    # Sử dụng expanded_query để có recall tốt hơn
     if USE_BM25:
-        bm25_results = _search_bm25(query, top_k=STAGE1_BM25_TOP_K)
+        bm25_results = _search_bm25(expanded_query, top_k=STAGE1_BM25_TOP_K)
         for idx, bm25_score in bm25_results:
             if idx in candidate_chunks_dict:
                 # Merge: thêm BM25 score vào chunk đã có
@@ -872,7 +1074,17 @@ def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata
             chunk["bm25_rank"] = rank
         
         # Tính RRF score cho mỗi chunk
-        RRF_K = 60  # Constant cho RRF (thường dùng 60)
+        # TỐI ƯU: Dynamic RRF_K dựa trên dataset size
+        # Với dataset nhỏ (<10k), K nhỏ hơn để không làm phẳng ranking
+        # Với dataset lớn (>100k), K lớn hơn để ổn định
+        total_chunks = len(chunks) if chunks else len(candidate_chunks)
+        if total_chunks < 10000:
+            RRF_K = 30  # Dataset nhỏ: K nhỏ hơn
+        elif total_chunks < 100000:
+            RRF_K = 60  # Dataset vừa: K chuẩn
+        else:
+            RRF_K = 100  # Dataset lớn: K lớn hơn để ổn định
+        
         for chunk in candidate_chunks:
             rrf_score = 0.0
             
@@ -902,6 +1114,24 @@ def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata
     
     # ========== STAGE 3: Extract References & Calculate Additional Scores ==========
     references = _extract_legal_references(query)
+    temporal_refs = _extract_temporal_references(query)
+    
+    # Filter chunks theo temporal references nếu có
+    if temporal_refs.get("min_year"):
+        original_count = len(re_ranked)
+        filtered_re_ranked = []
+        for chunk, cross_score, is_cross_encoder in re_ranked:
+            chunk_year = chunk.get("year")
+            # Nếu chunk có năm và năm >= min_year, giữ lại
+            # Nếu chunk không có năm, giữ lại (không filter)
+            if chunk_year is None or chunk_year >= temporal_refs["min_year"]:
+                filtered_re_ranked.append((chunk, cross_score, is_cross_encoder))
+        
+        if filtered_re_ranked:
+            re_ranked = filtered_re_ranked
+            filtered_count = original_count - len(re_ranked)
+            if filtered_count > 0:
+                print(f"   📅 Đã filter theo năm: giữ lại {len(re_ranked)}/{original_count} chunks (năm >= {temporal_refs['min_year']})")
     
     # Tính các loại scores
     scored_chunks = []
@@ -909,20 +1139,57 @@ def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata
         chunk_text = chunk.get("text", "")
         
         # Cross-encoder score đã được normalize trong _re_rank_with_cross_encoder
-        cross_score_norm = float(cross_score) if isinstance(cross_score, (int, float)) else 0.5
+        # QUAN TRỌNG: numpy scalars (numpy.float64, numpy.float32) không pass isinstance(..., (int, float))
+        # Sử dụng try-except để convert an toàn và validate
+        try:
+            cross_score_norm = float(cross_score)
+            # Validate: tránh NaN/Inf
+            if not np.isfinite(cross_score_norm):
+                cross_score_norm = 0.5
+        except (TypeError, ValueError):
+            cross_score_norm = 0.5
         
         # Hybrid score (FAISS + BM25) - từ RRF
         hybrid_score = chunk.get("hybrid_score", 0.0)
+        if not np.isfinite(hybrid_score):
+            hybrid_score = 0.0
         
-        # Keyword score
+        # Keyword score (với context awareness)
         keyword_score = 0.0
         if USE_KEYWORD_BOOST and references["keywords"]:
-            keyword_score = _calculate_keyword_score(chunk_text, references["keywords"])
+            keyword_score = _calculate_keyword_score(chunk_text, references["keywords"], query)
+            if not np.isfinite(keyword_score):
+                keyword_score = 0.0
         
-        # Metadata score (tăng weight cho legal docs)
+        # Number matching score (boost chunks có số liệu khớp với query)
+        # Đặc biệt boost nếu số liệu nằm trong bảng biểu
+        number_score = 0.0
+        query_numbers = _extract_numbers_from_query(query)
+        has_table = chunk.get("has_table", False)
+        
+        if query_numbers:
+            chunk_text_normalized = chunk_text.replace('.', '').replace(',', '').replace('đ', '')
+            for num in query_numbers:
+                if num in chunk_text_normalized:
+                    # Boost cao hơn nếu số liệu nằm trong bảng (bảng thường chứa số liệu quan trọng)
+                    boost = 0.3 if has_table else 0.2
+                    number_score += boost
+            number_score = min(1.0, number_score)  # Cap ở 1.0
+        
+        # Boost thêm nếu query có số liệu và chunk có bảng (bảng thường chứa số liệu)
+        if query_numbers and has_table:
+            number_score = min(1.0, number_score + 0.2)  # Bonus cho chunks có bảng khi query có số
+        
+        # Validate number_score
+        if not np.isfinite(number_score):
+            number_score = 0.0
+        
+        # Metadata score (tăng weight cho legal docs, bao gồm temporal)
         metadata_score = 0.0
         if USE_METADATA_FILTER:
-            metadata_score = _calculate_metadata_score(chunk, references)
+            metadata_score = _calculate_metadata_score(chunk, references, temporal_refs)
+            if not np.isfinite(metadata_score):
+                metadata_score = 0.0
         
         # Stage 3 score: Combine tất cả
         # QUAN TRỌNG: Điều chỉnh weight dựa trên is_cross_encoder
@@ -935,22 +1202,33 @@ def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata
             cross_weight = 0.20 if references["article_numbers"] else 0.25
         
         # Adaptive weights: nếu có mention điều khoản, tăng metadata weight
+        # QUAN TRỌNG: Normalize weights để tổng = 1.0
         if references["article_numbers"]:
             # Có mention điều khoản: metadata quan trọng hơn
+            # Weights: cross_weight (0.45) + 0.20 + 0.08 + 0.15 + 0.07 = 0.95
+            # Normalize để tổng = 1.0
+            remaining_weight = 1.0 - cross_weight
             stage3_score = (
                 cross_weight * cross_score_norm +
-                0.25 * hybrid_score +
-                0.10 * keyword_score +
-                0.20 * metadata_score
+                (0.20 / 0.50) * remaining_weight * hybrid_score +
+                (0.08 / 0.50) * remaining_weight * keyword_score +
+                (0.15 / 0.50) * remaining_weight * metadata_score +
+                (0.07 / 0.50) * remaining_weight * number_score
             )
         else:
             # Không có mention điều khoản: semantic quan trọng hơn
+            # Weights: cross_weight (0.50) + 0.25 + 0.12 + 0.05 + 0.08 = 1.0 (đã đúng)
             stage3_score = (
                 cross_weight * cross_score_norm +
-                0.30 * hybrid_score +
-                0.15 * keyword_score +
-                0.05 * metadata_score
+                0.25 * hybrid_score +
+                0.12 * keyword_score +
+                0.05 * metadata_score +
+                0.08 * number_score
             )
+        
+        # Validate stage3_score (tránh NaN/Inf)
+        if not (isinstance(stage3_score, (int, float)) and np.isfinite(stage3_score)):
+            stage3_score = 0.0
         
         # Lưu flag để debug
         chunk["is_cross_encoder"] = is_cross_encoder
@@ -960,6 +1238,7 @@ def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata
         chunk["hybrid_score"] = hybrid_score
         chunk["keyword_score"] = keyword_score
         chunk["metadata_score"] = metadata_score
+        chunk["number_score"] = number_score  # Lưu number score để debug
         
         scored_chunks.append((chunk, stage3_score))
     
@@ -970,15 +1249,17 @@ def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata
     # ========== STAGE 4: Diversity Filtering ==========
     # Lọc để tránh nhiều chunks từ cùng điều khoản
     # QUAN TRỌNG: Sử dụng hard constraint và soft constraint
+    # TỐI ƯU: Pre-compute embeddings để tránh tính lại nhiều lần
     selected_chunks = []
+    selected_embeddings = {}  # Cache embeddings cho selected_chunks
     
     for chunk, score in scored_chunks:
         # Kiểm tra xem đã đủ số lượng chưa
         if len(selected_chunks) >= STAGE4_TOP_K:
             break
         
-        # Kiểm tra diversity constraints (hard + soft)
-        should_skip, penalty = _check_diversity_constraints(chunk, selected_chunks)
+        # Kiểm tra diversity constraints (hard + soft) với pre-computed embeddings
+        should_skip, penalty = _check_diversity_constraints(chunk, selected_chunks, selected_embeddings)
         
         # Hard/Soft constraint: Skip chunk này nếu vi phạm
         if should_skip:
@@ -990,11 +1271,21 @@ def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata
         else:
             final_score = score
         
+        # Validate final_score (tránh NaN/Inf)
+        if not (isinstance(final_score, (int, float)) and np.isfinite(final_score)):
+            final_score = 0.0
+        
         chunk["final_score"] = final_score
         chunk["diversity_penalty"] = penalty
         
         # CHỈ APPEND KHI ĐÃ PASS DIVERSITY CHECK
         selected_chunks.append(chunk)
+        # Cache embedding cho chunk mới được chọn
+        # Ưu tiên dùng chunk_idx (stable identifier), fallback về id()
+        chunk_id = chunk.get("chunk_idx") or id(chunk)
+        if chunk_id not in selected_embeddings:
+            # Tận dụng global cache nếu có (thông qua _get_chunk_embedding_optimized)
+            selected_embeddings[chunk_id] = _get_chunk_embedding_optimized(chunk)
     
     # selected_chunks đã được sort theo score ban đầu và filtered, không cần sort lại
     diverse_chunks = [(chunk, chunk.get("final_score", 0.0)) for chunk in selected_chunks]
@@ -1007,6 +1298,75 @@ def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata
     # ========== STAGE 6: Final Selection ==========
     # Lấy top K cuối cùng
     final_chunks = final_chunks[:top_k]
+    
+    # ========== Log Retrieved Chunks ==========
+    # In ra log các chunks khớp với query
+    print("\n" + "=" * 80)
+    print(f"📋 CÁC CHUNKS KHỚP VỚI QUERY: '{query[:60]}{'...' if len(query) > 60 else ''}'")
+    print("=" * 80)
+    print(f"Tổng số chunks được retrieve: {len(final_chunks)}")
+    print("-" * 80)
+    
+    for idx, chunk in enumerate(final_chunks, 1):
+        chunk_text = chunk.get("text", "")
+        
+        print(f"\n[{idx}] Chunk #{chunk.get('chunk_idx', 'N/A')}")
+        print(f"    📄 Text (full):")
+        print(f"    {'-' * 76}")
+        # In đầy đủ text, wrap nếu cần
+        lines = chunk_text.split('\n')
+        for line in lines:
+            # Wrap dòng dài nếu cần (tùy chọn)
+            if len(line) > 76:
+                # Tách thành các đoạn 76 ký tự
+                wrapped = [line[i:i+76] for i in range(0, len(line), 76)]
+                for wrapped_line in wrapped:
+                    print(f"    {wrapped_line}")
+            else:
+                print(f"    {line}")
+        print(f"    {'-' * 76}")
+        
+        # In scores nếu có
+        if chunk.get("final_score") is not None:
+            print(f"    ⭐ Final Score: {chunk.get('final_score', 0.0):.4f}")
+        if chunk.get("cross_score") is not None:
+            print(f"    🔍 Cross-Encoder Score: {chunk.get('cross_score', 0.0):.4f}")
+        if chunk.get("hybrid_score") is not None:
+            print(f"    🔗 Hybrid Score (RRF): {chunk.get('hybrid_score', 0.0):.4f}")
+        if chunk.get("keyword_score") is not None:
+            print(f"    🔤 Keyword Score: {chunk.get('keyword_score', 0.0):.4f}")
+        if chunk.get("metadata_score") is not None:
+            print(f"    📑 Metadata Score: {chunk.get('metadata_score', 0.0):.4f}")
+        
+        # In metadata
+        metadata_parts = []
+        if chunk.get("article"):
+            metadata_parts.append(f"Điều: {chunk['article']}")
+        if chunk.get("clause"):
+            metadata_parts.append(f"Khoản: {chunk['clause']}")
+        if chunk.get("point"):
+            metadata_parts.append(f"Điểm: {chunk['point']}")
+        if chunk.get("chapter"):
+            metadata_parts.append(f"Chương: {chunk['chapter']}")
+        if chunk.get("source_file"):
+            metadata_parts.append(f"File: {chunk['source_file']}")
+        if chunk.get("year"):
+            metadata_parts.append(f"Năm: {chunk['year']}")
+        if chunk.get("has_table"):
+            metadata_parts.append("📊 Có bảng biểu")
+        
+        if metadata_parts:
+            print(f"    📚 Metadata: {' | '.join(metadata_parts)}")
+        
+        # In word count
+        word_count = chunk.get("word_count", len(chunk_text.split()))
+        print(f"    📊 Word Count: {word_count}")
+        
+        # In number score nếu có
+        if chunk.get("number_score") is not None and chunk.get("number_score", 0) > 0:
+            print(f"    🔢 Number Score: {chunk.get('number_score', 0.0):.4f}")
+    
+    print("\n" + "=" * 80)
     
     # ========== Return Results ==========
     if return_metadata:

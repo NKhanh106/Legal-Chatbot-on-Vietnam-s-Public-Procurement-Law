@@ -748,7 +748,7 @@ def process_all_markdown_files(documents_dir: str = DOCUMENTS_DIR,
     md_files = [f for f in md_files if not f.stem.endswith(suffix)]
     
     if not md_files:
-        logging.info(f"⚠️  Không tìm thấy file .md nào trong {markdown_dir}")
+        logging.info(f"⚠️  Không tìm thấy file .md nào trong {documents_dir}")
         return
     
     logging.info(f"🔍 Tìm thấy {len(md_files)} file markdown để xử lý\n")

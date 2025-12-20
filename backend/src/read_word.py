@@ -484,6 +484,7 @@ def read_doc_to_markdown(doc_path: str, output_path: str = None) -> str:
         logger.info(f"   ⚠️  File markdown đã tồn tại, sẽ ghi đè: {output_path}")
     
     # Sử dụng python-docx2txt (KHÔNG dùng OCR)
+    text = None
     try:
         import docx2txt
         logger.info("   🔄 Đang đọc bằng python-docx2txt (giữ nguyên chính tả)...")
@@ -496,6 +497,11 @@ def read_doc_to_markdown(doc_path: str, output_path: str = None) -> str:
     except Exception as e:
         logger.error(f"   ❌ Lỗi khi đọc file .doc: {e}")
         raise
+    
+    # Validate text sau khi đọc
+    if text is None:
+        logger.warning("   ⚠️  docx2txt.process() trả về None")
+        text = ""
     
     if not text or len(text.strip()) < 100:
         logger.warning("   ⚠️  File có vẻ rỗng hoặc không đọc được")

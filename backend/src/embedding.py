@@ -57,10 +57,39 @@ STORE_DIR = os.path.join(PROJECT_ROOT, "data")
 
 # Configuration
 EMBEDDING_MODEL = "bkai-foundation-models/vietnamese-bi-encoder"
-CHUNK_SIZE = 500  # Số từ tối ưu cho legal documents (tăng để giữ nguyên Điều khi có thể)
-CHUNK_OVERLAP = 50  # Overlap để giữ context (giảm để tránh trùng lặp quá nhiều)
-MIN_CHUNK_SIZE = 20  # Chunk tối thiểu (tăng để tránh chunks quá ngắn, không có ý nghĩa)
-MAX_CHUNK_SIZE = 1000  # Chunk tối đa (tăng để giữ nguyên các Điều dài)
+
+# ============================================================================
+# CHUNKING PARAMETERS - Tối ưu cho văn bản pháp luật lớn
+# ============================================================================
+# CHUNK_SIZE: Kích thước chunk mục tiêu (số từ)
+# - Tăng từ 750 lên 1000 để:
+#   + Giữ nguyên các định nghĩa dài và danh sách không bị cắt
+#   + Giảm mất context ở đầu/đuôi chunk
+#   + Phù hợp với văn bản pháp luật có cấu trúc phức tạp
+#   + Vẫn trong khoảng tối ưu cho embedding models
+CHUNK_SIZE = 1000  # Tối ưu cho legal documents lớn (tăng từ 750)
+
+# CHUNK_OVERLAP: Số từ overlap giữa các chunks liên tiếp
+# - Tăng từ 200 lên 300 (30% của CHUNK_SIZE) để:
+#   + Giữ context tốt hơn giữa các chunks (quan trọng với văn bản có nhiều tham chiếu chéo)
+#   + Đảm bảo không mất thông tin quan trọng ở ranh giới chunks
+#   + Best practice: 20-30% của chunk size cho legal documents
+CHUNK_OVERLAP = 300  # tối ưu cho legal documents (tăng từ 200)
+
+# MIN_CHUNK_SIZE: Chunk tối thiểu (số từ)
+# - Tăng từ 10 lên 20 để:
+#   + Tránh chunks quá ngắn không có đủ context
+#   + Với văn bản pháp luật, 50 từ là tối thiểu hợp lý để có ý nghĩa
+#   + Giảm noise trong retrieval
+MIN_CHUNK_SIZE = 10  # Chunk tối thiểu có ý nghĩa
+
+# MAX_CHUNK_SIZE: Chunk tối đa (số từ)
+# - Tăng từ 1000 lên 1500 để:
+#   + Giữ nguyên các Điều rất dài mà không bị cắt
+#   + Vẫn trong giới hạn hợp lý để tránh mất ngữ cảnh
+#   + Một số Điều pháp luật có thể rất dài (1000+ từ)
+MAX_CHUNK_SIZE = 1500  # Chunk tối đa để giữ nguyên Điều dài
+
 DEVICE = 'cuda' if os.getenv("CUDA_VISIBLE_DEVICES") else 'cpu'
 
 # FAISS Index Configuration
@@ -82,6 +111,56 @@ class LegalDocumentChunker:
     Chunker chuyên biệt cho tài liệu pháp luật.
     Chunk theo cấu trúc pháp luật: Chương > Mục > Điều > Khoản > Điểm
     """
+    
+    # Semantic boundaries - các từ khóa báo hiệu bắt đầu danh sách/định nghĩa
+    SEMANTIC_BOUNDARIES = [
+        r'gồm\s*:', r'bao gồm\s*:', r'như sau\s*:', r'sau đây\s*:',
+        r'cụ thể\s*:', r'chi tiết\s*:', r'định nghĩa\s*:', r'quy định\s*:',
+        r'bao gồm\s*:', r'gồm có\s*:', r'như\s*:', r'các\s*:'
+    ]
+    
+    # TỐI ƯU: Compile regex patterns một lần để tránh recompile mỗi lần sử dụng
+    _SEMANTIC_BOUNDARIES_COMPILED = [re.compile(pattern) for pattern in SEMANTIC_BOUNDARIES]
+    # TỐI ƯU: Compile patterns với end anchor cho việc kiểm tra kết thúc chunk
+    _SEMANTIC_BOUNDARIES_END_COMPILED = [re.compile(pattern + r'\s*$') for pattern in SEMANTIC_BOUNDARIES]
+    
+    @staticmethod
+    def _detect_table_in_text(text: str) -> bool:
+        """
+        Phát hiện bảng markdown trong text.
+        Format: | col1 | col2 | ... | với ít nhất 2 dòng có format này.
+        """
+        lines = text.split('\n')
+        table_lines = 0
+        for line in lines:
+            line_stripped = line.strip()
+            # Phát hiện markdown table: có ít nhất 2 dấu | và không phải separator (---)
+            if '|' in line_stripped and line_stripped.count('|') >= 2:
+                # Loại bỏ separator line (---)
+                if not re.match(r'^\|\s*[-:|\s]+\s*\|', line_stripped):
+                    table_lines += 1
+        
+        return table_lines >= 2  # Ít nhất 2 dòng có format bảng
+    
+    @staticmethod
+    def _extract_table_from_text(text: str) -> Optional[str]:
+        """
+        Extract toàn bộ table từ text (từ dòng đầu tiên có | đến dòng cuối cùng).
+        """
+        lines = text.split('\n')
+        table_start = None
+        table_end = None
+        
+        for i, line in enumerate(lines):
+            line_stripped = line.strip()
+            if '|' in line_stripped and line_stripped.count('|') >= 2:
+                if table_start is None:
+                    table_start = i
+                table_end = i
+        
+        if table_start is not None and table_end is not None:
+            return '\n'.join(lines[table_start:table_end + 1])
+        return None
     
     def __init__(self, chunk_size: int = CHUNK_SIZE, overlap: int = CHUNK_OVERLAP):
         self.chunk_size = chunk_size
@@ -185,22 +264,52 @@ class LegalDocumentChunker:
         - Ưu tiên giữ nguyên Điều/Khoản/Điểm làm một chunk nếu có thể
         - Chỉ tách khi quá dài (vượt MAX_CHUNK_SIZE)
         - Tôn trọng ranh giới cấu trúc pháp luật (Khoản, Điểm)
+        - Giữ nguyên toàn bộ bảng biểu (không cắt bảng)
         """
         # Tách thành các đoạn (theo dòng trống hoặc markdown headers)
-        # Phát hiện các ranh giới cấu trúc pháp luật (Khoản, Điểm)
+        # Phát hiện các ranh giới cấu trúc pháp luật (Khoản, Điểm) và bảng biểu
         lines = content.split("\n")
         paragraphs = []
         current_para = []
+        in_table = False
         
-        for line in lines:
+        for i, line in enumerate(lines):
             line_stripped = line.strip()
             
-            # Phát hiện ranh giới cấu trúc pháp luật (Khoản, Điểm)
-            # Pattern: #### số. hoặc ##### chữ)
-            is_legal_boundary = (
-                re.match(r"^####\s+\d+\.\s+", line_stripped) or  # Khoản
-                re.match(r"^#####\s+[a-zđ]\)\s+", line_stripped, re.IGNORECASE)  # Điểm
-            )
+            # Phát hiện bảng markdown (bắt đầu bằng |)
+            is_table_line = '|' in line_stripped and line_stripped.count('|') >= 2
+            
+            if is_table_line:
+                # Nếu đang trong table, tiếp tục thêm vào
+                if in_table:
+                    current_para.append(line_stripped)
+                else:
+                    # Bắt đầu table mới
+                    if current_para:
+                        para_text = "\n".join(current_para).strip()
+                        if para_text:
+                            paragraphs.append(para_text)
+                        current_para = []
+                    current_para.append(line_stripped)
+                    in_table = True
+            elif in_table and not line_stripped:
+                # Dòng trống sau table - kết thúc table
+                para_text = "\n".join(current_para).strip()
+                if para_text:
+                    paragraphs.append(para_text)
+                current_para = []
+                in_table = False
+            elif in_table:
+                # Vẫn trong table (có thể có dòng separator ---)
+                current_para.append(line_stripped)
+            else:
+                # Không phải table - xử lý legal boundary và paragraphs
+                # Phát hiện ranh giới cấu trúc pháp luật (Khoản, Điểm)
+                # Pattern: #### số. hoặc ##### chữ)
+                is_legal_boundary = (
+                    re.match(r"^####\s+\d+\.\s+", line_stripped) or  # Khoản
+                    re.match(r"^#####\s+[a-zđ]\)\s+", line_stripped, re.IGNORECASE)  # Điểm
+                )
             
             if is_legal_boundary:
                 # Lưu paragraph hiện tại nếu có
@@ -234,6 +343,25 @@ class LegalDocumentChunker:
         for para in paragraphs:
             para_words = len(para.split())
             
+            # Kiểm tra xem paragraph có phải là bảng không
+            is_table = self._detect_table_in_text(para)
+            
+            # Nếu là bảng, luôn giữ nguyên (không tách bảng)
+            if is_table:
+                # Nếu chunk hiện tại đã có nội dung, lưu lại trước khi thêm bảng
+                if current_chunk_parts:
+                    chunks.append(self._create_chunk_with_hierarchy(
+                        current_chunk_parts, hierarchy, section_header, legal_header, metadata
+                    ))
+                    current_chunk_parts = []
+                    current_length = 0
+                
+                # Thêm bảng vào chunk mới (bảng luôn là một chunk riêng)
+                chunks.append(self._create_chunk_with_hierarchy(
+                    [para], hierarchy, section_header, legal_header, metadata, is_table=True
+                ))
+                continue
+            
             # Nếu đoạn quá lớn (vượt MAX_CHUNK_SIZE), bắt buộc tách
             if para_words > MAX_CHUNK_SIZE:
                 # Lưu chunk hiện tại nếu có
@@ -252,8 +380,8 @@ class LegalDocumentChunker:
                         chunks.append(self._create_chunk_with_hierarchy(
                             current_chunk_parts, hierarchy, section_header, legal_header, metadata
                         ))
-                        # Tạo overlap nhỏ (chỉ 1-2 câu cuối)
-                        overlap = self._get_overlap_text(current_chunk_parts, max_sentences=2)
+                        # Tạo overlap dựa trên CHUNK_OVERLAP
+                        overlap = self._get_overlap_text(current_chunk_parts, target_words=self.overlap)
                         current_chunk_parts = [overlap, sub_chunk] if overlap else [sub_chunk]
                         current_length = len(" ".join(current_chunk_parts).split())
                     else:
@@ -261,21 +389,46 @@ class LegalDocumentChunker:
                         current_length += sub_words
             else:
                 # Kiểm tra xem có thể thêm vào chunk hiện tại không
-                # Ưu tiên: Nếu là Điều và vẫn trong giới hạn hợp lý, giữ nguyên
+                # Ưu tiên: Nếu là Điều, cố gắng giữ nguyên trong một chunk nếu có thể
                 is_article = hierarchy.get("article") is not None
                 can_fit = current_length + para_words <= self.chunk_size
+                # Cho phép vượt một chút (lên đến MAX_CHUNK_SIZE) để giữ nguyên Điều
+                can_fit_with_tolerance = current_length + para_words <= MAX_CHUNK_SIZE
                 
-                # Nếu là Điều và có thể fit, luôn thêm vào (giữ nguyên Điều)
-                if is_article and can_fit:
+                # Kiểm tra xem chunk hiện tại có kết thúc bằng semantic boundary không
+                # (ví dụ: "gồm:", "bao gồm:") - nếu có, bắt buộc phải thêm para tiếp theo
+                # TỐI ƯU: Dùng compiled patterns với end anchor thay vì re.search mỗi lần
+                current_text = " ".join(current_chunk_parts).lower()
+                ends_with_boundary = any(pattern.search(current_text) 
+                                        for pattern in self._SEMANTIC_BOUNDARIES_END_COMPILED)
+                
+                # Nếu chunk kết thúc bằng semantic boundary, bắt buộc phải thêm para tiếp theo
+                if ends_with_boundary:
                     current_chunk_parts.append(para)
                     current_length += para_words
-                # Nếu không fit và đã có chunk, tạo chunk mới
+                # Nếu là Điều và có thể fit (kể cả với tolerance), luôn thêm vào (giữ nguyên Điều)
+                elif is_article and can_fit_with_tolerance:
+                    current_chunk_parts.append(para)
+                    current_length += para_words
+                # Nếu là Điều nhưng quá dài, vẫn thêm vào nhưng cảnh báo
+                elif is_article and not can_fit_with_tolerance:
+                    # Điều quá dài, bắt buộc phải tách
+                    if current_chunk_parts:
+                        chunks.append(self._create_chunk_with_hierarchy(
+                            current_chunk_parts, hierarchy, section_header, legal_header, metadata
+                        ))
+                    # Tạo overlap lớn hơn cho Điều dài để giữ context
+                    overlap = self._get_overlap_text(current_chunk_parts, target_words=self.overlap * 1.5) if current_chunk_parts else None
+                    current_chunk_parts = [overlap, para] if overlap else [para]
+                    current_length = len(" ".join(current_chunk_parts).split())
+                # Nếu không phải Điều và không fit, tạo chunk mới
                 elif current_length + para_words > self.chunk_size and current_chunk_parts:
                     chunks.append(self._create_chunk_with_hierarchy(
                         current_chunk_parts, hierarchy, section_header, legal_header, metadata
                     ))
-                    # Tạo overlap nhỏ (chỉ 1-2 câu cuối)
-                    overlap = self._get_overlap_text(current_chunk_parts, max_sentences=2)
+                    # Tạo overlap dựa trên CHUNK_OVERLAP (tối ưu cho văn bản pháp luật)
+                    # Overlap lớn hơn giúp giữ context tốt hơn với các tham chiếu chéo
+                    overlap = self._get_overlap_text(current_chunk_parts, target_words=self.overlap)
                     current_chunk_parts = [overlap, para] if overlap else [para]
                     current_length = len(" ".join(current_chunk_parts).split())
                 else:
@@ -315,7 +468,7 @@ class LegalDocumentChunker:
             else:
                 if current_length + para_words > self.chunk_size and current_chunk:
                     chunks.append(self._create_chunk(current_chunk, metadata))
-                    overlap_text = self._get_overlap_text(current_chunk)
+                    overlap_text = self._get_overlap_text(current_chunk, target_words=self.overlap)
                     current_chunk = [overlap_text, para] if overlap_text else [para]
                     current_length = len(" ".join(current_chunk).split())
                 else:
@@ -336,8 +489,8 @@ class LegalDocumentChunker:
         cleaned_paragraphs = []
         for para in paragraphs:
             para = para.strip()
-            # Tăng threshold từ 10 lên 15 từ để bỏ qua các đoạn quá ngắn
-            if para and len(para.split()) >= 15:
+            # Lọc các đoạn quá ngắn (dùng MIN_CHUNK_SIZE để nhất quán)
+            if para and len(para.split()) >= MIN_CHUNK_SIZE:
                 cleaned_paragraphs.append(para)
         
         return cleaned_paragraphs
@@ -436,44 +589,139 @@ class LegalDocumentChunker:
         
         return chunks
     
-    def _get_overlap_text(self, chunk: List[str], max_sentences: int = 2) -> str:
+    def _get_overlap_text(self, chunk: List[str], target_words: int = None, max_sentences: int = None) -> str:
         """
         Lấy phần overlap từ chunk cuối cùng.
+        Cải thiện: Không cắt giữa danh sách, đảm bảo giữ nguyên semantic boundaries.
+        QUAN TRỌNG: Không bao giờ cắt bảng biểu trong overlap.
         
         Args:
             chunk: List các phần text
-            max_sentences: Số câu tối đa để lấy làm overlap (mặc định: 2 để giảm trùng lặp)
+            target_words: Số từ mục tiêu cho overlap (ưu tiên, dùng CHUNK_OVERLAP)
+            max_sentences: Số câu tối đa để lấy làm overlap (fallback nếu không có target_words)
         
         Returns:
-            Text overlap (1-2 câu cuối, tối đa 150 từ)
+            Text overlap với số từ gần target_words nhất, không cắt giữa danh sách hoặc bảng
         """
         if not chunk:
             return ""
         
-        # Lấy câu cuối cùng
-        last_para = chunk[-1]
-        sentences = re.split(r'([.!?]+[)\]\}"\']*\s+)', last_para)
-        combined = []
-        for i in range(0, len(sentences) - 1, 2):
-            if i + 1 < len(sentences):
-                combined.append(sentences[i] + sentences[i + 1])
+        if target_words is None:
+            target_words = self.overlap  # Dùng CHUNK_OVERLAP mặc định
         
-        # Lấy max_sentences câu cuối (mặc định 2)
-        overlap_sentences = combined[-min(max_sentences, len(combined)):]
-        overlap_text = " ".join(overlap_sentences).strip()
+        # Lấy text từ cuối chunk (từ các paragraph cuối)
+        # Bắt đầu từ paragraph cuối và lùi dần để đạt target_words
+        # TỐI ƯU: Dùng list và reverse sau thay vì insert(0) để tránh O(N) mỗi lần insert
+        overlap_parts = []
+        overlap_word_count = 0
         
-        # Giới hạn độ dài overlap (tối đa 150 từ để tránh overlap quá lớn)
+        # TỐI ƯU: Compile regex patterns một lần
+        semantic_patterns = self._SEMANTIC_BOUNDARIES_COMPILED
+        
+        # Lấy từ cuối lên
+        for para in reversed(chunk):
+            # TỐI ƯU: Cache split() và lower() để tránh tính lại nhiều lần
+            para_words_list = para.split()
+            para_words = len(para_words_list)
+            para_lower = para.lower()
+            
+            # QUAN TRỌNG: Kiểm tra xem paragraph có phải là bảng không
+            # Nếu là bảng, KHÔNG BAO GIỜ cắt - lấy cả bảng hoặc không lấy gì
+            is_table_para = self._detect_table_in_text(para)
+            if is_table_para:
+                # Nếu đã có overlap_parts, dừng lại (không lấy bảng vào overlap)
+                # Nếu chưa có gì, có thể lấy bảng nhưng chỉ khi không có lựa chọn khác
+                if overlap_parts:
+                    break  # Đã có overlap, không lấy bảng
+                else:
+                    # Chưa có overlap, nhưng không nên lấy bảng vào overlap
+                    # (bảng nên là một chunk riêng)
+                    break
+            
+            # Kiểm tra xem paragraph có chứa semantic boundary không
+            # TỐI ƯU: Dùng compiled patterns thay vì re.search mỗi lần
+            has_boundary = any(pattern.search(para_lower) for pattern in semantic_patterns)
+            
+            # Nếu thêm paragraph này vẫn chưa vượt quá target_words * 1.5, thêm vào
+            # (cho phép vượt một chút để giữ nguyên câu)
+            if overlap_word_count + para_words <= target_words * 1.5:
+                # TỐI ƯU: Append thay vì insert(0), sẽ reverse sau
+                overlap_parts.append(para)
+                overlap_word_count += para_words
+                
+                # Nếu paragraph có semantic boundary và chưa đủ target_words, tiếp tục lấy thêm
+                if has_boundary and overlap_word_count < target_words:
+                    continue
+                
+                # Nếu đã đạt target_words, dừng lại
+                if overlap_word_count >= target_words:
+                    break
+            else:
+                # Nếu paragraph quá lớn, tách theo câu
+                # Nhưng không cắt nếu có semantic boundary
+                if has_boundary:
+                    # Nếu có boundary, lấy cả paragraph (quan trọng hơn target_words)
+                    overlap_parts.append(para)
+                    overlap_word_count += para_words
+                    break
+                
+                # Tách paragraph thành các câu
+                sentences = re.split(r'([.!?]+[)\]\}"\']*\s+)', para)
+                combined_sentences = []
+                for i in range(0, len(sentences) - 1, 2):
+                    if i + 1 < len(sentences):
+                        combined_sentences.append(sentences[i] + sentences[i + 1])
+                    else:
+                        combined_sentences.append(sentences[i])
+                
+                # Lấy các câu cuối để đạt target_words
+                for sent in reversed(combined_sentences):
+                    # TỐI ƯU: Cache split() để tránh tính lại
+                    sent_words = len(sent.split())
+                    if overlap_word_count + sent_words <= target_words * 1.5:
+                        overlap_parts.append(sent)
+                        overlap_word_count += sent_words
+                        if overlap_word_count >= target_words:
+                            break
+                
+                break
+        
+        # TỐI ƯU: Reverse một lần thay vì insert(0) nhiều lần
+        overlap_parts.reverse()
+        overlap_text = " ".join(overlap_parts).strip()
+        
+        # Đảm bảo overlap không quá lớn (tối đa 1.5x target_words)
+        # Nhưng nếu có semantic boundary, cho phép vượt một chút
         overlap_words = overlap_text.split()
-        if len(overlap_words) > 150:
-            overlap_text = " ".join(overlap_words[-150:])
+        max_overlap_words = int(target_words * 1.5)
+        # TỐI ƯU: Cache lower() và dùng compiled patterns
+        overlap_text_lower = overlap_text.lower()
+        has_boundary_in_overlap = any(pattern.search(overlap_text_lower) for pattern in semantic_patterns)
+        
+        if len(overlap_words) > max_overlap_words and not has_boundary_in_overlap:
+            overlap_text = " ".join(overlap_words[-max_overlap_words:])
         
         return overlap_text
     
     def _create_chunk_with_hierarchy(self, text_parts: List[str], hierarchy: Dict,
                                      section_header: str, legal_header: str,
-                                     metadata: Dict = None) -> Dict:
-        """Tạo chunk với metadata phong phú về cấu trúc pháp luật."""
-        chunk_text = " ".join(text_parts).strip()
+                                     metadata: Dict = None, is_table: bool = False) -> Dict:
+        """
+        Tạo chunk với metadata phong phú về cấu trúc pháp luật.
+        
+        Args:
+            text_parts: List các phần text
+            hierarchy: Hierarchy metadata
+            section_header: Section header
+            legal_header: Legal header
+            metadata: Document metadata
+            is_table: True nếu chunk này là một bảng biểu
+        """
+        # Nếu là bảng, giữ nguyên format markdown (không join bằng space)
+        if is_table:
+            chunk_text = "\n".join(text_parts).strip()
+        else:
+            chunk_text = " ".join(text_parts).strip()
         
         # Xây dựng hierarchy list
         hierarchy_list = []
@@ -487,6 +735,16 @@ class LegalDocumentChunker:
             hierarchy_list.append(hierarchy["clause"])
         if hierarchy.get("point"):
             hierarchy_list.append(hierarchy["point"])
+        
+        # Phát hiện bảng trong chunk (nếu chưa được đánh dấu)
+        # Nếu is_table=True, đã biết chắc là bảng, không cần detect lại
+        has_table = is_table or self._detect_table_in_text(chunk_text)
+        table_data = None
+        if has_table:
+            table_data = self._extract_table_from_text(chunk_text)
+            # Đảm bảo table_data không None
+            if table_data is None:
+                table_data = chunk_text  # Fallback: dùng toàn bộ chunk_text
         
         chunk_data = {
             "text": chunk_text,
@@ -502,6 +760,9 @@ class LegalDocumentChunker:
             "hierarchy": hierarchy_list,
             "section_header": section_header or "",
             "legal_header": legal_header or "",
+            # Metadata về bảng biểu
+            "has_table": has_table,
+            "table_data": table_data,  # Raw table markdown nếu có
         }
         
         # Thêm metadata từ document level
@@ -509,6 +770,11 @@ class LegalDocumentChunker:
             chunk_data.update({
                 "source": metadata.get("source", ""),
                 "file_path": metadata.get("file_path", ""),
+                # Metadata về năm và loại văn bản (quan trọng cho temporal filtering)
+                "year": metadata.get("year"),
+                "document_type": metadata.get("document_type"),
+                "document_number": metadata.get("document_number"),
+                "is_active": True,  # Mặc định là active, có thể parse từ văn bản sau
             })
         
         return chunk_data
@@ -569,6 +835,10 @@ class EmbeddingSystem:
             "file_path": file_path
         }
         
+        # Extract metadata từ filename (năm, loại văn bản, số văn bản)
+        filename_metadata = self._extract_metadata_from_filename(file_name)
+        metadata.update(filename_metadata)
+        
         # Parse cấu trúc nếu có
         metadata.update(self._extract_structure(text))
         
@@ -589,6 +859,36 @@ class EmbeddingSystem:
             print(f"   📚 {chunks_with_chapter} chunks có thông tin Chương")
         
         return chunks, file_name
+    
+    def _extract_metadata_from_filename(self, file_name: str) -> Dict:
+        """
+        Extract metadata từ filename.
+        Pattern: "02_2024_TT-BKHDT_591580.txt" -> year=2024, doc_type=TT, number=591580
+        """
+        metadata = {}
+        
+        # Extract năm (4 chữ số)
+        year_match = re.search(r'_(\d{4})_', file_name)
+        if year_match:
+            try:
+                metadata["year"] = int(year_match.group(1))
+            except ValueError:
+                pass
+        
+        # Extract loại văn bản (TT, ND, QD, CT, etc.)
+        doc_type_match = re.search(r'_([A-Z]{2,3})-', file_name)
+        if doc_type_match:
+            metadata["document_type"] = doc_type_match.group(1)
+        
+        # Extract số văn bản
+        number_match = re.search(r'_(\d+)(?:\.txt)?$', file_name)
+        if number_match:
+            try:
+                metadata["document_number"] = number_match.group(1)
+            except ValueError:
+                pass
+        
+        return metadata
     
     def _extract_structure(self, text: str) -> Dict:
         """Trích xuất cấu trúc từ text với thông tin chi tiết hơn."""
@@ -696,7 +996,8 @@ class EmbeddingSystem:
         if not validated_chunks:
             raise ValueError("Không có chunks hợp lệ để tạo embeddings")
         
-        texts = [chunk["text"] for chunk in validated_chunks]
+        # Safe get để tránh KeyError nếu chunk không có "text" key
+        texts = [chunk.get("text", "") for chunk in validated_chunks]
         
         # Tự động tính batch size nếu không được chỉ định
         if batch_size is None:
@@ -761,7 +1062,7 @@ class EmbeddingSystem:
         # L2 + normalize = gần đúng nhưng không tối ưu
         
         # Quyết định loại index dựa trên kích thước dataset
-        if n_vectors < 1000:
+        if n_vectors < 5000:
             # Small dataset: sử dụng IndexFlatIP (exact search, nhanh cho datasets nhỏ)
             print("   Sử dụng IndexFlatIP (Inner Product - exact search, phù hợp cho datasets nhỏ)")
             print("   ⚡ Tối ưu: Normalize + IP = cosine similarity chuẩn")
@@ -915,7 +1216,7 @@ class EmbeddingSystem:
         
         # Lưu metadata
         metadata = {
-            "chunks": [chunk["text"] for chunk in chunks],  # Chỉ lưu text cho backward compatibility
+            "chunks": [chunk.get("text", "") for chunk in chunks],  # Chỉ lưu text cho backward compatibility (safe get)
             "chunks_full": chunks,  # Lưu full metadata
             "file_name": file_name,
             "total_chunks": len(chunks),

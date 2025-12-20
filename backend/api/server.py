@@ -74,31 +74,8 @@ def chat():
         if stream:
             # Streaming response
             def generate():
-                # Tìm kiếm context
-                contexts = query.search_faiss(user_message, top_k=3)
-                context_text = "\n".join(contexts)
-                
-                # Tạo prompt
-                prompt = f"""Bạn là một chuyên gia tư vấn về Luật Đấu thầu Việt Nam. 
-Hãy sử dụng thông tin ngữ cảnh sau đây để trả lời câu hỏi một cách chính xác, ngắn gọn và súc tích.
-
-### Ngữ cảnh (từ các văn bản pháp luật):
-{context_text}
-
-### Câu hỏi:
-{user_message}
-
-### Yêu cầu:
-- Trả lời dựa trên ngữ cảnh được cung cấp
-- Diễn đạt bằng lời văn tự nhiên, dễ hiểu
-- Không sao chép nguyên văn mà diễn đạt lại
-- Kết thúc bằng một câu kết luận rõ ràng
-- Nếu không có thông tin trong ngữ cảnh, hãy nói rõ
-- Sử dụng định dạng Markdown để trình bày văn bản rõ ràng (bold, list, headings)
-
-### Trả lời:"""
-                
                 # Gọi RAG system với metadata và conversation history
+                # TỐI ƯU: Không cần tìm kiếm context riêng vì ask_sth đã tự tìm kiếm
                 result = query.ask_sth(
                     user_message, 
                     return_metadata=True, 
