@@ -229,7 +229,7 @@ Từ filename, hệ thống tự động extract:
 - **Cấu trúc**: Thêm markdown headers cho cấu trúc pháp luật
 
 #### 5.2.3. OCR Correction (nếu cần)
-- **Tool**: Gemini AI (`gemini-2.5-flash-lite`)
+- **Tool**: Groq API (`llama-3.3-70b-versatile` hoặc `qwen-2.5-32b`)
 - **Mục đích**: Sửa lỗi OCR nếu có (cho PDF scan)
 - **Validation**: Kiểm tra tỷ lệ dấu tiếng Việt
 - **Retry mechanism**: Adaptive prompting với validation loop

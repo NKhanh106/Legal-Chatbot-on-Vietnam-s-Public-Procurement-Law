@@ -24,7 +24,7 @@ Hệ thống query được thiết kế để thực hiện tìm kiếm và tr�
 - Multi-stage retrieval với hybrid search
 - Cross-encoder re-ranking
 - Dynamic prompt generation
-- Integration với Gemini API
+- Integration với Groq API
 - Conversation history support
 - Citation và confidence scoring
 
@@ -44,18 +44,18 @@ Hệ thống query được thiết kế để thực hiện tìm kiếm và tr�
 ### 2.1. Core Technologies
 
 #### 2.1.1. Sentence Transformers
-- **Bi-Encoder Model**: `bkai-foundation-models/vietnamese-bi-encoder`
+- **Bi-Encoder Model**: `BAAI/bge-m3`
   - **Mục đích**: Tạo embeddings cho query và chunks (fast retrieval)
   - **Đặc điểm**: 
-    - Tối ưu cho semantic search
-    - Output: 768-dimensional vectors
+    - Tối ưu cho semantic search, đa ngôn ngữ
+    - Output: 1024-dimensional vectors
     - Normalize embeddings cho cosine similarity
 
-- **Cross-Encoder Model**: `bkai-foundation-models/vietnamese-cross-encoder`
+- **Cross-Encoder Model**: `BAAI/bge-reranker-v2-m3`
   - **Mục đích**: Re-ranking candidates (accurate scoring)
   - **Đặc điểm**:
     - Chính xác hơn bi-encoder nhưng chậm hơn
-    - Xử lý query-chunk pairs
+    - Hỗ trợ context dài, max_length khuyến nghị 512-1024 cho RAG
     - Fallback về multilingual model nếu không có Vietnamese model
 
 #### 2.1.2. FAISS (Facebook AI Similarity Search)
@@ -75,15 +75,17 @@ Hệ thống query được thiết kế để thực hiện tìm kiếm và tr�
   - **Primary**: `pyvi` hoặc `underthesea` (Vietnamese tokenizers)
   - **Fallback**: Regex-based tokenizer
 
-#### 2.1.4. Google Gemini API
-- **Model**: `gemini-2.5-pro` (configurable)
+#### 2.1.4. Groq API
+- **Primary Model**: `llama-3.3-70b-versatile` (configurable)
+- **Fallback Model**: `qwen-2.5-32b` (khi primary bị rate limit)
 - **Mục đích**: Generate responses từ retrieved contexts
 - **Features**:
   - Dynamic prompt generation
   - Conversation history support
-  - Retry mechanism với exponential backoff
-  - Temperature: 0.7 (balanced creativity/accuracy)
-  - Max output tokens: 8192
+  - Rate limit handling với automatic fallback
+  - Temperature: 0.3 (tối ưu cho accuracy)
+  - Max output tokens: 4096
+  - Fast inference với Groq's optimized infrastructure
 
 #### 2.1.5. Python Libraries
 - **numpy**: Vector operations và array handling
@@ -183,7 +185,7 @@ Hệ thống query được thiết kế để thực hiện tìm kiếm và tr�
 2. Analyze query type
 3. Calculate confidence score
 4. Generate dynamic prompt
-5. Call Gemini API với retry
+5. Call Groq API với fallback model khi rate limit
 6. Post-process response
 7. Return answer với metadata (optional)
 
@@ -276,7 +278,7 @@ User Query
     ├─ Conversation History (optional)
     └─ Task Instruction (dynamic)
     ↓
-[Call Gemini API] (với retry)
+[Call Groq API] (với fallback model khi rate limit)
     ↓
 [Post-process Response]
     ├─ Remove unwanted phrases
@@ -513,38 +515,55 @@ Trợ lý: ...
 - Contexts: Variable (depends on chunk count và length)
 - Total: ~100-200 tokens overhead (không tính contexts)
 
-### 4.3. Gemini API Integration
+### 4.3. Groq API Integration
 
 #### 4.3.1. Request Configuration
 
 ```python
-generation_config = {
-    "temperature": 0.7,        # Balanced creativity/accuracy
-    "max_output_tokens": 8192  # Sufficient for long answers
-}
+# Primary model configuration
+GROQ_PRIMARY_MODEL = "llama-3.3-70b-versatile"
+GROQ_FALLBACK_MODEL = "qwen-2.5-32b"
+GROQ_TEMPERATURE = 0.3  # Optimized for accuracy
+GROQ_MAX_TOKENS = 4096  # Sufficient for detailed answers
 ```
 
-#### 4.3.2. Retry Mechanism
+#### 4.3.2. Rate Limit Handling
 
-**Strategy**: Exponential backoff
+**Strategy**: Automatic fallback to secondary model
 
-**Retryable Errors**:
-- Timeout
-- Rate limit
-- Quota exceeded
-- Network errors
-- 503, 429, 500 status codes
+**Rate Limit Detection**:
+- HTTP 429 status code
+- "rate limit" trong error message
 
-**Non-Retryable Errors**:
-- Invalid API key
+**Fallback Mechanism**:
+- Khi primary model (`llama-3.3-70b-versatile`) bị rate limit
+- Tự động chuyển sang fallback model (`qwen-2.5-32b`)
+- Giữ nguyên prompt và conversation history
+
+**Error Handling**:
+- Non-retryable errors: Invalid API key, authentication errors
 - Bad request (400)
 - Authentication errors
 
 **Implementation**:
 ```python
-max_retries = 3
-base_delay = 1.0
-delay = base_delay * (2 ** attempt)
+# Primary model
+response = client.chat.completions.create(
+    model="llama-3.3-70b-versatile",
+    messages=messages,
+    temperature=0.3,
+    max_tokens=4096
+)
+
+# Fallback khi rate limit (429)
+except Exception as e:
+    if "429" in str(e) or "rate limit" in str(e).lower():
+        response = client.chat.completions.create(
+            model="qwen-2.5-32b",  # Fallback model
+            messages=messages,
+            temperature=0.3,
+            max_tokens=4096
+        )
 ```
 
 #### 4.3.3. Post-Processing
@@ -622,13 +641,15 @@ confidence = (
 ### 5.1. Performance Optimizations
 
 #### 5.1.1. Lazy Loading
+- **Bi-Encoder**: Chỉ load khi cần (lần đầu query) - giảm thời gian khởi động từ ~10-30s xuống <1s
 - **Cross-Encoder**: Chỉ load khi cần (Stage 2)
 - **BM25 Index**: Chỉ build khi cần (Stage 1)
 - **FAISS Index**: Load một lần khi import
 
 **Lợi ích**:
 - Giảm memory usage lúc khởi động
-- Tăng tốc độ import
+- Tăng tốc độ import (không phải chờ load model)
+- Tối ưu cho development và testing
 
 #### 5.1.2. Caching
 - **Embeddings**: Cache theo `chunk_id` (max 1000 entries, FIFO)
@@ -638,12 +659,16 @@ confidence = (
 - Tránh tính lại embeddings cho chunks đã xử lý
 - Giảm latency trong diversity filtering
 
-#### 5.1.3. Batch Processing
-- **Cross-Encoder**: Batch size 16 để tránh GPU OOM
-- **Bi-Encoder**: Batch encoding cho chunks
+#### 5.1.3. Batch Processing & VRAM Optimization
+- **Cross-Encoder**: Batch size 8 (configurable, safe cho RTX 3050 4GB VRAM)
+- **Bi-Encoder**: Batch size 16 (configurable, tối ưu cho 4GB VRAM)
+- **FP16 Precision**: Cả bi-encoder và cross-encoder dùng `torch.float16` khi GPU
+- **Memory Cleanup**: `torch.cuda.empty_cache()` trước re-ranking để giải phóng fragmented VRAM
 
 **Lợi ích**:
-- Tối ưu GPU memory
+- Tối ưu GPU memory cho RTX 3050 4GB VRAM
+- Giảm 50% VRAM usage với FP16
+- Tránh OOM errors
 - Tăng throughput
 
 #### 5.1.4. Optimization Algorithms
@@ -718,14 +743,15 @@ confidence = (
 
 ### 5.4. Error Handling
 
-#### 5.4.1. Retry Mechanism
-- Exponential backoff
-- Chỉ retry cho retryable errors
-- Max 3 retries
+#### 5.4.1. Rate Limit Handling (Groq API)
+- Automatic fallback to secondary model khi primary bị rate limit
+- Không cần retry với delay (Groq API nhanh)
+- Fallback model (`qwen-2.5-32b`) được sử dụng tự động
 
 **Lợi ích**:
-- Tăng reliability
-- Xử lý transient errors
+- Tăng reliability với rate limit handling
+- Giảm latency (không phải chờ retry)
+- Seamless user experience
 
 #### 5.4.2. Fallback Mechanisms
 - **Cross-Encoder**: Fallback về bi-encoder
@@ -777,9 +803,9 @@ confidence = (
 
 #### 6.1.2. Generation Speed
 
-**Gemini API**:
-- Request latency: ~500-2000ms (tùy response length)
-- Với retry: +1-4s nếu có lỗi
+**Groq API**:
+- Request latency: ~300-1500ms (tùy response length, Groq optimized)
+- Với fallback: +200-500ms nếu primary model bị rate limit
 
 **Post-processing**:
 - Remove phrases: ~1-5ms
@@ -876,27 +902,37 @@ confidence = (
 - **Total**: ~50-200 MB
 
 **Overall Memory**:
-- **Total**: ~600-1550 MB (với GPU)
-- **CPU only**: ~600-1550 MB (không có GPU memory)
+- **RAM**: ~4-8 GB (với GPU, bao gồm models + FAISS + metadata)
+- **VRAM**: ~3-4 GB (RTX 3050 4GB với FP16 optimization)
+- **CPU only**: ~4-6 GB RAM (không có GPU memory)
+
+**Hardware Requirements (Recommended)**:
+- **Minimum**: RTX 3050 4GB VRAM, 8 GB RAM, 4 vCPU
+- **Optimal**: RTX 3050 4GB VRAM, 16 GB RAM, 8 vCPU
+- **FAISS**: Chạy trên CPU (không tốn VRAM)
 
 #### 6.4.2. CPU/GPU
 
 **CPU Usage**:
 - Retrieval: ~10-30% (single core)
-- Generation: ~5-10% (API call, không tốn CPU)
+- FAISS search: ~5-15% (CPU-only)
+- BM25: ~5-10% (CPU-only)
+- Generation: ~5-10% (Groq API call, không tốn CPU)
 
-**GPU Usage** (nếu có):
-- Bi-encoder: ~20-40% (khi encode)
-- Cross-encoder: ~30-60% (khi re-rank)
-- **Peak**: ~60-80% (khi cả hai chạy)
+**GPU Usage** (RTX 3050 4GB):
+- Bi-encoder: ~3-4 GB VRAM (FP16, khi encode)
+- Cross-encoder: ~2-3 GB VRAM (FP16, khi re-rank)
+- **Peak VRAM**: ~3.5-4 GB (khi cả hai chạy, với FP16 optimization)
+- **GPU Utilization**: ~20-50% (batch processing tận dụng tốt GPU)
 
 ### 6.5. Reliability
 
 #### 6.5.1. Error Handling
-- ✅ Retry mechanism cho API calls
+- ✅ Rate limit handling với automatic fallback model (Groq API)
 - ✅ Fallback mechanisms cho missing dependencies
 - ✅ Unicode handling trên Windows
 - ✅ Graceful degradation
+- ✅ VRAM cleanup để tránh OOM errors trên GPU 4GB
 
 #### 6.5.2. Robustness
 - ✅ Xử lý edge cases (empty query, no results)
@@ -942,7 +978,7 @@ Hệ thống query đã được thiết kế và tối ưu hóa tốt cho:
 3. **Cross-Encoder Re-ranking**: Tăng độ chính xác
 4. **Diversity Filtering**: Tăng coverage, giảm redundancy
 5. **Dynamic Prompting**: Tối ưu theo query type
-6. **Robust Error Handling**: Retry, fallback, graceful degradation
+6. **Robust Error Handling**: Rate limit fallback, VRAM management, graceful degradation
 7. **Token Optimization**: Giảm overhead, tiết kiệm costs
 
 ### 7.3. Hướng Phát Triển
@@ -994,11 +1030,12 @@ BM25_K1 = 1.5
 BM25_B = 0.75
 # RRF_K: Dynamic (30/60/100) dựa trên dataset size
 
-# Gemini API
-TEMPERATURE = 0.7
-MAX_OUTPUT_TOKENS = 8192
-MAX_RETRIES = 3
-BASE_DELAY = 1.0
+# Groq API
+GROQ_PRIMARY_MODEL = "llama-3.3-70b-versatile"
+GROQ_FALLBACK_MODEL = "qwen-2.5-32b"
+GROQ_TEMPERATURE = 0.3
+GROQ_MAX_TOKENS = 4096
+# Automatic fallback khi rate limit (không cần retry với delay)
 
 # Caching
 EMBEDDING_CACHE_SIZE = 1000

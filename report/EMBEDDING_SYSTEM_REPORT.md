@@ -40,13 +40,13 @@ Hệ thống embedding được thiết kế để xử lý và tạo vector emb
 ### 2.1. Core Technologies
 
 #### 2.1.1. Sentence Transformers
-- **Model**: `bkai-foundation-models/vietnamese-bi-encoder`
-- **Mục đích**: Tạo embeddings cho văn bản tiếng Việt
+- **Model**: `BAAI/bge-m3`
+- **Mục đích**: Tạo embeddings cho văn bản (đa ngôn ngữ, tối ưu retrieval)
 - **Đặc điểm**:
   - Bi-encoder architecture (tối ưu cho retrieval)
-  - Được train trên dữ liệu tiếng Việt
-  - Output: Vector embeddings 768 dimensions (hoặc tùy model)
-  - Normalize embeddings để tối ưu cosine similarity
+  - Multilingual, hỗ trợ tiếng Việt tốt
+  - Output: Vector embeddings 1024 dimensions
+  - Normalize embeddings để tối ưu cosine similarity (mặc định bật)
 
 #### 2.1.2. FAISS (Facebook AI Similarity Search)
 - **Mục đích**: Vector database cho tìm kiếm nhanh
@@ -318,7 +318,7 @@ Otherwise:
       "chunks_full": [chunk1_dict, chunk2_dict, ...],  # Full metadata
       "file_name": "data_for_rag",
       "total_chunks": 1234,
-      "model": "bkai-foundation-models/vietnamese-bi-encoder",
+      "model": "BAAI/bge-m3",
       "chunk_size": 750,
       "chunk_overlap": 120
   }
@@ -425,7 +425,7 @@ Otherwise:
 #### 6.1.4. Memory Usage
 - **Embeddings**: 
   - Full vectors: `n_vectors × dimension × 4 bytes` (float32)
-  - Ví dụ: 10,000 vectors × 768 dims = ~30 MB
+  - Ví dụ: 10,000 vectors × 1024 dims = ~39 MB
 - **FAISS Index**:
   - IndexFlatIP: ~30 MB (same as embeddings)
   - IndexIVFFlat: ~30 MB + overhead (~5-10 MB)
@@ -448,7 +448,7 @@ Otherwise:
 - **Embedding Quality**:
   - Model tiếng Việt chuyên biệt
   - Normalize embeddings → cosine similarity chuẩn
-  - Dimension 768 → đủ để capture semantics
+  - Dimension 1024 → đủ để capture semantics
 
 - **Index Accuracy**:
   - IndexFlatIP: 100% accuracy

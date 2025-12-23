@@ -368,7 +368,7 @@ App.tsx → streamChatResponse(history, message, onChunk)
     ↓
 apiService.ts → fetch('/api/chat', {stream: true})
     ↓
-Backend → RAG System → Gemini API
+Backend → RAG System → Groq API
     ↓
 Streaming Response → onChunk callback
     ↓

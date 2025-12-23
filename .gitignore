@@ -1,75 +1,301 @@
-# Logs
-log/
-logs/
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# ============================================================================
+# SECRETS & CONFIGURATION
+# ============================================================================
+.env
+.env.local
+.env.*.local
+*.env
 
-# Dependencies
-node_modules/
-dist/
-dist-ssr/
-*.local
+# Config files with secrets (ignore actual config, but keep examples)
+**/config.py
+!**/config.py.example
+!backend/config/config.py.example
 
-# Python
+# ============================================================================
+# PYTHON
+# ============================================================================
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
+# C extensions
 *.so
+
+# Distribution / packaging
 .Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
 *.egg-info/
-.venv/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Virtual environments
 venv/
 env/
 ENV/
 env.bak/
 venv.bak/
+.venv/
+.ENV/
 
-# Configuration files with sensitive data
-config/config.py
-backend/config/config.py
-.env
-.env.local
-.env.*.local
-
-# Generated data files (RAG indices and metadata)
-# OCR-generated text files from PDF processing
+# ============================================================================
+# RAG DATA (Too heavy for Git)
+# ============================================================================
+# FAISS indexes
 data/*.index
-data/*_meta.pkl
-data/**/*.txt
-data/text/
+*.index
 
-# Keep source documents (PDFs and markdown)
-!documents/
-!documents/**/*.pdf
-!documents/**/*.md
+# Metadata files
+data/*.pkl
+*.pkl
+
+# Chunk JSON files
+data/chunks_*.json
+chunks_*.json
+
+# Embedding cache
+*.embeddings
+data/*.embeddings
+
+# ============================================================================
+# LOGS
+# ============================================================================
+log/
+logs/
+*.log
+*.log.*
+*.out
+
+# ============================================================================
+# LOCAL MODELS & CACHE
+# ============================================================================
+# Model files (too large for Git)
+model/
+models/
+*.bin
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.onnx
+
+# Hugging Face cache
+.cache/
+huggingface/
+.huggingface/
+transformers_cache/
+
+# Model cache directories
+cache/
+.cache/
+
+# ============================================================================
+# SYSTEM & IDE
+# ============================================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# IDE - VSCode
+.vscode/
+*.code-workspace
+.history/
+
+# IDE - PyCharm / IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# IDE - Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints/
+
+# IDE - Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# IDE - Vim
+*.swp
+*.swo
+*~
+.vim/
+
+# ============================================================================
+# FRONTEND (Node.js)
+# ============================================================================
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Build outputs
+dist/
+dist-ssr/
+build/
+*.local
+
+# Environment variables
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea/
-.DS_Store
+.idea
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
-# OS files
-Thumbs.db
-.DS_Store
-*.swp
-*.swo
-*~
-
-# Temporary files
+# ============================================================================
+# TEMPORARY FILES
+# ============================================================================
 *.tmp
 *.temp
-.cache/
+*.bak
+*.backup
+*.swp
+*~
+.#*
+\#*#
 
-# Restructure scripts (temporary)
-restructure_project.py
-complete_restructure.py
+# ============================================================================
+# DOCUMENTATION BUILD
+# ============================================================================
+docs/_build/
+docs/.doctrees/
+site/
+
+# ============================================================================
+# MISC
+# ============================================================================
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# ============================================================================
+# PROJECT SPECIFIC
+# ============================================================================
+# Test outputs
+test_outputs/
+test_results/
+
+# Temporary processing files
+temp/
+tmp/
+.tmp/

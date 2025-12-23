@@ -1,0 +1,599 @@
+| BỘ KẾ HOẠCH VÀ ĐẦU TƯ ------- | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự do - Hạnh phúc --------------- | | --- | --- | | Số: 02/2024/TT-BKHĐT | Hà Nội, ngày 06 tháng 3 năm **THÔNG TƯ** QUY ĐỊNH HOẠT ĐỘNG ĐÀO TẠO, BỒI DƯỠNG KIẾN THỨC VÀ THI, CẤP, THU HỒI CHỨNG CHỈ NGHIỆP VỤ CHUYÊN MÔN VỀ ĐẤU THẦU *Căn cứ **Luật Đấu thầu** ngày 23 tháng 6 năm *Căn cứ Nghị định số **60/2021/NĐ-CP** ngày 21 tháng 6 năm 2021 của Chính phủ quy định cơ chế tự chủ tài chính của đơn vị sự nghiệp công lập;* *Căn cứ Nghị định số **35/2021/NĐ-CP** ngày 29 tháng 3 năm 2021 của Chính phủ quy định chi tiết và hướng dẫn thi hành **Luật Đầu tư theo phương thức đối tác công tư**;* *Căn cứ Nghị định số **89/2022/NĐ-CP** ngày 28 tháng 10 năm 2022 của Chính phủ quy định chức năng, nhiệm vụ, quyền hạn và cơ cấu tổ chức của Bộ Kế hoạch và Đầu tư;* *Căn cứ Nghị định số **23/2024/NĐ-CP** ngày 27 tháng 02 năm 2024 của Chính phủ quy định chi tiết một số điều và biện pháp thi hành **Luật Đấu thầu** về lựa chọn nhà đầu tư thực hiện dự án thuộc trường hợp phải tổ chức đấu thầu theo quy định của pháp luật quản lý ngành, lĩnh vực;* *Căn cứ Nghị định số **24/2024/NĐ-CP** ngày 27 tháng 02 năm 2024 của Chính phủ quy định chi tiết một số điều và biện pháp thi hành **Luật Đấu thầu** về lựa chọn nhà thầu;* *Bộ trưởng Bộ Kế hoạch và Đầu tư ban hành Thông tư quy định hoạt động đào tạo, bồi dưỡng kiến thức và thi, cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu.* **Chương I** **QUY ĐỊNH CHUNG** **Điều 1.
+
+Phạm vi điều chỉnh** Thông tư này quy định hoạt động đào tạo, bồi dưỡng, cập nhật kiến thức, nghiệp vụ chuyên môn về đấu thầu; tổ chức thi, cấp lần đầu, cấp lại, cấp gia hạn và thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu lựa chọn nhà thầu, nhà đầu tư theo quy định của Luật Đấu thầu. **Điều 2.
+
+Đối tượng áp dụng** Thông tư này áp dụng đối với tổ chức, cá nhân tham gia hoặc có liên quan đến hoạt động đào tạo, bồi dưỡng, cập nhật kiến thức và thi, cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu quy định tại Điều 1 của Thông tư này. **Điều 3.
+
+Giải thích từ ngữ** *Chứng chỉ nghiệp vụ chuyên môn về đấu thầu* là chứng chỉ do cơ quan quy định tại khoản 1 Điều 9 của Thông tư này cấp cho cá nhân tham dự thi và đạt kết quả quy định tại khoản 3 Điều 20 của Thông tư này. *Chi phí thi, cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu* là chi phí dự thi và cấp lần đầu, cấp lại, cấp gia hạn chứng chỉ nghiệp vụ chuyên môn về đấu thầu.
+
+*Hệ thống quản lý cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu (sau đây gọi là Hệ thống)* là Hệ thống công nghệ thông tin có địa chỉ tại https://chungchidauthau.mpi.gov.vn thực hiện các chức năng:
+
+##### e) Các chức năng liên quan khác.
+
+*Hướng dẫn sử dụng* là tài liệu điện tử được đăng tải trên Hệ thống để hướng dẫn người dùng thực hiện các giao dịch trên Hệ thống. *Tổ chức tham gia Hệ thống* là các cơ quan, đơn vị đăng ký tham gia Hệ thống để thực hiện một hoặc nhiều hoạt động như sau:
+
+##### c) Cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu.
+
+*Tài khoản tham gia Hệ thống* là tài khoản được cấp cho Tổ chức tham gia Hệ thống để thực hiện một hoặc một số hoạt động quy định tại khoản 5 Điều này. *Tài khoản** **chức năng* là tài khoản được tạo bởi Tài khoản tham gia Hệ thống để thực hiện các nhiệm vụ được giao trên Hệ thống. *Thi trực tuyến* là hình thức thí sinh làm bài thi trên máy tính thông qua phần mềm thi thuộc Hệ thống.
+
+*Trung tâm Hỗ trợ đấu thầu (sau đây gọi là Trung tâm)* là đơn vị sự nghiệp công lập thuộc Cục Quản lý đấu thầu, Bộ Kế hoạch và Đầu tư có nhiệm vụ xây dựng, quản lý, vận hành, duy trì và nâng cấp Hệ thống.
+
+##### c) Cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu.
+
+**Điều 4. Đăng ký tham gia Hệ thống và xử lý hồ sơ đăng ký** Tổ chức tham gia Hệ thống thực hiện đăng ký trên Hệ thống. Đơn đăng ký quy định tại Mẫu số 01, Mẫu số 02 Phụ lục 03 của Thông tư này. Quy trình đăng ký thực hiện theo *Hướng dẫn sử dụng*. Bổ sung, sửa đổi thông tin đã đăng ký trên Hệ thống:
+
+##### c) Cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu.
+
+Việc sửa đổi thông tin đã đăng ký trên Hệ thống (bao gồm việc bổ sung các hoạt động cho Tài khoản tham gia Hệ thống) được thực hiện theo *Hướng dẫn sử dụng*. Chấm dứt hoặc tạm ngừng tham gia Hệ thống:
+
+##### c) Cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu.
+
+Hệ thống chấm dứt hoặc tạm ngừng hoạt động của Tài khoản tham gia Hệ thống khi thuộc một trong các trường hợp sau đây:
+
+##### c) Trường hợp Tổ chức tham gia Hệ thống đã giải thể, chấm dứt hoạt động theo quy định của pháp luật thì Hệ thống sẽ cập nhật trạng thái chấm dứt Tài khoản tham gia Hệ thống.
+
+Khôi phục Tài khoản tham gia Hệ thống:
+
+##### c) Trường hợp Tổ chức tham gia Hệ thống đã giải thể, chấm dứt hoạt động theo quy định của pháp luật thì Hệ thống sẽ cập nhật trạng thái chấm dứt Tài khoản tham gia Hệ thống.
+
+Việc khôi phục Tài khoản tham gia Hệ thống sau khi đã tạm ngừng hoặc chấm dứt theo quy định tại khoản 3 Điều này được thực hiện theo *Hướng dẫn sử dụng.* Quy trình và thời hạn xử lý hồ sơ:
+
+##### c) Trường hợp Tổ chức tham gia Hệ thống đã giải thể, chấm dứt hoạt động theo quy định của pháp luật thì Hệ thống sẽ cập nhật trạng thái chấm dứt Tài khoản tham gia Hệ thống.
+
+Trung tâm có trách nhiệm xử lý hồ sơ quy định tại khoản 1, khoản 2, các điểm a, b khoản 3 và khoản 4 Điều này trong thời hạn 02 ngày làm việc kể từ ngày nhận được yêu cầu trên Hệ thống, đồng thời thông báo kết quả xử lý cho Tổ chức tham gia Hệ thống qua bảng thông báo trên Hệ thống, thư điện tử (e-mail), ứng dụng trên thiết bị di động hoặc các kênh thông tin khác và được hướng dẫn chi tiết trong *Hướng dẫn sử dụng.* **Chương II** **ĐÀO TẠO, BỒI DƯỠNG, CẬP NHẬT KIẾN THỨC, NGHIỆP VỤ CHUYÊN MÔN VỀ ĐẤU THẦU** **Điều 5.
+
+Đối tượng đào tạo, bồi dưỡng, cập nhật kiến thức, nghiệp vụ chuyên môn về đấu thầu** Người làm công tác đấu thầu có trách nhiệm tự cập nhật kiến thức, nghiệp vụ chuyên môn về đấu thầu hoặc tham gia khóa đào tạo, bồi dưỡng, cập nhật kiến thức, nghiệp vụ chuyên môn do Bộ, ngành, địa phương, doanh nghiệp hoặc cơ sở đào tạo đấu thầu tổ chức. **Điều 6.
+
+Nội dung chương trình, hình thức đào tạo, bồi dưỡng nghiệp vụ chuyên môn về đấu thầu** Nội dung chương trình đào tạo, bồi dưỡng:
+
+##### b) Thời lượng của mỗi khóa đào tạo, bồi dưỡng, cập nhật kiến thức, nghiệp vụ chuyên môn về đấu thầu do Bộ, ngành, địa phương, doanh nghiệp, cơ sở đào tạo đấu thầu xác định bảo đảm đáp ứng mục đích, yêu cầu của khóa đào tạo, bồi dưỡng.
+
+Hoạt động đào tạo, bồi dưỡng được thực hiện theo hình thức tập trung, bán tập trung, từ xa.
+
+##### b) Thời lượng của mỗi khóa đào tạo, bồi dưỡng, cập nhật kiến thức, nghiệp vụ chuyên môn về đấu thầu do Bộ, ngành, địa phương, doanh nghiệp, cơ sở đào tạo đấu thầu xác định bảo đảm đáp ứng mục đích, yêu cầu của khóa đào tạo, bồi dưỡng.
+
+**Chương III** **TỔ CHỨC THI, CẤP, THU HỒI CHỨNG CHỈ NGHIỆP VỤ CHUYÊN MÔN VỀ ĐẤU THẦU** **Mục 1. CẤP, THU HỒI CHỨNG CHỈ NGHIỆP VỤ CHUYÊN MÔN VỀ ĐẤU THẦU** **Điều 7. Cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu** Chứng chỉ nghiệp vụ chuyên môn về đấu thầu được cấp cho cá nhân bao gồm:
+
+##### c) Cá nhân tham gia tổ chuyên gia trong đầu thầu lựa chọn nhà đầu tư đối với dự án đầu tư theo phương thức đối tác công tư quy định tại Điều 33 Nghị định số 35/2021/NĐ-CP ngày 29 tháng 3 năm 2021 của Chính phủ quy định chi tiết và hướng dẫn thi hành Luật Đầu tư theo phương thức đối tác công tư.
+
+Chứng chỉ nghiệp vụ chuyên môn về đấu thầu được cấp trong một hoặc các trường hợp sau đây:
+
+##### c) Cấp gia hạn hiệu lực chứng chỉ nghiệp vụ chuyên môn về đấu thầu được thực hiện trong trường hợp chứng chỉ hết hiệu lực theo quy định tại khoản 1 Điều 8 của Thông tư này. Cá nhân thực hiện đăng ký gia hạn hiệu lực chứng chỉ trên Hệ thống trong thời hạn tối thiểu 15 ngày trước ngày hết hiệu lực của chứng chỉ. Sau thời hạn này, cá nhân không được đăng ký gia hạn hiệu lực chứng chỉ và phải dự thi, cấp chứng chỉ lần đầu theo quy định tại điểm a khoản này nếu có nhu cầu.
+
+**Điều 8. Hiệu lực, quy cách của chứng chỉ nghiệp vụ chuyên môn về đấu thầu** Chứng chỉ nghiệp vụ chuyên môn về đấu thầu có hiệu lực trong thời hạn 05 năm kể từ ngày được cấp lần đầu hoặc được gia hạn. Trường hợp cấp lại chứng chỉ thì ghi thời hạn theo chứng chỉ nghiệp vụ chuyên môn về đấu thầu được cấp trước đó. Chứng chỉ nghiệp vụ chuyên môn về đấu thầu có quy cách và nội dung theo Phụ lục 2 ban hành kèm theo Thông tư này.
+
+##### c) Cấp gia hạn hiệu lực chứng chỉ nghiệp vụ chuyên môn về đấu thầu được thực hiện trong trường hợp chứng chỉ hết hiệu lực theo quy định tại khoản 1 Điều 8 của Thông tư này. Cá nhân thực hiện đăng ký gia hạn hiệu lực chứng chỉ trên Hệ thống trong thời hạn tối thiểu 15 ngày trước ngày hết hiệu lực của chứng chỉ. Sau thời hạn này, cá nhân không được đăng ký gia hạn hiệu lực chứng chỉ và phải dự thi, cấp chứng chỉ lần đầu theo quy định tại điểm a khoản này nếu có nhu cầu.
+
+**Điều 9. Cơ quan, đơn vị tổ chức thi, cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu** Cơ quan cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu:
+
+##### b) Sở Kế hoạch và Đầu tư các tỉnh, thành phố trực thuộc Trung ương.
+
+Cơ quan cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu quy định tại khoản 1 Điều này giao đơn vị sự nghiệp công lập trực thuộc tiếp nhận, kiểm tra hồ sơ đăng ký thi cấp lần đầu, hồ sơ đăng ký cấp lại, hồ sơ đăng ký cấp gia hạn chứng chỉ nghiệp vụ chuyên môn về đấu thầu và tổ chức thi nghiệp vụ chuyên môn về đấu thầu.
+
+##### b) Sở Kế hoạch và Đầu tư các tỉnh, thành phố trực thuộc Trung ương.
+
+**Điều 10. Thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu** Cá nhân là thành viên tổ chuyên gia, tổ thẩm định bị thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu trong trường hợp có hành vi vi phạm bị xử lý theo quy định tại khoản 9 Điều 125 của Nghị định số 24/2024/NĐ-CP ngày 27 tháng 02 năm 2024 của Chính phủ quy định chi tiết một số điều và biện pháp thi hành Luật Đấu thầu về lựa chọn nhà thầu. Quy trình thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu:
+
+##### c) Thông tin của cá nhân bị thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu trong cơ sở dữ liệu trên Hệ thống thể hiện trạng thái *“chứng chỉ bị thu hồi”.*
+
+Cá nhân bị thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu được thi cấp chứng chỉ mới sau ít nhất 02 năm kể từ ngày bị thu hồi chứng chỉ.
+
+##### c) Thông tin của cá nhân bị thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu trong cơ sở dữ liệu trên Hệ thống thể hiện trạng thái *“chứng chỉ bị thu hồi”.*
+
+**Mục 2. HỘI ĐỒNG XÂY DỰNG NGÂN HÀNG CÂU HỎI, ĐỀ THI, HỘI ĐỒNG THI VÀ CÁC BAN GIÚP VIỆC HỘI ĐỒNG THI** **Điều 11. Hội đồng xây dựng ngân hàng câu hỏi, đề thi nghiệp vụ chuyên môn về đấu thầu** Hội đồng xây dựng ngân hàng câu hỏi, đề thi do Cục Quản lý đấu thầu, Bộ Kế hoạch và Đầu tư thành lập.
+
+Thành phần Hội đồng xây dựng ngân hàng câu hỏi, đề thi gồm Chủ tịch Hội đồng là lãnh đạo Cục Quản lý đấu thầu; các Phó chủ tịch hội đồng và các thành viên. Nhiệm vụ, quyền hạn của Hội đồng xây dựng ngân hàng câu hỏi, đề thi:
+
+##### d) Thực hiện các công việc liên quan khác theo yêu cầu của Cục trưởng Cục Quản lý đấu thầu.
+
+Ngân hàng câu hỏi, đề thi:
+
+##### b) Đề thi được xây dựng trên cơ sở hoán vị tự động các câu hỏi từ ngân hàng câu hỏi theo từng kỳ thi; được bảo mật trên Hệ thống và được gửi tự động ngẫu nhiên đến máy tính từng thí sinh trước giờ thi.
+
+**Điều 12. Hội đồng thi nghiệp vụ chuyên môn về đấu thầu** Hội đồng thi nghiệp vụ chuyên môn về đấu thầu do người đứng đầu đơn vị tổ chức thi nghiệp vụ chuyên môn về đấu thầu quyết định thành lập. Chủ tịch Hội đồng thi sử dụng con dấu của đơn vị tổ chức thi nghiệp vụ chuyên môn về đấu thầu khi giao dịch với các tổ chức, cá nhân liên quan trong quá trình tổ chức thi và các hoạt động liên quan khác. Thành phần Hội đồng thi nghiệp vụ chuyên môn về đấu thầu bao gồm:
+
+##### b) Các ủy viên.
+
+Hội đồng thi có nhiệm vụ thực hiện các công việc sau đây:
+
+##### g) Thực hiện các nhiệm vụ khác có liên quan.
+
+Chế độ làm việc của Hội đồng thi:
+
+##### b) Hội đồng thi tổ chức các cuộc họp theo triệu tập của Chủ tịch Hội đồng thi. Nội dung các cuộc họp được ghi thành biên bản và lưu giữ theo quy định.
+
+**Điều 13. Nhiệm vụ, quyền hạn của các Ban giúp việc Hội đồng thi** Nhiệm vụ, quyền hạn của Ban Thư ký - Giám sát:
+
+##### c) Thành viên Ban Thư ký - Giám sát không được tham gia Ban Coi thi - Hậu cần.
+
+Nhiệm vụ, quyền hạn của Ban Coi thi - Hậu cần:
+
+##### c) Thành viên Ban Coi thi - Hậu cần thực hiện công tác coi thi không được tham gia Ban Thư ký - Giám sát.
+
+Các Ban giúp việc cho Hội đồng thi tự giải thể sau khi hoàn thành các nghĩa vụ đối với từng kỳ thi hoặc tiếp tục thực hiện các nhiệm vụ của mình đối với các kỳ thi tiếp theo nếu không có thay đổi, điều chỉnh, bổ sung nhân sự.
+
+##### c) Thành viên Ban Coi thi - Hậu cần thực hiện công tác coi thi không được tham gia Ban Thư ký - Giám sát.
+
+**Mục 3. TỔ CHỨC THI NGHIỆP VỤ CHUYÊN MÔN VỀ ĐẤU THẦU** **Điều 14. Yêu cầu tổ chức thi** Điều kiện đối với đơn vị tổ chức thi nghiệp vụ chuyên môn về đấu thầu:
+
+##### c) Có năng lực, nguồn lực để tổ chức thi nghiệp vụ chuyên môn về đấu thầu quy định tại Điều 12, Điều 13 và khoản 3 Điều này.
+
+Trình tự, thủ tục đăng ký tổ chức thi nghiệp vụ chuyên môn về đấu thầu:
+
+##### b) Trong thời hạn 20 ngày kể từ ngày nhận đủ hồ sơ hợp lệ, Cục Quản lý đấu thầu, Bộ Kế hoạch và Đầu tư đăng tải danh sách đơn vị được tổ chức thi nghiệp vụ chuyên môn về đấu thầu trên Hệ thống
+
+Đơn vị tổ chức thi nghiệp vụ chuyên môn về đấu thầu có trách nhiệm bố trí địa điểm tổ chức thi đáp ứng điều kiện cơ sở vật chất gồm:
+
+##### d) Máy in: được bố trí tối thiểu 01 máy in phục vụ in phiếu kết quả thi và 01 máy in dự phòng sử dụng trong trường hợp cần thiết.
+
+**Điều 15. Kế hoạch tổ chức thi và mở kỳ thi trên Hệ thống** Kế hoạch tổ chức thi được đơn vị tổ chức thi nghiệp vụ chuyên môn về đấu thầu xây dựng trên Hệ thống bảo đảm tổ chức không quá 01 kỳ thi mỗi tháng, trừ trường hợp đột xuất. Mỗi kỳ thi phải bảo đảm có tối thiểu 50 thí sinh đăng ký dự thi.
+
+Đơn vị tổ chức thi nghiệp vụ chuyên môn về đấu thầu gửi kế hoạch tổ chức thi theo từng quý hoặc theo năm trên Hệ thống. Cục Quản lý đấu thầu, Bộ Kế hoạch và Đầu tư phê duyệt kế hoạch tổ chức thi trong thời hạn không quá 07 ngày làm việc kể từ ngày tiếp nhận yêu cầu gửi trên Hệ thống. Kế hoạch tổ chức thi phải được đăng tải trên Hệ thống trước thời điểm tổ chức kỳ thi đầu tiên tối thiểu 30 ngày.
+
+Đơn vị tổ chức thi nghiệp vụ chuyên môn về đấu thầu có trách nhiệm:
+
+##### c) Chuẩn bị khu vực tổ chức thi đáp ứng điều kiện theo quy định tại khoản 3 Điều 14 của Thông tư này.
+
+**Điều 16. Công tác chuẩn bị tổ chức thi** Thời gian dự kiến tổ chức thi, chi phí dự thi được thông báo trên Hệ thống trước ngày thi dự kiến tối thiểu 30 ngày. Trước ngày thi tối thiểu 10 ngày, danh sách thí sinh đủ điều kiện dự thi, thông báo triệu tập thi được đăng tải trên Hệ thống, đồng thời Hệ thống tự động gửi email thông báo triệu tập thi tới các thí sinh đủ điều kiện dự thi.
+
+Trước ngày thi tối thiểu 03 ngày, danh sách chia phòng thi (họ và tên thí sinh dự thi, số báo danh, địa điểm thi, số phòng thi) được đăng tải trên Hệ thống. Trước ngày thi tối thiểu 01 ngày, Hội đồng thi niêm yết danh sách thí sinh theo số báo danh và theo phòng thi tại địa điểm tổ chức thi.
+
+Trước ngày thi tối thiểu 01 ngày, Ban Coi thi - Hậu cần phải hoàn thành các công tác chuẩn bị cho kỳ thi như sau:
+
+##### c) Chuẩn bị các tài liệu và thực hiện các công việc khác có liên quan.
+
+**Điều 17. Đăng ký thi, cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu** Cá nhân có nhu cầu cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu gửi hồ sơ đăng ký thi trên Hệ thống đến đơn vị tổ chức thi thuộc danh sách công khai trên Hệ thống theo quy định tại điểm b khoản 2 Điều 14 của Thông tư này.
+
+Cá nhân được đưa vào danh sách thí sinh đủ điều kiện dự khi đã đăng ký thi thành công và nộp đầy đủ chi phí dự thi theo quy định tại khoản 1 Điều 28 của Thông tư này. Hồ sơ đăng ký thi, cấp chứng chỉ bao gồm:
+
+##### b) 01 ảnh màu mới chụp không quá 06 tháng, cỡ 3cm x 4cm, mặt nhìn thẳng, đầu để trần, rõ mặt, rõ hai tai, không đeo kính, trang phục lịch sự (đính kèm tệp tin lên hồ sơ đăng ký thi trên Hệ thống);
+
+Hồ sơ đề nghị cấp lại chứng chỉ bao gồm:
+
+##### c) Bản gốc chứng chỉ nghiệp vụ chuyên môn về đấu thầu còn hiệu lực nhưng bị hư hỏng hoặc bị ghi sai thông tin. Trường hợp bị mất chứng chỉ nghiệp vụ chuyên môn về đấu thầu thì phải có cam kết của người đề nghị cấp lại (đính kèm tệp tin ảnh màu chụp từ bản chính chứng chỉ nghiệp vụ chuyên môn về đấu thầu hoặc bản cam kết vào hồ sơ đề nghị cấp lại trên Hệ thống).
+
+Hồ sơ đề nghị cấp gia hạn hiệu lực chứng chỉ bao gồm:
+
+##### b) 01 ảnh màu mới chụp không quá 06 tháng, cỡ 3cm x 4cm, mặt nhìn thẳng, đầu để trần, rõ mặt, rõ hai tai, không đeo kính, trang phục lịch sự (đính kèm tệp tin lên hồ sơ đề nghị gia hạn trên Hệ thống).
+
+**Điều 18. Hình thức, nội dung thi trực tuyến** Hình thức thi: thi trắc nghiệm trong thời gian tối đa 90 phút. Nội dung đề thi bao gồm:
+
+##### d) Câu hỏi kiến thức, bài tập về xử lý tình huống trong đấu thầu.
+
+**Điều 19. Kết thúc bài thi và bàn giao danh sách điểm bài thi** Kết thúc thời gian làm bài thi, giám thị phòng thi bàn giao danh sách điểm, danh sách nộp bài thi có chữ ký của thí sinh và toàn bộ biên bản, tài liệu liên quan cho đại diện Ban Coi thi - Hậu cần. Trưởng ban Ban Coi thi - Hậu cần tổng hợp và bàn giao danh sách, các tài liệu liên quan cho Trưởng ban Ban Thư ký - Giám sát chậm nhất trong thời hạn 02 ngày làm việc kể từ ngày kết thúc kỳ thi.
+
+##### d) Câu hỏi kiến thức, bài tập về xử lý tình huống trong đấu thầu.
+
+**Điều 20. Chấm thi và công bố kết quả thi** Chức năng thi trực tuyến trên Hệ thống tự động chấm điểm bài thi của thí sinh theo đề thi và đáp án tương ứng. Điểm của bài thi phải được ghi rõ bằng số vào phần chấm điểm trên Hệ thống. Kết quả xếp loại chứng chỉ nghiệp vụ chuyên môn về đấu thầu:
+
+##### đ) Không đạt yêu cầu: đối với bài thi có kết quả đạt dưới 50% tổng số điểm;
+
+Ban Thư ký - Giám sát tổng hợp kết quả thi và báo cáo Chủ tịch Hội đồng thi. Căn cứ vào kết quả thi do Hội đồng thi tổng hợp, đơn vị tổ chức thi trình, cơ quan cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu ban hành quyết định công nhận kết quả thi. Cơ quan cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu công khai quyết định công nhận kết quả thi trên Hệ thống trong thời hạn 05 ngày làm việc kể từ ngày ban hành.
+
+##### đ) Không đạt yêu cầu: đối với bài thi có kết quả đạt dưới 50% tổng số điểm;
+
+**Điều 21. Giải quyết đơn kiến nghị, phản ánh trong quá trình dự thi** Trong quá trình tham dự thi, trường hợp cá nhân tham dự thi thấy quyền và lợi ích hợp pháp của mình bị ảnh hưởng thì gửi đơn kiến nghị, phản ánh đến Hội đồng thi. Hội đồng thi xem xét, giải quyết trong thời hạn tối đa 15 ngày kể từ ngày nhận được đơn kiến nghị, phản ánh.
+
+Trường hợp đơn kiến nghị, phản ánh không có chữ ký, đóng dấu (nếu có) của người gửi đơn hoặc nội dung kiến nghị, phản ánh sai sự thật, Hội đồng thi không xem xét, giải quyết.
+
+##### đ) Không đạt yêu cầu: đối với bài thi có kết quả đạt dưới 50% tổng số điểm;
+
+**Điều 22. Thời hạn cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu** Trong thời hạn 03 ngày làm việc kể từ ngày ban hành quyết định công nhận kết quả thi, đơn vị tổ chức thi trình cơ quan cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu ban hành quyết định cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu.
+
+##### đ) Không đạt yêu cầu: đối với bài thi có kết quả đạt dưới 50% tổng số điểm;
+
+Trong thời hạn 05 ngày làm việc kể từ ngày nhận được tờ trình của đơn vị tổ chức thi, cơ quan cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu ban hành quyết định cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu. Cơ quan cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu công khai quyết định cấp chứng chỉ trên Hệ thống trong thời hạn 05 ngày làm việc kể từ ngày ban hành.
+
+Cá nhân được cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu lần đầu trong thời hạn tối đa 15 ngày làm việc kể từ ngày ban hành quyết định cấp chứng chỉ. Cá nhân được cấp lại chứng chỉ nghiệp vụ chuyên môn về đấu thầu trong thời hạn tối đa 07 ngày làm việc kể từ ngày ban hành quyết định cấp lại chứng chỉ.
+
+Cá nhân được cấp gia hạn hiệu lực chứng chỉ nghiệp vụ chuyên môn về đấu thầu trong thời hạn tối đa 07 ngày làm việc kể từ ngày ban hành quyết định cấp gia hạn chứng chỉ.
+
+##### đ) Không đạt yêu cầu: đối với bài thi có kết quả đạt dưới 50% tổng số điểm;
+
+**Điều 23. Lưu trữ hồ sơ cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu** Hồ sơ đăng ký thi, đề nghị cấp lại, cấp gia hạn chứng chỉ nghiệp vụ chuyên môn về đấu thầu được lưu trữ trên Hệ thống. Đơn vị tổ chức thi nghiệp vụ chuyên môn về đấu thầu có trách nhiệm lưu trữ các quyết định liên quan đến việc tổ chức thi trong thời hạn tối thiểu là 05 năm kể từ khi ban hành quyết định, bao gồm:
+
+##### c) Các tài liệu liên quan khác đến việc tổ chức kỳ thi.
+
+Cơ quan cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu có trách nhiệm lưu trữ các quyết định liên quan đến việc cấp, thu hồi chứng chỉ trong thời hạn tối thiểu là 05 năm kể từ khi ban hành quyết định, bao gồm:
+
+##### b) Quyết định cấp lần đầu, cấp lại, cấp gia hạn, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu.
+
+Bộ đề thi kèm theo đáp án, bài thi của từng kỳ thi được lưu trữ trên Hệ thống.
+
+##### b) Quyết định cấp lần đầu, cấp lại, cấp gia hạn, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu.
+
+**Mục 4. YÊU CẦU ĐỐI VỚI CÁC BÊN THAM GIA KỲ THI** **Điều 24. Yêu cầu đối với thành viên tổ chức thi, thí sinh** Căn cứ chức năng, nhiệm vụ được giao, thành viên Hội đồng xây dựng ngân hàng câu hỏi, đề thi, Hội đồng thi và thành viên các Ban giúp việc Hội đồng thi không được thực hiện các hành vi sau đây:
+
+##### e) Các hành vi khác làm thay đổi kết quả của bài thi, kỳ thi.
+
+Thành viên Hội đồng xây dựng ngân hàng câu hỏi, đề thi, Hội đồng thi và thành viên các Ban giúp việc Hội đồng thi có hành vi vi phạm quy định tại Thông tư này, nếu có đủ chứng cứ, tuỳ theo mức độ, sẽ bị xử lý theo quy định của pháp luật. Thí sinh tham dự thi không được thực hiện các hành vi sau đây:
+
+##### i) Các hành vi khác làm thay đổi kết quả của bài thi, kỳ thi.
+
+**Điều 25. Các hình thức xử lý vi phạm trong kỳ thi** Thí sinh vi phạm quy định của kỳ thi bị lập biên bản và tuỳ mức vi phạm bị xử lý kỷ luật theo các hình thức sau:
+
+##### đ) Thí sinh vi phạm quy định tại các điểm g, h khoản 2 Điều 24 của Thông tư này bị đình chỉ thi và không được tham dự các kỳ thi cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu trong thời hạn 02 năm kể từ ngày vi phạm.
+
+Việc xử lý kỷ luật thí sinh phải được lập thành biên bản, có chữ ký của giám thị coi thi phòng thi đó và được thông báo cho thí sinh. Trường hợp thí sinh không ký tên vào biên bản thì các giám thị coi thi ghi rõ nội dung này trong biên bản.
+
+Trường hợp giữa các giám thị coi thi không nhất trí về cách xử lý thì ghi rõ ý kiến vào biên bản để báo cáo Trưởng ban Ban Coi thi - Hậu cần xem xét, báo cáo Chủ tịch Hội đồng thi quyết định. Việc xử lý kỷ luật theo hình thức quy định tại các điểm a, b, c khoản 1 Điều này do giám thị phòng thi quyết định.
+
+Trường hợp thí sinh không đồng ý chấp hành hình thức kỷ luật theo quyết định này, giám thị phòng thi báo cáo Trưởng ban Ban Coi thi - Hậu cần quyết định. Việc đình chỉ thi do Chủ tịch Hội đồng thi quyết định; việc cấm thi do người đứng đầu đơn vị tổ chức thi nghiệp vụ chuyên môn về đấu thầu quyết định theo đề nghị của Chủ tịch Hội đồng thi.
+
+##### đ) Thí sinh vi phạm quy định tại các điểm g, h khoản 2 Điều 24 của Thông tư này bị đình chỉ thi và không được tham dự các kỳ thi cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu trong thời hạn 02 năm kể từ ngày vi phạm.
+
+**Chương IV** **NGUYÊN TẮC THU, CHI, NỘI DUNG CHI, MỨC THU VÀ QUẢN LÝ, SỬ DỤNG CHI PHÍ THI, CẤP CHỨNG CHỈ NGHIỆP VỤ CHUYÊN MÔN VỀ ĐẤU THẦU** **Điều 26.
+
+Nguyên tắc thu, chi và quản lý, sử dụng khoản thu chi phí thi, cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu** Hoạt động thi nghiệp vụ chuyên môn về đấu thầu là hoạt động dịch vụ sự nghiệp công không sử dụng ngân sách nhà nước của đơn vị tổ chức thi.
+
+Cá nhân có nhu cầu đăng ký dự thi và cấp chứng chỉ lần đầu, cấp lại chứng chỉ, cấp gia hạn chứng chỉ phải nộp chi phí thi, cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu. Đơn vị tổ chức thi nghiệp vụ chuyên môn về đấu thầu thực hiện thu, quản lý, sử dụng chi phí thi, cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu.
+
+Mức thu chi phí thi, cấp chứng chỉ và phương thức nộp chi phí thi, cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu thực hiện theo thông báo của đơn vị tổ chức thi. Chi phí thi, cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu không được hoàn trả, trừ trường hợp đơn vị tổ chức thi nghiệp vụ chuyên môn về đấu thầu thông báo hủy tổ chức thi.
+
+Chi phí thi, cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu là khoản thu hợp pháp của đơn vị tổ chức thi nghiệp vụ chuyên môn về đấu thầu theo quy định tại khoản 3 Điều này và được sử dụng để chi trả cho các hoạt động phục vụ công tác tổ chức thi, cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu.
+
+Trường hợp thu lớn hơn chi thì đơn vị tổ chức thi nghiệp vụ chuyên môn về đấu thầu được bổ sung số tiền còn dư vào nguồn kinh phí hoạt động của đơn vị để sử dụng theo cơ chế tài chính của đơn vị.
+
+##### đ) Thí sinh vi phạm quy định tại các điểm g, h khoản 2 Điều 24 của Thông tư này bị đình chỉ thi và không được tham dự các kỳ thi cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu trong thời hạn 02 năm kể từ ngày vi phạm.
+
+**Điều 27. Nội dung chi phục vụ hoạt động thi, cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu** Nội dung chi phục vụ hoạt động thi, cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu gồm:
+
+##### g) Các khoản chi khác phục vụ hoạt động tổ chức thi, cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu (nếu có).
+
+Mức chi của các nội dung quy định tại khoản 1 Điều này thực hiện theo chế độ chi tiêu tài chính của pháp luật hiện hành và cơ chế tài chính của đơn vị tổ chức thi nghiệp vụ chuyên môn về đấu thầu.
+
+##### g) Các khoản chi khác phục vụ hoạt động tổ chức thi, cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu (nếu có).
+
+**Điều 28. Mức thu chi phí thi, cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu** Mức thu chi phí thi, cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu lần đầu tối đa là 800.000 đồng/thí sinh/kỳ thi. Mức thu chi phí cấp lại hoặc cấp gia hạn chứng chỉ nghiệp vụ chuyên môn về đấu thầu là 100.000 đồng/lần.
+
+Không thu chi phí cấp lại chứng chỉ đối với trường hợp cơ quan cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu ghi sai thông tin trên chứng chỉ nghiệp vụ chuyên môn về đấu thầu. Mức thu quy định tại khoản 1 và khoản 2 Điều này chưa bao gồm thuế giá trị gia tăng phải nộp theo quy định của Luật Thuế giá trị gia tăng và các văn bản hướng dẫn thực hiện Luật này.
+
+Trường hợp cần điều chỉnh mức thu chi phí quy định tại khoản 1, khoản 2 Điều này để phù hợp với điều kiện kinh tế - xã hội và yêu cầu thực tiễn công tác tổ chức thi, Cục Quản lý đấu thầu trình Bộ trưởng Bộ Kế hoạch và Đầu tư xem xét, quyết định.
+
+##### g) Các khoản chi khác phục vụ hoạt động tổ chức thi, cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu (nếu có).
+
+**Điều 29.
+
+Quản lý, sử dụng chi phí thi, cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu** Đơn vị tổ chức thi nghiệp vụ chuyên môn về đấu thầu có trách nhiệm xây dựng và ban hành quy chế thu, chi để quản lý, sử dụng chi phí thi, cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu tiết kiệm, bảo đảm hiệu quả hoạt động của công tác thi, cấp chứng chỉ và phù hợp với cơ chế tài chính của đơn vị theo quy định của pháp luật; quyết toán thu, chi theo quy định của pháp luật hiện hành.
+
+Trong thời hạn không quá 10 ngày kể từ ngày tổ chức thi, đơn vị tổ chức thi nghiệp vụ chuyên môn về đấu thầu có trách nhiệm chi trả cho Trung tâm 200.000 đồng/thí sinh/kỳ thi (chưa bao gồm thuế giá trị gia tăng phải nộp theo quy định của Luật Thuế giá trị gia tăng và các văn bản hướng dẫn Luật này) để Trung tâm quản lý, sử dụng theo quy định tại Điều 30 của Thông tư này.
+
+##### g) Các khoản chi khác phục vụ hoạt động tổ chức thi, cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu (nếu có).
+
+**Điều 30. Quản lý, sử dụng kinh phí xây dựng ngân hàng câu hỏi và bù đắp chi phí xây dựng, quản lý, vận hành, duy trì, nâng cấp Hệ thống** Trung tâm sử dụng kinh phí thu tại khoản 2 Điều 29 của Thông tư này để chi cho các nội dung sau:
+
+##### e) Chi thực hiện nghĩa vụ với ngân sách nhà nước theo quy định (nếu có).
+
+Mức chi đối với các nội dung tại khoản 1 Điều này thực hiện theo quy định của pháp luật về chế độ chi tiêu tài chính áp dụng đối với đơn vị sự nghiệp công lập, cơ chế tài chính của Trung tâm và được quy định trong Quy chế chi tiêu nội bộ của Trung tâm. Trường hợp thu lớn hơn chi thì được bổ sung số tiền còn dư vào nguồn kinh phí hoạt động để sử dụng theo cơ chế tài chính của đơn vị.
+
+Chênh lệch thu, chi sau khi nộp ngân sách nhà nước theo quy định của pháp luật về thuế thu nhập doanh nghiệp (nếu có) được trích lập vào các quỹ và sử dụng theo quy định về cơ chế tự chủ tài chính đối với đơn vị sự nghiệp công lập theo quy định của pháp luật hiện hành. Việc hạch toán kế toán, quyết toán thu, chi thực hiện theo quy định của pháp luật hiện hành đối với đơn vị sự nghiệp công lập.
+
+##### e) Chi thực hiện nghĩa vụ với ngân sách nhà nước theo quy định (nếu có).
+
+**Chương V** **TRÁCH NHIỆM CỦA CÁC BÊN TRONG HOẠT ĐỘNG ĐÀO TẠO, BỒI DƯỠNG, CẬP NHẬT KIẾN THỨC, NGHIỆP VỤ CHUYÊN MÔN VỀ ĐẤU THẦU VÀ THI, CẤP, THU HỒI CHỨNG CHỈ NGHIỆP VỤ CHUYÊN MÔN VỀ ĐẤU THẦU** **Điều 31. Trách nhiệm của Cục Quản lý đấu thầu** Phê duyệt kế hoạch tổ chức thi nghiệp vụ chuyên môn về đấu thầu bảo đảm kịp thời đáp ứng nhu cầu của các cá nhân tham gia hoạt động đấu thầu.
+
+Thành lập Hội đồng xây dựng ngân hàng câu hỏi, đề thi nghiệp vụ chuyên môn về đấu thầu. Quản lý hoạt động tổ chức thi, cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu. Thực hiện trách nhiệm của cơ quan cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu theo quy định tại Điều 34 của Thông tư này.
+
+##### e) Chi thực hiện nghĩa vụ với ngân sách nhà nước theo quy định (nếu có).
+
+**Điều 32. Trách nhiệm của Trung tâm Hỗ trợ đấu thầu** Tổ chức xây dựng, quản lý, vận hành, duy trì, nâng cấp Hệ thống để bảo đảm các chức năng của Hệ thống quy định tại khoản 3 Điều 3 của Thông tư này hoạt động ổn định, an toàn.
+
+Tổ chức thu, quản lý, sử dụng chi phí để bù đắp xây dựng, quản lý, vận hành, duy trì, nâng cấp Hệ thống và chi phí cho công tác xây dựng ngân hàng câu hỏi, đề thi theo quy định tại khoản 2 Điều 29 và Điều 30 của Thông tư này. Thực hiện các nhiệm vụ khác do Bộ Kế hoạch và Đầu tư, Cục Quản lý đấu thầu giao.
+
+##### e) Chi thực hiện nghĩa vụ với ngân sách nhà nước theo quy định (nếu có).
+
+**Điều 33. Trách nhiệm của cơ quan, đơn vị tổ chức đào tạo, bồi dưỡng về đấu thầu** Xây dựng tài liệu giảng dạy phù hợp với đối tượng được đào tạo, bồi dưỡng, cập nhật kiến thức, nghiệp vụ chuyên môn về đấu thầu. Lựa chọn giảng viên có uy tín, năng lực và kinh nghiệm phù hợp với nội dung đào tạo, bồi dưỡng, cập nhật kiến thức, nghiệp vụ chuyên môn về đấu thầu.
+
+Chịu hoàn toàn trách nhiệm về việc tổ chức đào tạo, bồi dưỡng tuân thủ quy định tại Thông tư này và quy định của pháp luật khác có liên quan.
+
+##### e) Chi thực hiện nghĩa vụ với ngân sách nhà nước theo quy định (nếu có).
+
+**Điều 34. Trách nhiệm của cơ quan cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu** Đăng tải quyết định cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu kèm theo danh sách cá nhân được cấp chứng chỉ trên Hệ thống trong thời hạn 05 ngày làm việc kể từ ngày ban hành quyết định cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu.
+
+Trước ngày 31 tháng 12 hằng năm, gửi báo cáo hoạt động tổ chức thi, cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu đến Bộ Kế hoạch và Đầu tư thông qua Hệ thống. Nội dung báo cáo thực hiện theo Mẫu số 06 Phụ lục 03 ban hành kèm theo Thông tư này.
+
+##### e) Chi thực hiện nghĩa vụ với ngân sách nhà nước theo quy định (nếu có).
+
+**Điều 35. Trách nhiệm của đơn vị tổ chức thi nghiệp vụ chuyên môn về đấu thầu** Xây dựng và ban hành quy chế tổ chức thi nghiệp vụ chuyên môn về đấu thầu tuân thủ quy định tại Thông tư này. Xây dựng và ban hành quy chế thu, chi để quản lý, sử dụng chi phí thi, cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu.
+
+Tổ chức thi nghiệp vụ chuyên môn về đấu thầu theo quy định tại Thông tư này và các hướng dẫn liên quan. Thực hiện các nhiệm vụ khác do cơ quan cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu giao.
+
+##### e) Chi thực hiện nghĩa vụ với ngân sách nhà nước theo quy định (nếu có).
+
+**Điều 36. Trách nhiệm của cá nhân được cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu** Tự cập nhật kiến thức, cơ chế, chính sách pháp luật hoặc tham gia cập nhật kiến thức, nghiệp vụ chuyên môn về đấu thầu do Bộ, ngành, địa phương, doanh nghiệp hoặc cơ sở đào tạo đấu thầu tổ chức để hoàn thành trách nhiệm được giao theo quy định của Luật Đấu thầu.
+
+Tuân thủ quy định của pháp luật về đấu thầu và quy định khác của pháp luật có liên quan trong quá trình hoạt động đấu thầu. Báo cáo về quá trình hoạt động đấu thầu khi có yêu cầu của cơ quan quản lý nhà nước và cơ quan khác có thẩm quyền.
+
+##### e) Chi thực hiện nghĩa vụ với ngân sách nhà nước theo quy định (nếu có).
+
+**Chương VI** **ĐIỀU KHOẢN THI HÀNH** **Điều 37.
+
+Quy định chuyển tiếp** Chứng chỉ tham gia khóa học về đấu thầu, chứng chỉ đào tạo về đấu thầu được cấp theo quy định của Luật Đấu thầu số 61/2005/QH11, Luật Đấu thầu số 43/2013/QH13 đến trước ngày 01 tháng 01 năm 2024 có giá trị như chứng chỉ nghiệp vụ chuyên môn về đấu thầu quy định tại Thông tư này và tiếp tục có hiệu lực đến hết ngày 31 tháng 12 năm 2025.
+
+Từ ngày 01 tháng 01 năm 2026, cá nhân có nhu cầu cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu phải tham dự thi để được cấp chứng chỉ theo quy định tại Thông tư này.
+
+Chứng chỉ hành nghề hoạt động đấu thầu đã được cấp, cấp lại theo quy định của Luật Đấu thầu số 43/2013/QH13 và còn hiệu lực ghi trên chứng chỉ có giá trị như chứng chỉ nghiệp vụ chuyên môn về đấu thầu quy định tại Thông tư này và tiếp tục có hiệu lực theo thời hạn ghi tại chứng chỉ, trừ trường hợp quy định tại khoản 3 Điều này.
+
+Sau thời hạn ghi tại chứng chỉ, cá nhân có nhu cầu gia hạn thì thực hiện thủ tục gia hạn theo quy định tại điểm c khoản 2 Điều 7 và khoản 5 Điều 17 của Thông tư này. Chứng chỉ hành nghề hoạt động đấu thầu đã được cấp nhưng hết hiệu lực trong năm 2024 có giá trị như chứng chỉ nghiệp vụ chuyên môn về đấu thầu quy định tại Thông tư này và tiếp tục có hiệu lực đến hết ngày 31 tháng 12 năm 2024.
+
+Từ ngày 01 tháng 01 năm 2025, cá nhân có nhu cầu gia hạn hiệu lực chứng chỉ thực hiện thủ tục gia hạn theo quy định tại điểm c khoản 2 Điều 7 và khoản 5 Điều 17 của Thông tư này.
+
+Cá nhân đã được cấp chứng chỉ tham gia khóa học về đấu thầu, chứng chỉ đào tạo đấu thầu theo quy định của Luật Đấu thầu số 61/2005/QH11, Luật Đấu thầu số 43/2013/QH13, cá nhân được cấp, cấp lại chứng chỉ hành nghề hoạt động đấu thầu theo quy định của Luật Đấu thầu số 43/2013/QH13 còn hiệu lực thì được sử dụng các chứng chỉ này để tham gia tổ chuyên gia, tổ thẩm định trong lựa chọn nhà đầu tư cho đến thời điểm quy định tại các khoản 1, 2 và 3 Điều này.
+
+##### e) Chi thực hiện nghĩa vụ với ngân sách nhà nước theo quy định (nếu có).
+
+**Điều 38. Hiệu lực thi hành** Thông tư này có hiệu lực thi hành kể từ ngày ký ban hành, trừ quy định tại khoản 2 Điều này. Các nội dung quy định tại Điều 37 Thông tư này có hiệu lực thi hành kể từ ngày 01 tháng 01 năm Kể từ ngày 01 tháng 01 năm 2024, Thông tư số 04/2019/TT-BKHĐT ngày 25 tháng 01 năm 2019 của Bộ trưởng Bộ Kế hoạch và Đầu tư quy định chi tiết đối với hoạt động đào tạo, bồi dưỡng và thi sát hạch cấp chứng chỉ hành nghề hoạt động đấu thầu hết hiệu lực thi hành.
+
+##### e) Chi thực hiện nghĩa vụ với ngân sách nhà nước theo quy định (nếu có).
+
+**Điều 39. Trách nhiệm thi hành** Các Bộ, cơ quan ngang Bộ, cơ quan trực thuộc Chính phủ, cơ quan khác ở Trung ương, Ủy ban nhân dân các cấp và tổ chức, cá nhân có liên quan chịu trách nhiệm thi hành Thông tư này.
+
+Trong quá trình thực hiện, nếu có vướng mắc, các Bộ, cơ quan ngang Bộ, cơ quan thuộc Chính phủ, cơ quan khác ở Trung ương, Ủy ban nhân dân các cấp và tổ chức, cá nhân có liên quan gửi ý kiến về Bộ Kế hoạch và Đầu tư để kịp thời hướng dẫn./.
+
+| Nơi nhận: - Thủ tướng Chính phủ; - Các Phó Thủ tướng Chính phủ; - Các Bộ, cơ quan ngang Bộ, cơ quan thuộc CP; - HĐND, UBND các tỉnh, thành phố trực thuộc TW; - Văn phòng Trung ương và các Ban của Đảng; - Văn phòng Chủ tịch nước; - Hội đồng Dân tộc và các Ủy Ban của Quốc hội; - Văn phòng Quốc hội; - Văn phòng Chính phủ; - Tòa án nhân dân tối cao; - Viện Kiểm sát nhân dân tối cao; - Kiểm toán Nhà nước; - Cơ quan Trung ương của các đoàn thể; - Sở Kế hoạch và Đầu tư các tỉnh, thành phố trực thuộc Trung ương; - Cục Kiểm tra văn bản QPPL (Bộ Tư pháp); - Công báo; - Cổng TTĐT Chính phủ; - Cổng TTĐT Kế hoạch và Đầu tư; - Các đơn vị thuộc Bộ Kế hoạch và Đầu tư; - Lưu: VT, Cục QLĐT ( ).
+
+| BỘ TRƯỞNG Nguyễn Chí Dũng | | --- | --- |
+
+##### e) Chi thực hiện nghĩa vụ với ngân sách nhà nước theo quy định (nếu có).
+
+**PHỤ LỤC
+
+## CHƯƠNG TRÌNH KHUNG ĐÀO TẠO, BỒI DƯỠNG NGHIỆP VỤ CHUYÊN MÔN VỀ ĐẤU THẦU
+
+*(Ban hành kèm theo Thông tư số: 02/2024/TT-BKHĐT ngày 06 tháng 3 năm 2024 của Bộ trưởng Bộ Kế hoạch và Đầu tư)*
+
+## Chương trình khung đào tạo, bồi dưỡng chuyên môn đấu thầu bao gồm các chuyên đề sau:
+
+**A. Đối với lựa chọn nhà thầu** **I. Chuyên đề 1: Tổng quan lựa chọn nhà thầu** Quá trình xây dựng, hoàn thiện pháp luật về đấu thầu Các nguyên tắc của đấu thầu mua sắm công Các chức năng của đấu thầu mua sắm công Tính liêm chính và đạo đức nghề nghiệp trong đấu thầu mua sắm công
+
+## Chương trình khung đào tạo, bồi dưỡng chuyên môn đấu thầu bao gồm các chuyên đề sau:
+
+**II. Chuyên đề 2: Quy định chung trong lựa chọn nhà thầu** Phạm vi điều chỉnh, đối tượng áp dụng Tư cách hợp lệ của nhà thầu Bảo đảm cạnh tranh trong đấu thầu Cung cấp và đăng tải thông tin trong đấu thầu Ưu đãi trong lựa chọn nhà thầu Chi phí trong đấu thầu Các hành vi bị cấm trong đấu thầu và xử lý vi phạm Trách nhiệm của các bên trong hoạt động lựa chọn nhà thầu
+
+## Chương trình khung đào tạo, bồi dưỡng chuyên môn đấu thầu bao gồm các chuyên đề sau:
+
+**III. Chuyên đề 3: Kế hoạch tổng thể và kế hoạch lựa chọn nhà thầu** Nguyên tắc lập kế hoạch Kỹ năng lập, thẩm định, phê duyệt kế hoạch Bài tập về kế hoạch tổng thể, kế hoạch lựa chọn nhà thầu
+
+## Chương trình khung đào tạo, bồi dưỡng chuyên môn đấu thầu bao gồm các chuyên đề sau:
+
+**IV. Chuyên đề 4: Quy trình, thủ tục lựa chọn nhà thầu không qua mạng** Đối với đấu thầu rộng rãi, đấu thầu hạn chế:
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+Đối với chào hàng cạnh tranh Đối với chỉ định thầu Đối với mua sắm trực tiếp Đối với tự thực hiện Đối với lựa chọn nhà thầu trong trường hợp đặc biệt Đối với lựa chọn tư vấn cá nhân Bài tập thực hành về kỹ năng lập, thẩm định hồ sơ mời thầu, hồ sơ yêu cầu, đánh giá hồ sơ dự thầu, hồ sơ đề xuất, thẩm định kết quả lựa chọn nhà thầu
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**V. Chuyên đề 5: Mua sắm tập trung** Nguyên tắc trong mua sắm tập trung Quy trình mua sắm tập trung Nội dung thoả thuận khung Trách nhiệm trong mua sắm tập trung
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**VI. Chuyên đề 6: Mua sắm trong lĩnh vực y tế** Lựa chọn nhà thầu cung cấp thuốc, hoá chất, vật tư xét nghiệm, thiết bị y tế Ưu đãi trong mua thuốc Bài tập thực hành
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**VII. Chuyên đề 7: Đấu thầu qua mạng** Quy định chung về đấu thầu qua mạng Quy trình lựa chọn nhà thầu qua mạng Thực hành kỹ năng đăng tải thông tin, lập hồ sơ, đánh giá hồ sơ, tổ chức lựa chọn nhà thầu, tham dự thầu trên Hệ thống mạng đấu thầu quốc gia
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**VIII. Chuyên đề 8: Hợp đồng** Các loại hợp đồng Điều kiện ký kết hợp đồng Nguyên tắc thực hiện hợp đồng Sửa đổi hợp đồng Điều chỉnh giá hợp đồng Quản lý thực hiện hợp đồng Thanh toán hợp đồng Thanh lý hợp đồng Uy tín của nhà thầu trong việc tham dự thầu, kết quả thực hiện hợp đồng của nhà thầu, đánh giá chất lượng hàng hóa đã sử dụng Bài tập thực hành
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**IX. Chuyên đề 9: Xử lý tình huống trong đấu thầu** Các quy định về xử lý tình huống trong đấu thầu Nguyên tắc xử lý tình huống trong đấu thầu Bài tập thực hành
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**X. Chuyên đề 10: Xử lý kiến nghị, kiểm tra, giám sát trong đấu thầu** Điều kiện xem xét, giải quyết kiến nghị Quy trình giải quyết kiến nghị về lựa chọn nhà thầu Khởi kiện và yêu cầu Tòa án áp dụng biện pháp khẩn cấp tạm thời Kiểm tra và báo cáo công tác đấu thầu Giám sát hoạt động đấu thầu
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**B. Đối với lựa chọn nhà đầu tư** **I. Chuyên đề 1: Tổng quan lựa chọn nhà đầu tư** Quá trình xây dựng và hoàn thiện pháp luật về đấu thầu lựa chọn nhà đầu tư Các nguyên tắc của đấu thầu lựa chọn nhà đầu tư Các chức năng của đấu thầu lựa chọn nhà đầu tư Tính liêm chính và đạo đức nghề nghiệp trong đấu thầu lựa chọn nhà đầu tư
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**II. Chuyên đề 2: Quy định chung trong lựa chọn nhà đầu tư** Phạm vi điều chỉnh, đối tượng áp dụng Tư cách hợp lệ của nhà đầu tư Bảo đảm cạnh tranh trong đấu thầu Cung cấp và đăng tải thông tin trong đấu thầu Ưu đãi trong lựa chọn nhà đầu tư Chi phí trong đấu thầu Các hành vi bị cấm trong đấu thầu
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**III.
+
+Chuyên đề 3: Quy trình, thủ tục lựa chọn nhà đầu tư thực hiện dự án PPP không qua mạng** Tổng quan về đầu tư theo phương thức PPP Trình tự, thủ tục triển khai dự án PPP Khảo sát sự quan tâm của nhà đầu tư Sơ tuyển Quy trình đấu thầu rộng rãi Quy trình đàm phán cạnh tranh Quy trình chỉ định thầu Triển khai thực hiện dự án PPP Hợp đồng dự án PPP Kiểm tra, thanh tra, kiểm toán nhà nước trong hoạt động đầu tư theo phương thức PPP Giám sát hoạt động đầu tư theo phương thức PPP Giải quyết kiến nghị, tranh chấp và xử lý vi phạm Bài tập thực hành về kỹ năng lập, thẩm định hồ sơ mời thầu, đánh giá hồ sơ dự thầu, thẩm định kết quả lựa chọn nhà đầu tư
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**IV.
+
+Chuyên đề 4: Quy trình, thủ tục lựa chọn nhà đầu tư thực hiện dự án đầu tư kinh doanh** Tổng quan về pháp luật đầu tư dự án đầu tư kinh doanh Trình tự, thủ tục triển khai dự án đầu tư kinh doanh Mời quan tâm Quy trình đấu thầu rộng rãi theo phương thức một giai đoạn một túi hồ sơ; một giai đoạn hai túi hồ sơ; hai giai đoạn Quy trình đấu thầu hạn chế Kiểm tra, thanh tra, giám sát dự án đầu tư kinh doanh Giải quyết kiến nghị, tranh chấp và xử lý vi phạm Triển khai thực hiện dự án Hợp đồng dự án đầu tư kinh doanh Bài tập thực hành về kỹ năng lập, thẩm định hồ sơ mời thầu, đánh giá hồ sơ dự thầu, thẩm định kết quả lựa chọn nhà đầu tư
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**V.
+
+Chuyên đề 5: Quy trình, thủ tục lựa chọn nhà đầu tư thực hiện dự án đầu tư có sử dụng** Tổng quan về dự án đầu tư có sử dụng đất Mời quan tâm Quy trình đấu thầu rộng rãi theo phương thức một giai đoạn một túi hồ sơ; một giai đoạn hai túi hồ sơ; hai giai đoạn Quy trình đấu thầu hạn chế Kiểm tra, thanh tra, giám sát dự án đầu tư có sử dụng đất Giải quyết kiến nghị, tranh chấp và xử lý vi phạm Triển khai thực hiện dự án đầu tư có sử dụng đất Giao đất, cho thuê đất cho nhà đầu tư trúng thầu Hợp đồng dự án đầu tư có sử dụng đất Bài tập thực hành về kỹ năng lập, thẩm định hồ sơ mời thầu, đánh giá hồ sơ dự thầu, thẩm định kết quả lựa chọn nhà đầu tư
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**VI. Chuyên đề 6: Đấu thầu qua mạng** Quy định chung về đấu thầu qua mạng Quy trình lựa chọn nhà đầu tư dự án PPP qua mạng Quy trình lựa chọn nhà đầu tư dự án đầu tư có sử dụng đất qua mạng Quy trình lựa chọn nhà đầu tư dự án thuộc trường hợp phải tổ chức đấu thầu theo quy định của pháp luật quản lý ngành, lĩnh vực qua mạng Thực hành kỹ năng đăng tải thông tin, lập hồ sơ, đánh giá hồ sơ, tổ chức lựa chọn nhà thầu, tham dự thầu trên Hệ thống mạng đấu thầu quốc gia
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**VII. Chuyên đề 7: Xử lý tình huống trong đấu thầu** Các quy định về xử lý tình huống trong đấu thầu qua mạng và không qua mạng Nguyên tắc xử lý tình huống trong đấu thầu Bài tập thực hành
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**C.
+
+CHƯƠNG TRÌNH ĐÀO TẠO, BỒI DƯỠNG THEO CHUYÊN ĐỀ** Căn cứ nhu cầu của học viên về cập nhật, nâng cao kiến thức nghiệp vụ chuyên môn, cơ sở đào tạo đấu thầu có thể tổ chức bồi dưỡng theo một hoặc các chuyên đề sau đây: Chuyên đề: Cập nhật các quy định mới về đấu thầu Chuyên đề: Kỹ năng lập hồ sơ mời thầu, đánh giá hồ sơ dự thầu cho các lĩnh vực xây lắp, mua sắm hàng hoá, dịch vụ phi tư vấn và dịch vụ tư vấn, hỗn hợp.
+
+Chuyên đề: Kỹ năng lập hồ sơ mời thầu, đánh giá hồ sơ dự thầu cho các dự án PPP, dự án đầu tư có sử dụng đất, dự án thuộc trường hợp phải tổ chức đấu thầu theo quy định của pháp luật quản lý ngành, lĩnh vực. Chuyên đề: Kỹ năng thẩm định trong đấu thầu Chuyên đề: Xây dựng giá đánh giá Chuyên đề: Kỹ năng thương thảo, soạn thảo và quản lý hợp đồng.
+
+Chuyên đề: Quản trị rủi ro trong đấu thầu Chuyên đề: Đấu thầu trong lĩnh vực y tế Chuyên đề: Kiểm tra, thanh tra, giải quyết kiến nghị và xử lý vi phạm trong đấu thầu Chuyên đề: Xử lý các vướng mắc, tình huống trong đấu thầu Chuyên đề: Đấu thầu qua mạng Các chuyên đề khác theo nhu cầu của tổ chức, cá nhân.
+
+**PHỤ LỤC MẪU CHỨNG CHỈ NGHIỆP VỤ CHUYÊN MÔN VỀ ĐẤU THẦU *(Ban hành kèm theo Thông tư số: 02/2024/TT-BKHĐT ngày 06 tháng 3 năm 2024 của Bộ trưởng Bộ Kế hoạch và Đầu tư)* **a) Mặt trong:** | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự do - Hạnh phúc ----------------- CHỨNG CHỈ NGHIỆP VỤ CHUYÊN MÔN VỀ ĐẤU THẦU ĐỐI VỚI ____________________________ (1) [CƠ QUAN CẤP CHỨNG CHỈ] Cấp cho Ông (Bà): ___________________________________________________________ Ngày sinh: ____________ Số thẻ căn cước/hộ chiếu: _______________________________ Xếp loại chứng chỉ: __________________________________________________________ (2) Hiệu lực chứng chỉ: 05 năm kể từ ngày __________________________________________ (3) Số chứng chỉ: ______________ | | --- |
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**b) Mặt ngoài:** | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự do - Hạnh phúc --------------------- CHỨNG CHỈ NGHIỆP VỤ CHUYÊN MÔN VỀ ĐẤU THẦU | | --- |
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+*(Kích thước chứng chỉ nghiệp vụ chuyên môn về đấu thầu: 14,8 cm x 21 cm.)* Ghi chú: Ghi loại chứng chỉ nghiệp vụ chuyên môn về đấu thầu:
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+- Ghi “LỰA CHỌN NHÀ THẦU” hoặc “LỰA CHỌN NHÀ ĐẦU TƯ” nếu chỉ tham gia kỳ thi cấp chứng chỉ đối với lựa chọn nhà thầu hoặc lựa chọn nhà đầu tư.
+- Ghi “LỰA CHỌN NHÀ THẦU VÀ LỰA CHỌN NHÀ ĐẦU TƯ” nếu tham gia cả 2 kỳ thi cấp chứng chỉ đối với lựa chọn nhà thầu và lựa chọn nhà đầu tư.
+- Ghi “gia hạn” đối với chứng chỉ nghiệp vụ chuyên môn về đấu thầu được cấp gia hạn từ chứng chỉ hành nghề hoạt động đấu thầu theo quy định tại khoản 2 và khoản 3 Điều 37 của Thông tư này.
+- Ghi ngày ban hành quyết định cấp lần đầu, cấp gia hạn chứng chỉ nghiệp vụ chuyên môn về đấu thầu.
+- Ghi ngày cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu.
+- **PHỤ LỤC
+- CÁC BIỂU MẪU
+- *(Ban hành kèm theo Thông tư số: 02/2024/TT-BKHĐT ngày 06 tháng 3 năm 2024 của Bộ trưởng Bộ Kế hoạch và Đầu tư)*
+- Mẫu số 01 (webform trên Hệ thống)
+- | [CƠ QUAN, ĐƠN VỊ ĐĂNG KÝ TÀI KHOẢN THAM GIA HỆ THỐNG] ------- | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự do - Hạnh phúc --------------- |
+- | --- | --- |
+- | Số: ....... | ....., ngày ..... tháng .... năm ..... |
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**ĐĂNG KÝ TÀI KHOẢN THAM GIA HỆ THỐNG** *(Đối với cơ quan cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu)* Kính gửi: …………………………………. Tên cơ quan: ……………………………………………………………………………………** Thông tin chứng thực**
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+2.1 Mã số thuế: …………………………………………………………………………………….. 2.2 Quyết định chức năng, nhiệm vụ số: ……………………. ngày: ………………………… Tổ chức tham gia Hệ thống thực hiện: **Cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu. Địa chỉ trụ sở**
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+4.1 Địa chỉ: …………………………………………………………………………………………. 4.2 Điện thoại: ……………………………………………………………………………………… Thông tin người đại diện theo pháp luật của cơ quan:**
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+5.1 Họ và tên: ………………………………………………………………………………………. 5.2 Chức danh: …………………………………………………………………………………….. 5.3 Số thẻ căn cước/Hộ chiếu: …………………………………….. Ngày cấp:………………. 5.4 Điện thoại: ……………………………………………………………………………………… 5.5 Email: …………………………………………………………………………………………… Thông tin người quản lý tài khoản tham gia hệ thống:**
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+6.1 Họ và tên: ……………………………………………………………………………………… 6.2 Chức danh: ……………………………………………………………………………………. 6.3 Phòng ban: ……………………………………………………………………………………. 6.4 Số thẻ căn cước/Hộ chiếu: ………………………………… Ngày cấp:………………….. 6.5 Điện thoại: …………………………………………………………………………………….. 6.6 Email: ………………………………………………………………………………………….. 6.7 Địa chỉ liên lạc: ………………………………………………………………………………..
+
+| Nơi nhận: - Như trên; - Lưu văn thư. | ĐẠI DIỆN CƠ QUAN CẤP, THU HỒI CHỨNG CHỈ NGHIỆP VỤ CHUYÊN MÔN VỀ ĐẤU THẦU (Ký tên và đóng dấu) | | --- | --- |
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+** Ghi chú: Hồ sơ đăng ký tổ chức tham gia Hệ thống của cơ quan cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu bao gồm: quyết định thành lập hoặc quyết định chức năng, nhiệm vụ hoặc văn bản tương đương của cơ quan cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu; đơn đăng ký theo mẫu đã được ký đóng dấu và các hồ sơ khác (nếu có).*
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+- *
+- Mẫu số 02 (webform trên Hệ thống)
+- | [CƠ QUAN, ĐƠN VỊ ĐĂNG KÝ TÀI KHOẢN THAM GIA HỆ THỐNG] ------- | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự do - Hạnh phúc --------------- |
+- | --- | --- |
+- | Số: ……. | ….., ngày ….. tháng ….. năm ….. |
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**ĐĂNG KÝ TÀI KHOẢN THAM GIA HỆ THỐNG** *(Đối với đơn vị tổ chức thi nghiệp vụ chuyên môn về đấu thầu)* Kính gửi: …………………………………. Tên đơn vị: ……………………………………………………………………………………..** Thông tin chứng thực**
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+2.1 Mã số thuế: …………………………………………………………………………………….. 2.2 Quyết định thành lập số: ………………………….……. ngày: ……………………….…… Tổ chức tham gia Hệ thống thực hiện: (Chọn 01 hoặc nhiều hoạt động):**
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+□ Tiếp nhận, kiểm tra hồ sơ đăng ký thi cấp lần đầu, cấp lại, cấp gia hạn chứng chỉ nghiệp vụ chuyên môn về đấu thầu; □ Tổ chức thi nghiệp vụ chuyên môn về đấu thầu. Địa chỉ trụ sở**
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+4.1 Địa chỉ: …………………………………………………………………………………………. 4.2 Điện thoại: ……………………………………………………………………………………… Thông tin người đại diện theo pháp luật của đơn vị:**
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+5.1 Họ và tên: ………………………………………………………………………………………. 5.2 Chức danh: …………………………………………………………………………………….. 5.3 Số thẻ căn cước/Hộ chiếu: …………………………………….. Ngày cấp:………………. 5.4 Điện thoại: ……………………………………………………………………………………… 5.5 Email: …………………………………………………………………………………………… Thông tin người quản lý tài khoản tham gia hệ thống:**
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+6.1 Họ và tên: ……………………………………………………………………………………… 6.2 Chức danh: ……………………………………………………………………………………. 6.3 Phòng ban: ……………………………………………………………………………………. 6.4 Số thẻ căn cước/Hộ chiếu: ………………………………… Ngày cấp:………………….. 6.5 Điện thoại: …………………………………………………………………………………….. 6.6 Email: ………………………………………………………………………………………….. 6.7 Địa chỉ liên lạc: ………………………………………………………………………………..
+
+| Nơi nhận: - Như trên; - Lưu văn thư. | ĐẠI DIỆN ĐƠN VỊ TỔ CHỨC THI CẤP CHỨNG CHỈ NGHIỆP VỤ CHUYÊN MÔN VỀ ĐẤU THẦU (Ký tên và đóng dấu) | | --- | --- |
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+** Ghi chú: Hồ sơ đăng ký tổ chức tham gia Hệ thống của đơn vị tổ chức thi nghiệp vụ chuyên môn về đấu thầu bao gồm: quyết định thành lập hoặc quyết định chức năng, nhiệm vụ hoặc văn bản tương đương của đơn vị sự nghiệp công lập; đơn đăng ký theo mẫu đã được ký đóng dấu và các hồ sơ khác (nếu có).*
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+** ** Mẫu số 03 (webform trên Hệ thống) **CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM** **Độc lập - Tự do - Hạnh phúc**** ****--------------------** *___, ngày ____ **tháng* *____**năm__***_***_* **ĐĂNG KÝ THI** **CHỨNG CHỈ NGHIỆP VỤ CHUYÊN MÔN VỀ ĐẤU THẦU** Kính gửi : …………………………………………………….…. Họ và tên *(chữ in hoa)*: .......................................................Nam/Nữ:................
+
+Sinh ngày: ................. tháng ............. năm ....................................................... Số thẻ căn cước/hộ chiếu:................................................................................. Số điện thoại liên hệ:………………………………………………………………….. Email:……………………………………………………………………………………. Địa chỉ nhận chứng chỉ: ……………………………………………………………….
+
+Địa điểm đăng ký dự thi: ……………………………………………………............. Đơn vị tổ chức thi: ………………………………………………….......................... Thời gian đăng ký dự thi: ……………………………………………………............
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+Tôi xin cam đoan những nội dung kê khai nêu trên là trung thực và chịu trách nhiệm trước pháp luật về các nội dung đã kê khai trong đơn./. | | NGƯỜI LÀM ĐƠN (Ký, ghi rõ họ tên) | | --- | --- |
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+Mẫu số 04 (webform trên Hệ thống) **CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM** **Độc lập - Tự do - Hạnh phúc**** ****------------------** *___, ngày ____ **tháng* *____**năm__***_***_* **ĐỀ NGHỊ CẤP LẠI** **CHỨNG CHỈ NGHIỆP VỤ CHUYÊN MÔN VỀ ĐẤU THẦU** Kính gửi : ……………………………………………………. Họ và tên *(chữ in hoa)*: .......................................................Nam/Nữ:................
+
+Sinh ngày: ................. tháng ............. năm ....................................................... Số thẻ căn cước/hộ chiếu:................................................................................. Số điện thoại liên hệ:..………………………………………………………………… Email:…………………………………………………………………………………….
+
+Địa chỉ nhận chứng chỉ: ……………………………………………………………… Địa điểm dự thi: ………………………………………………………………............ Cơ quan cấp chứng chỉ: …………………………………………………………….. Thời gian dự thi: ……………………………………………………………………… Số chứng chỉ đã được cấp: ……………………………ngày cấp………………. Lý do đề nghị cấp lại: ……………………………………………………………….
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+Tôi xin cam đoan những nội dung kê khai nêu trên là trung thực và chịu trách nhiệm trước pháp luật về các nội dung đã kê khai trong đơn./. | | NGƯỜI LÀM ĐƠN (Ký, ghi rõ họ tên) | | --- | --- |
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+Mẫu số 05 (webform trên Hệ thống) **CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM** **Độc lập - Tự do - Hạnh phúc**** ****-----------------** *___, ngày ____ **tháng* *____**năm__***_***_* **ĐỀ NGHỊ GIA HẠN** **CHỨNG CHỈ NGHIỆP VỤ CHUYÊN MÔN VỀ ĐẤU THẦU** Kính gửi :…………………..........................................……….
+
+Họ và tên *(chữ in hoa)*: .......................................................Nam/Nữ:................. Sinh ngày: ................. tháng ............. năm ........................................................ Số thẻ căn cước/hộ chiếu:................................................................................... Số điện thoại liên hệ:..…………………………………………………………………..
+
+Email:……………………………………………………………………………………… Địa chỉ nhận chứng chỉ: ………………………………………………………............. Số chứng chỉ đã được cấp: ………………………ngày cấp…………………………
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+Tôi xin cam đoan những nội dung kê khai nêu trên là trung thực và chịu trách nhiệm trước pháp luật về các nội dung đã kê khai trong đơn./. | | NGƯỜI LÀM ĐƠN (Ký, ghi rõ họ tên) | | --- | --- |
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+Mẫu số 06 (webform trên Hệ thống) **MẪU BÁO CÁO CỦA CƠ QUAN CẤP, THU HỒI CHỨNG CHỈ NGHIỆP VỤ CHUYÊN MÔN VỀ ĐẤU THẦU NĂM …** | [TÊN CƠ QUAN] ------- | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự do - Hạnh phúc --------------- | | --- | --- | | Số: ____/____ | ___, ngày ____ tháng ____ năm__ _ _ |
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**BÁO CÁO CỦA CƠ QUAN CẤP, THU HỒI CHỨNG CHỈ NGHIỆP VỤ CHUYÊN MÔN VỀ ĐẤU THẦU NĂM …** Kính gửi: ………………………………………………………….
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+- Tên đầy đủ của cơ quan: *[Ghi tên đầy đủ]* ___________________________________
+- Mã số thuế (*nếu có*):­­­­____________________________________________________
+- Tên tiếng Anh: *[Ghi tên tiếng Anh (nếu có)]* __________________________________
+- Địa chỉ: *[Ghi địa chỉ của cơ quan]* __________________________________________
+- Điện thoại: *[Ghi số điện thoại liên lạc]* _______________________________________
+- E-mail: *[Ghi địa chỉ hộp thư điện tử]* _________________________________________
+- Website: *[Ghi địa chỉ trang thông tin điện tử của cơ quan (nếu có)] _________________*
+- Đại diện pháp nhân: *[Ghi tên người đại diện theo pháp luật] ______________________*
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**I. THÔNG TIN VỀ CÁC KỲ THI ĐÃ TỔ CHỨC NĂM …** | Stt | Tên kỳ thi | Thời gian tổ chức thi | Địa điểm tổ chức thi | Số lượng thí sinh đủ điều kiện dự thi | Số lượng thí sinh được cấp chứng chỉ | Tỉ lệ % thí sinh được cấp chứng chỉ | Ghi chú |
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+| Tổng cộng | Tổng cộng | Tổng cộng | Tổng cộng | | | | |
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**II. THÔNG TIN VỀ VIỆC CẤP LẠI, THU HỒI CHỨNG CHỈ NĂM …** | Stt | Nội dung | Số lượng | Ghi chú | Số lượng cá nhân cấp lại chứng chỉ nghiệp vụ chuyên môn về đấu thầu | | | Số lượng cá nhân bị thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu (Ghi rõ lý do thu hồi tại cột ghi chú) | | |
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+**III. THÔNG TIN VỀ CÁC KỲ CẤP GIA HẠN NĂM …** | Stt | Tên kỳ cấp gia hạn | Số lượng thí sinh đã được cấp chứng chỉ lần đầu | Số lượng thí sinh được cấp gia hạn chứng chỉ | Tỷ lệ % thí sinh cấp gia hạn chứng chỉ | Ghi chú |
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+| Tổng cộng | Tổng cộng | Tổng cộng | Tổng cộng | | |
+
+##### d) Phương thức hai giai đoạn hai túi hồ sơ
+
+- Các thông tin, ý kiến khác: _______________________________________________
+- Đề xuất, kiến nghị: _____________________________________________________
+- | | Đại diện hợp pháp của cơ quan, đơn vị [Ghi tên, chức danh, ký tên và đóng dấu] |
+- | --- | --- |

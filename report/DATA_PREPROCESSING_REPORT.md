@@ -297,7 +297,7 @@ Sửa lỗi OCR trong markdown files (chủ yếu cho PDF scan):
 
 #### 5.1.2. Công Nghệ
 
-- **AI Model**: Gemini (`gemini-2.5-flash-lite`)
+- **AI Model**: Groq (`llama-3.3-70b-versatile` hoặc `qwen-2.5-32b`)
 - **Validation**: Kiểm tra tỷ lệ dấu tiếng Việt
 - **Adaptive Prompting**: 2 vòng với prompts khác nhau
 

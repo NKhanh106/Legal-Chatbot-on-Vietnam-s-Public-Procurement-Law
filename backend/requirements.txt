@@ -1,10 +1,13 @@
-# Core dependencies for RAG
-sentence-transformers>=2.2.0  # For semantic search embeddings
-faiss-cpu>=1.7.4  # For vector search
-# For GPU support, use: faiss-gpu>=1.7.4
+# --- PYTORCH GPU (CUDA 12.4) ---
+--extra-index-url https://download.pytorch.org/whl/cu124
+torch>=2.4.0  # Install CUDA build on GPU machines
+torchvision>=0.19.0
+torchaudio>=2.4.0
 
-# Gemini API
-google-generativeai>=0.3.0
+# Core dependencies for RAG
+sentence-transformers>=2.2.2  # For semantic search embeddings
+faiss-cpu>=1.7.4  # Windows-friendly; on Linux CUDA, you can swap to faiss-gpu
+huggingface_hub[hf_xet]>=0.24.0  # Hugging Face hub with xet support
 
 # Streamlit for deployment
 streamlit>=1.28.0
@@ -46,4 +49,7 @@ python-dotenv>=1.0.0  # Load .env.local files
 # Jupyter notebook
 jupyter>=1.0.0
 ipykernel>=6.25.0
+
+# Groq LLM API
+groq>=0.5.0
 

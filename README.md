@@ -39,7 +39,7 @@ RAG System (query.py)
     ↓
 Context Retrieval
     ↓
-Gemini API (LLM Generation)
+Groq API (LLM Generation)
     ↓
 Streaming Response
     ↓
@@ -189,18 +189,25 @@ npm install
 cp backend/config/config.py.example backend/config/config.py
 ```
 
-2. Edit `backend/config/config.py` and add your Gemini API key:
-```python
-# Load from .env.local (recommended)
-# Or set directly (not recommended for production)
-GEMINI_API_KEY = "your_api_key_here"
-GEMINI_MODEL_NAME = "gemini-2.5-pro"
+2. Create `.env.local` file in project root (recommended):
+```bash
+# Copy example file
+cp .env.local.example .env.local
 ```
 
-**OR** create `.env.local` in project root:
+Then edit `.env.local` and add your Groq API key:
 ```env
-GEMINI_API_KEY=your_api_key_here
-GEMINI_MODEL_NAME=gemini-2.5-pro
+GROQ_API_KEY=your_groq_api_key_here
+```
+
+Get your Groq API key from: https://console.groq.com/keys
+
+**Optional configuration** in `.env.local`:
+```env
+GROQ_PRIMARY_MODEL=llama-3.3-70b-versatile
+GROQ_FALLBACK_MODEL=qwen-2.5-32b
+GROQ_TEMPERATURE=0.3
+GROQ_MAX_TOKENS=4096
 ```
 
 #### Frontend Configuration
@@ -214,7 +221,33 @@ VITE_API_URL=http://localhost:5000
 
 ## 🚀 Running the Application
 
-### Start Backend Server
+### Quick Start (Recommended) - Run Both Backend & Frontend Together
+
+**Windows:**
+```bash
+start_dev.bat
+```
+
+**Linux/Mac:**
+```bash
+chmod +x start_dev.sh
+./start_dev.sh
+```
+
+**Or using Python (Cross-platform):**
+```bash
+python start_dev.py
+```
+
+This will start both servers automatically:
+- **Backend**: `http://localhost:5000`
+- **Frontend**: `http://localhost:5173`
+
+Press `Ctrl+C` to stop both servers.
+
+### Manual Start (Alternative)
+
+#### Start Backend Server Only
 
 ```bash
 # Windows
@@ -229,10 +262,11 @@ python backend/api/server.py
 
 The API server will run on `http://localhost:5000`
 
-### Start Frontend
+#### Start Frontend Only
 
 ```bash
 cd frontend
+npm install  # First time only
 npm run dev
 ```
 
@@ -401,13 +435,13 @@ The system uses a hybrid search approach with advanced optimizations:
 
 ### Backend
 - **Flask** - Web framework
-- **FAISS** - Vector similarity search (Inner Product metric for normalized embeddings)
-- **Sentence Transformers** - Embedding models (Vietnamese Bi-Encoder)
-- **Google Gemini API** - LLM for generation (with retry and exponential backoff)
+- **FAISS (CPU)** - Vector similarity search (Inner Product metric for normalized embeddings)
+- **Sentence Transformers** - Embedding models (`BAAI/bge-m3` bi-encoder, 1024‑dim, normalized)
+- **Cross-Encoder** - Re-ranking (`BAAI/bge-reranker-v2-m3`) with GPU batching
+- **Groq LLM API** - Generation backend (primary: `llama-3.3-70b-versatile`, fallback: `qwen-2.5-32b`) with rate‑limit aware fallback
 - **pytesseract** - PDF OCR (for scanned documents)
 - **python-docx** - Word document processing (for original documents)
 - **rank-bm25** - Fast BM25 keyword search with inverted index (optimized for large datasets)
-- **Cross-Encoder** - Re-ranking (with batch processing)
 
 ### Frontend
 - **React** - UI framework

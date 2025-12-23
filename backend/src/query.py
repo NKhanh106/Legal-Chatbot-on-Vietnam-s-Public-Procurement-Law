@@ -1,5 +1,7 @@
-import google.generativeai as genai
+import torch
 from sentence_transformers import SentenceTransformer, CrossEncoder, util
+from groq import Groq
+from dotenv import load_dotenv
 import faiss
 import pickle
 import numpy as np
@@ -12,6 +14,19 @@ from collections import Counter, defaultdict
 import math
 import time
 from functools import lru_cache
+
+# Fix Unicode encoding trên Windows PowerShell
+# Set UTF-8 encoding cho stdout/stderr để tránh lỗi khi in emoji
+if sys.platform == 'win32':
+    try:
+        # Thử set UTF-8 encoding
+        if sys.stdout.encoding != 'utf-8':
+            sys.stdout.reconfigure(encoding='utf-8')
+        if sys.stderr.encoding != 'utf-8':
+            sys.stderr.reconfigure(encoding='utf-8')
+    except (AttributeError, ValueError):
+        # Fallback: set environment variable
+        os.environ['PYTHONIOENCODING'] = 'utf-8'
 
 # BM25 optimization: Use rank-bm25 for fast inverted index search
 try:
@@ -131,17 +146,45 @@ def safe_read_faiss_index(index_path: str):
         else:
             raise
 
-# Import configuration
-try:
-    from config import GEMINI_API_KEY, GEMINI_MODEL_NAME
-except ImportError:
-    # Fallback nếu không có config file
-    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-    GEMINI_MODEL_NAME = os.getenv("GEMINI_MODEL_NAME", "gemini-2.5-pro")
+# Load environment variables from .env.local (project root) if present
+# Sử dụng absolute path để đảm bảo tìm đúng file dù chạy từ đâu
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+env_local_path = os.path.join(PROJECT_ROOT, ".env.local")
+if os.path.exists(env_local_path):
+    load_dotenv(env_local_path)
+    print(f"✅ Loaded .env.local from: {env_local_path}")
+else:
+    # Fallback: thử load từ current directory
+    load_dotenv(".env.local")
+    # Cũng thử load từ environment variables trực tiếp
+    if not os.getenv("GROQ_API_KEY"):
+        print(f"⚠️  .env.local not found at: {env_local_path}")
+        print("   Please create .env.local file in project root with GROQ_API_KEY")
 
-# Configure Gemini API
-genai.configure(api_key=GEMINI_API_KEY)
-gemini_model = genai.GenerativeModel(GEMINI_MODEL_NAME)
+# Groq client & model configuration
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+if not GROQ_API_KEY:
+    print("⚠️  WARNING: GROQ_API_KEY not found! Please set it in environment variables.")
+client = Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
+
+# Cho phép cấu hình model Groq qua ENV, với default hợp lý
+GROQ_PRIMARY_MODEL = os.getenv("GROQ_PRIMARY_MODEL", "llama-3.3-70b-versatile")
+GROQ_FALLBACK_MODEL = os.getenv("GROQ_FALLBACK_MODEL", "qwen-2.5-32b")
+GROQ_TEMPERATURE = float(os.getenv("GROQ_TEMPERATURE", "0.3"))
+GROQ_MAX_TOKENS = int(os.getenv("GROQ_MAX_TOKENS", "4096"))
+
+# Model configuration (overrideable via ENV / used cho embeddings & reranker)
+EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL_NAME", "BAAI/bge-m3")
+CROSS_ENCODER_MODEL_NAME = os.getenv("CROSS_ENCODER_MODEL_NAME", "BAAI/bge-reranker-v2-m3")
+EMBEDDING_MAX_LENGTH = int(os.getenv("EMBEDDING_MAX_LENGTH", "1024"))
+CROSS_ENCODER_MAX_LENGTH = int(os.getenv("CROSS_ENCODER_MAX_LENGTH", "1024"))
+
+# Tối ưu: Cho phép tắt GPU qua ENV (để test CPU-only)
+USE_GPU_FOR_EMBEDDING = os.getenv("USE_GPU_FOR_EMBEDDING", "auto").lower()
+USE_GPU_FOR_RERANKING = os.getenv("USE_GPU_FOR_RERANKING", "auto").lower()
+
+# Batch size cho encoding (tăng để tận dụng GPU tốt hơn)
+EMBEDDING_BATCH_SIZE = int(os.getenv("EMBEDDING_BATCH_SIZE", "32"))  # Tăng từ mặc định 8-16 lên 32
 
 # Configuration for Advanced Multi-Stage Retrieval
 STAGE1_TOP_K = 100  # Số chunks lấy từ FAISS (stage 1) - tăng lên để có nhiều candidates
@@ -150,7 +193,7 @@ STAGE1_HYBRID_TOP_K = 150  # Tổng số chunks sau khi merge FAISS + BM25 (dedu
 STAGE2_TOP_K = 30  # Số chunks sau cross-encoder re-ranking (stage 2) - tăng để có nhiều candidates
 STAGE3_TOP_K = 15  # Số chunks sau keyword + metadata scoring (stage 3)
 STAGE4_TOP_K = 10  # Số chunks sau diversity filtering (stage 4)
-FINAL_TOP_K = 3  # Số chunks cuối cùng trả về
+FINAL_TOP_K = 5  # Số chunks cuối cùng trả về
 USE_CROSS_ENCODER = True  # Sử dụng cross-encoder để re-rank
 USE_KEYWORD_BOOST = True  # Boost chunks có từ khóa
 USE_METADATA_FILTER = True  # Filter theo metadata (điều khoản)
@@ -160,12 +203,70 @@ USE_DEDUPLICATION = True  # Loại bỏ chunks trùng lặp
 BM25_K1 = 1.5  # BM25 parameter k1
 BM25_B = 0.75  # BM25 parameter b
 
-# Load bi-encoder for semantic search (fast, for initial retrieval)
-bi_model = SentenceTransformer("bkai-foundation-models/vietnamese-bi-encoder",
-                               device='cuda' if os.getenv("CUDA_VISIBLE_DEVICES") else 'cpu')
+# Bi-encoder sẽ được load lazy (chỉ khi cần) - TỐI ƯU: Giảm thời gian khởi động
+bi_model = None
 
 # Cross-encoder sẽ được load lazy (chỉ khi cần)
 cross_encoder_model = None
+
+def _load_bi_encoder():
+    """
+    Lazy load bi-encoder model (chỉ load khi cần).
+    TỐI ƯU: Giảm thời gian khởi động từ ~10-30s xuống <1s.
+    """
+    global bi_model
+    if bi_model is None:
+        print("🔄 Đang load bi-encoder model (BGE-M3)...")
+        
+        # Xác định device
+        if USE_GPU_FOR_EMBEDDING == "0" or USE_GPU_FOR_EMBEDDING == "false":
+            _bi_device = 'cpu'
+            print("   ℹ️  Sử dụng CPU (USE_GPU_FOR_EMBEDDING=0)")
+        elif USE_GPU_FOR_EMBEDDING == "1" or USE_GPU_FOR_EMBEDDING == "true":
+            if torch.cuda.is_available():
+                _bi_device = 'cuda'
+                print(f"   🚀 Using GPU: {torch.cuda.get_device_name(0)}")
+            else:
+                _bi_device = 'cpu'
+                print("   ⚠️  GPU không có, fallback về CPU")
+        else:  # "auto"
+            if torch.cuda.is_available():
+                _bi_device = 'cuda'
+                print(f"   🚀 Using GPU: {torch.cuda.get_device_name(0)}")
+            else:
+                _bi_device = 'cpu'
+                print("   ℹ️  Using CPU (GPU not available)")
+        
+        # Model kwargs
+        _bi_kwargs = {}
+        if _bi_device == 'cuda':
+            # Sử dụng dtype thay vì torch_dtype (deprecated)
+            _bi_kwargs["dtype"] = torch.float16  # BGE-M3 tối ưu VRAM 4GB
+        
+        try:
+            bi_model = SentenceTransformer(EMBEDDING_MODEL_NAME, device=_bi_device, model_kwargs=_bi_kwargs)
+            # BGE-M3 hỗ trợ input dài; đặt 1024 để cân bằng tốc độ/độ chính xác cho RAG
+            try:
+                bi_model.max_seq_length = EMBEDDING_MAX_LENGTH
+            except Exception:
+                pass
+            print(f"   ✅ Bi-encoder loaded: {EMBEDDING_MODEL_NAME} on {_bi_device}")
+        except Exception as e:
+            print(f"   ❌ Lỗi khi load bi-encoder: {e}")
+            # Fallback về CPU nếu GPU lỗi
+            if _bi_device == 'cuda':
+                print("   ⚠️  Fallback về CPU...")
+                _bi_device = 'cpu'
+                _bi_kwargs = {}
+                bi_model = SentenceTransformer(EMBEDDING_MODEL_NAME, device=_bi_device, model_kwargs=_bi_kwargs)
+                try:
+                    bi_model.max_seq_length = EMBEDDING_MAX_LENGTH
+                except Exception:
+                    pass
+            else:
+                raise
+    
+    return bi_model
 
 # Load FAISS index and metadata
 # Sử dụng safe_read_faiss_index để xử lý đường dẫn Unicode
@@ -260,20 +361,53 @@ def _load_cross_encoder():
     global cross_encoder_model
     if cross_encoder_model is None:
         print("🔄 Đang load cross-encoder model cho re-ranking...")
+        
+        # Xác định device (tương tự bi-encoder)
+        if USE_GPU_FOR_RERANKING == "0" or USE_GPU_FOR_RERANKING == "false":
+            cross_device = 'cpu'
+            print("   ℹ️  Sử dụng CPU (USE_GPU_FOR_RERANKING=0)")
+        elif USE_GPU_FOR_RERANKING == "1" or USE_GPU_FOR_RERANKING == "true":
+            if torch.cuda.is_available():
+                cross_device = 'cuda'
+                print(f"   🚀 Using GPU: {torch.cuda.get_device_name(0)}")
+            else:
+                cross_device = 'cpu'
+                print("   ⚠️  GPU không có, fallback về CPU")
+        else:  # "auto"
+            cross_device = 'cuda' if torch.cuda.is_available() else 'cpu'
+            if cross_device == 'cuda':
+                print(f"   🚀 Using GPU: {torch.cuda.get_device_name(0)}")
+            else:
+                print("   ℹ️  Using CPU (GPU not available)")
         # Sử dụng cross-encoder tiếng Việt nếu có, hoặc fallback về model tiếng Anh
+        # TỐI ƯU VRAM: Force FP16 cho GPU để giảm 50% VRAM usage
+        cross_encoder_kwargs = {}
+        if cross_device == 'cuda':
+            # Sử dụng model_kwargs thay vì automodel_args (deprecated)
+            # Sử dụng dtype thay vì torch_dtype (deprecated)
+            cross_encoder_kwargs["model_kwargs"] = {"dtype": torch.float16}
+        
         try:
             # Thử load Vietnamese cross-encoder nếu có
-            cross_encoder_model = CrossEncoder("bkai-foundation-models/vietnamese-cross-encoder",
-                                              device='cuda' if os.getenv("CUDA_VISIBLE_DEVICES") else 'cpu')
+            cross_encoder_model = CrossEncoder(
+                CROSS_ENCODER_MODEL_NAME,
+                device=cross_device,
+                max_length=CROSS_ENCODER_MAX_LENGTH,
+                **cross_encoder_kwargs
+            )
         except:
             # Fallback về multilingual model
             try:
-                cross_encoder_model = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2",
-                                                  device='cuda' if os.getenv("CUDA_VISIBLE_DEVICES") else 'cpu')
+                cross_encoder_model = CrossEncoder(
+                    "cross-encoder/ms-marco-MiniLM-L-6-v2",
+                    device=cross_device,
+                    max_length=CROSS_ENCODER_MAX_LENGTH,
+                    **cross_encoder_kwargs
+                )
             except:
                 # Nếu không có cross-encoder, sử dụng bi-encoder để re-rank
                 print("⚠️  Không thể load cross-encoder, sử dụng bi-encoder để re-rank")
-                cross_encoder_model = bi_model
+                cross_encoder_model = _load_bi_encoder()  # Lazy load bi-encoder nếu chưa có
     return cross_encoder_model
 
 def _extract_numbers_from_query(query: str) -> List[str]:
@@ -788,7 +922,8 @@ def _get_chunk_embedding_optimized(chunk: Dict) -> np.ndarray:
     
     # Encode text
     text = chunk.get("text", "") if isinstance(chunk, dict) else str(chunk)
-    embedding = bi_model.encode([text], normalize_embeddings=True, convert_to_numpy=True)[0]
+    model = _load_bi_encoder()  # Lazy load nếu chưa có
+    embedding = model.encode([text], normalize_embeddings=True, convert_to_numpy=True)[0]
     
     # Cache theo chunk_id nếu có
     if chunk_id is not None:
@@ -902,6 +1037,10 @@ def _re_rank_with_cross_encoder(query: str, candidate_chunks: List[Dict],
     if not USE_CROSS_ENCODER or len(candidate_chunks) == 0:
         return [(chunk, 0.0, False) for chunk in candidate_chunks[:top_k]]
     
+    # TỐI ƯU VRAM: Clear fragmented VRAM trước khi re-rank (quan trọng cho GPU 4GB)
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+    
     try:
         cross_model = _load_cross_encoder()
         
@@ -925,10 +1064,10 @@ def _re_rank_with_cross_encoder(query: str, candidate_chunks: List[Dict],
             # Cross-encoder đã là relative scorer, normalize per-query làm chunk "trung bình" trông tốt giả
             # Chỉ dùng sigmoid để đưa về [0, 1] mà không làm méo relative ranking
             try:
-                import torch
+                # torch đã được import ở đầu file, không cần import lại
                 # Sigmoid: giữ nguyên relative ranking, chỉ scale về [0, 1]
                 scores = torch.sigmoid(torch.from_numpy(scores)).numpy()
-            except ImportError:
+            except (ImportError, AttributeError):
                 # Fallback: nếu không có torch, dùng scipy hoặc không normalize
                 try:
                     from scipy.special import expit  # expit = sigmoid
@@ -996,7 +1135,8 @@ def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata
         # QUAN TRỌNG: Normalize query embeddings để match với index (đã normalize)
         # Normalize + Inner Product = cosine similarity chuẩn
         # Sử dụng expanded_query để có recall tốt hơn
-        q_emb = bi_model.encode([expanded_query], normalize_embeddings=True, convert_to_numpy=True)
+        model = _load_bi_encoder()  # Lazy load nếu chưa có
+        q_emb = model.encode([expanded_query], normalize_embeddings=True, convert_to_numpy=True)
         D, I = index.search(np.array(q_emb).astype("float32"), top_k)
         results = [chunks[i] if isinstance(chunks[i], str) else chunks[i].get("text", "") 
                    for i in I[0]]
@@ -1010,7 +1150,8 @@ def search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata
     # QUAN TRỌNG: Normalize query embeddings để match với index (đã normalize)
     # Normalize + Inner Product = cosine similarity chuẩn
     # Sử dụng expanded_query để có recall tốt hơn
-    q_emb = bi_model.encode([expanded_query], normalize_embeddings=True, convert_to_numpy=True)
+    model = _load_bi_encoder()  # Lazy load nếu chưa có
+    q_emb = model.encode([expanded_query], normalize_embeddings=True, convert_to_numpy=True, batch_size=EMBEDDING_BATCH_SIZE)
     D, I = index.search(np.array(q_emb).astype("float32"), STAGE1_TOP_K)
     
     for idx, score in zip(I[0], D[0]):
@@ -1607,7 +1748,7 @@ def _format_conversation_history(history: List[Dict], max_messages: int = 10) ->
 
 def ask_sth(query, return_metadata=False, use_advanced=True, conversation_history=None):
     """
-    Trả lời câu hỏi sử dụng RAG (Retrieval-Augmented Generation) với Gemini API.
+    Trả lời câu hỏi sử dụng RAG (Retrieval-Augmented Generation) với Groq API.
     Phiên bản cải tiến với dynamic prompt, citation, confidence score, và conversation history.
     
     Args:
@@ -1627,7 +1768,7 @@ def ask_sth(query, return_metadata=False, use_advanced=True, conversation_histor
     """
     try:
         # Tìm kiếm context với metadata
-        contexts_metadata = search_faiss(query, top_k=3, use_multi_stage=True, return_metadata=True)
+        contexts_metadata = search_faiss(query, top_k=FINAL_TOP_K, use_multi_stage=True, return_metadata=True)
         
         if not contexts_metadata:
             if return_metadata:
@@ -1685,49 +1826,47 @@ Hãy sử dụng thông tin ngữ cảnh sau đây để trả lời câu hỏi 
 
 ### Trả lời (BẮT ĐẦU NGAY với nội dung, KHÔNG giới thiệu, PHẢI XUỐNG DÒNG giữa các đoạn):"""
         
-        # Gửi request đến Gemini API với retry và exponential backoff
-        max_retries = 3
-        base_delay = 1.0  # seconds
-        
+        if client is None:
+            raise RuntimeError("GROQ_API_KEY is not set. Please configure it in environment variables.")
+
+        # Gửi request đến Groq API với primary + fallback model khi bị rate limit
+        primary_model = GROQ_PRIMARY_MODEL
+        fallback_model = GROQ_FALLBACK_MODEL
+
+        messages = [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": prompt},
+        ]
+
+        def _call_groq(model_name: str):
+            return client.chat.completions.create(
+                model=model_name,
+                messages=messages,
+                max_tokens=GROQ_MAX_TOKENS,
+                temperature=GROQ_TEMPERATURE,
+            )
+
         answer = None
-        last_error = None
-        
-        for attempt in range(max_retries):
-            try:
-                # Gửi request đến Gemini API
-                response = gemini_model.generate_content(
-                    prompt,
-                    generation_config={
-                        "temperature": 0.7,
-                        "max_output_tokens": 8192,
-                    }
-                )
-                answer = response.text.strip()
-                break  # Thành công, thoát khỏi retry loop
-            except Exception as e:
-                last_error = e
-                error_str = str(e).lower()
-                # Chỉ retry cho các lỗi có thể recover (network, rate limit, timeout)
-                retryable_errors = ["timeout", "rate limit", "quota", "network", "connection", "503", "429", "500"]
-                is_retryable = any(err in error_str for err in retryable_errors)
-                
-                if attempt < max_retries - 1 and is_retryable:
-                    # Exponential backoff: delay = base_delay * (2^attempt)
-                    delay = base_delay * (2 ** attempt)
-                    print(f"⚠️  Lỗi khi gọi Gemini API (attempt {attempt + 1}/{max_retries}): {str(e)}")
-                    print(f"   Retry sau {delay:.1f} giây...")
-                    time.sleep(delay)
-                elif not is_retryable:
-                    # Lỗi không thể retry (ví dụ: invalid API key, bad request)
-                    print(f"❌ Lỗi không thể retry: {str(e)}")
+        try:
+            response = _call_groq(primary_model)
+            answer = (response.choices[0].message.content or "").strip()
+        except Exception as e:
+            error_str = str(e)
+            # Nếu bị rate limit (429) thì fallback sang model khác
+            if "429" in error_str or "rate limit" in error_str.lower():
+                print(f"⚠️  Rate limit với model {primary_model}, fallback sang {fallback_model}...")
+                try:
+                    response = _call_groq(fallback_model)
+                    answer = (response.choices[0].message.content or "").strip()
+                except Exception as e2:
+                    print(f"❌ Lỗi khi gọi Groq với fallback model: {e2}")
                     raise
-                else:
-                    # Lần thử cuối cùng thất bại
-                    print(f"❌ Lỗi khi gọi Gemini API sau {max_retries} lần thử: {str(e)}")
-                    raise Exception(f"Không thể lấy response từ Gemini API sau {max_retries} lần thử: {str(e)}")
-        
-        if answer is None:
-            raise Exception(f"Không thể lấy response từ Gemini API: {last_error}")
+            else:
+                print(f"❌ Lỗi khi gọi Groq API: {e}")
+                raise
+
+        if not answer:
+            raise Exception("Không nhận được nội dung trả lời từ Groq API.")
         
         # Post-processing: Loại bỏ các cụm từ không cần thiết
         unwanted_phrases = [
@@ -1855,7 +1994,7 @@ Hãy sử dụng thông tin ngữ cảnh sau đây để trả lời câu hỏi 
             return answer
             
     except Exception as e:
-        error_msg = f"❌ Lỗi khi gọi Gemini API: {str(e)}"
+        error_msg = f"❌ Lỗi khi gọi Groq API: {str(e)}"
         if return_metadata:
             return {
                 "answer": error_msg,

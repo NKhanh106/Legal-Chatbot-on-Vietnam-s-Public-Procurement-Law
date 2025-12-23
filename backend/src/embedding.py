@@ -2,6 +2,7 @@
 Advanced embedding system for RAG (Retrieval-Augmented Generation).
 Tối ưu hóa cho tài liệu pháp luật Việt Nam.
 """
+import torch
 from sentence_transformers import SentenceTransformer
 import faiss
 import numpy as np
@@ -56,7 +57,9 @@ DATA_TEXT_DIR = os.path.join(DATA_DIR, "text")
 STORE_DIR = os.path.join(PROJECT_ROOT, "data")
 
 # Configuration
-EMBEDDING_MODEL = "bkai-foundation-models/vietnamese-bi-encoder"
+# Cho phép override qua ENV để dễ thử nghiệm model khác
+EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL_NAME", "BAAI/bge-m3")
+EMBEDDING_MAX_LENGTH = int(os.getenv("EMBEDDING_MAX_LENGTH", "1024"))
 
 # ============================================================================
 # CHUNKING PARAMETERS - Tối ưu cho văn bản pháp luật lớn
@@ -90,7 +93,8 @@ MIN_CHUNK_SIZE = 10  # Chunk tối thiểu có ý nghĩa
 #   + Một số Điều pháp luật có thể rất dài (1000+ từ)
 MAX_CHUNK_SIZE = 1500  # Chunk tối đa để giữ nguyên Điều dài
 
-DEVICE = 'cuda' if os.getenv("CUDA_VISIBLE_DEVICES") else 'cpu'
+DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
+print(f"🖥️ Running on device: {DEVICE}")
 
 # FAISS Index Configuration
 USE_IVF_INDEX = True  # Sử dụng IndexIVFFlat cho hiệu suất tốt hơn với large datasets
@@ -101,8 +105,8 @@ PQ_BITS = 8  # Số bits cho mỗi subquantizer (chỉ dùng khi USE_COMPRESSED_
 
 # Performance Optimization
 AUTO_BATCH_SIZE = True  # Tự động điều chỉnh batch size
-DEFAULT_BATCH_SIZE = 32  # Batch size mặc định
-MAX_BATCH_SIZE = 128  # Batch size tối đa (cho GPU mạnh)
+DEFAULT_BATCH_SIZE = 16  # Giảm để tránh OOM với BGE-M3 (nặng hơn BKAI)
+MAX_BATCH_SIZE = 64  # Giảm trần batch cho model lớn
 MIN_BATCH_SIZE = 8  # Batch size tối thiểu (cho CPU hoặc GPU yếu)
 VALIDATE_CHUNKS = True  # Validate chunks trước khi embed
 
@@ -278,6 +282,9 @@ class LegalDocumentChunker:
             
             # Phát hiện bảng markdown (bắt đầu bằng |)
             is_table_line = '|' in line_stripped and line_stripped.count('|') >= 2
+            
+            # Khởi tạo is_legal_boundary mặc định là False
+            is_legal_boundary = False
             
             if is_table_line:
                 # Nếu đang trong table, tiếp tục thêm vào
@@ -804,13 +811,34 @@ class LegalDocumentChunker:
 class EmbeddingSystem:
     """Hệ thống embedding tối ưu cho RAG."""
     
-    def __init__(self, model_name: str = EMBEDDING_MODEL, device: str = DEVICE):
-        print(f"🔄 Đang load embedding model: {model_name}")
-        self.model = SentenceTransformer(model_name, device=device)
-        self.dimension = self.model.get_sentence_embedding_dimension()
-        print(f"✅ Model loaded. Dimension: {self.dimension}")
+    def __init__(self, model_name: str = EMBEDDING_MODEL, device: str = DEVICE, load_model: bool = True):
+        self.model_name = model_name
+        self.device = device
+        self.model = None
+        self.dimension = None
+        if load_model:
+            self._ensure_model_loaded()
         
         self.chunker = LegalDocumentChunker()
+
+    def _ensure_model_loaded(self):
+        """Lazy load model khi cần để tránh load 2 lần khi chỉ chunking."""
+        if self.model is not None:
+            return
+        print(f"🔄 Đang load embedding model: {self.model_name}")
+        model_kwargs = {}
+        if self.device == 'cuda':
+            # Sử dụng dtype thay vì torch_dtype (deprecated)
+            model_kwargs["dtype"] = torch.float16  # Giảm VRAM cho BGE-M3
+        self.model = SentenceTransformer(self.model_name, device=self.device, model_kwargs=model_kwargs)
+        # BGE-M3 hỗ trợ sequence length tới 8192; dùng 1024 để cân bằng hiệu năng
+        try:
+            self.model.max_seq_length = EMBEDDING_MAX_LENGTH
+        except Exception:
+            # Không phải model nào cũng expose max_seq_length, nên ignore nếu không set được
+            pass
+        self.dimension = self.model.get_sentence_embedding_dimension()
+        print(f"✅ Model loaded. Dimension: {self.dimension}")
     
     def process_file(self, file_path: str) -> Tuple[List[Dict], str]:
         """
@@ -990,6 +1018,7 @@ class EmbeddingSystem:
         Returns:
             Numpy array của embeddings
         """
+        self._ensure_model_loaded()
         # Validate chunks
         validated_chunks = self._validate_chunks(chunks)
         
@@ -1038,7 +1067,11 @@ class EmbeddingSystem:
     
     def create_faiss_index(self, embeddings: np.ndarray, use_ivf: bool = USE_IVF_INDEX) -> faiss.Index:
         """
-        Tạo FAISS index tối ưu với auto-tuning.
+        Tạo FAISS index với chiến lược "Accuracy First" cho dữ liệu pháp luật.
+        - Ưu tiên IndexFlatIP (exact) cho dataset < 50k vectors.
+        - Dùng IndexIVFFlat (không nén) cho 50k - 1M vectors (nhanh hơn, vẫn giữ nguyên vector).
+        - Chỉ dùng IndexIVFPQ (nén, giảm độ chính xác) khi >1M vectors hoặc bắt buộc do bộ nhớ.
+        Normalize + Inner Product = cosine similarity chuẩn cho embeddings đã normalize.
         
         Args:
             embeddings: Embeddings array
@@ -1057,73 +1090,53 @@ class EmbeddingSystem:
         # Điều chỉnh số clusters dựa trên số lượng vectors
         optimal_clusters = min(N_CLUSTERS, max(4, n_vectors // 10))
         
-        # QUAN TRỌNG: Embeddings đã được normalize, nên dùng Inner Product (IP) thay vì L2
-        # Normalize + IP = cosine similarity chuẩn (tối ưu nhất)
-        # L2 + normalize = gần đúng nhưng không tối ưu
-        
-        # Quyết định loại index dựa trên kích thước dataset
-        if n_vectors < 5000:
-            # Small dataset: sử dụng IndexFlatIP (exact search, nhanh cho datasets nhỏ)
-            print("   Sử dụng IndexFlatIP (Inner Product - exact search, phù hợp cho datasets nhỏ)")
-            print("   ⚡ Tối ưu: Normalize + IP = cosine similarity chuẩn")
+        # Nếu tắt IVF, ép dùng exact search
+        if not use_ivf:
+            print("   🧭 USE_IVF_INDEX=False -> dùng IndexFlatIP (exact, accuracy-first)")
             index = faiss.IndexFlatIP(dimension)
             index.add(embeddings.astype('float32'))
             print("   ✅ IndexFlatIP đã được tạo")
-        elif USE_COMPRESSED_INDEX and n_vectors > 100000:
-            # Very large dataset (>100k): sử dụng IndexIVFPQ (compressed, tiết kiệm memory)
-            # Lưu ý: IndexIVFPQ có thể không hỗ trợ Inner Product tốt, cần kiểm tra
-            print(f"   Sử dụng IndexIVFPQ (compressed index - phù hợp cho datasets rất lớn >100k)")
-            print(f"   PQ parameters: m={PQ_M}, bits={PQ_BITS}")
-            print("   ⚠️  Lưu ý: IndexIVFPQ với IP có thể không tối ưu, cân nhắc dùng IndexIVFFlat với IP")
+            return index
+        
+        # Chiến lược Accuracy First
+        if n_vectors < 50_000:
+            # Small/medium dataset: exact search
+            print("   🧭 Accuracy First: dùng IndexFlatIP (exact) cho <50k vectors")
+            print("   ⚡ Normalize + IP = cosine similarity chuẩn, không mất mát thông tin")
+            index = faiss.IndexFlatIP(dimension)
+            index.add(embeddings.astype('float32'))
+            print("   ✅ IndexFlatIP đã được tạo")
+        elif n_vectors <= 1_000_000:
+            # Medium-large dataset: IVF without compression
+            print(f"   🧭 Accuracy First: dùng IndexIVFFlat (no compression) cho 50k-1M vectors")
+            print("   ⚡ Không nén vector -> giữ nguyên độ chính xác của BGE-M3, vẫn tăng tốc nhờ clustering")
+            quantizer = faiss.IndexFlatIP(dimension)
+            index = faiss.IndexIVFFlat(quantizer, dimension, optimal_clusters, faiss.METRIC_INNER_PRODUCT)
             
-            # Vẫn dùng IP quantizer cho consistency
+            print("   🔄 Đang train index (IVFFlat)...")
+            index.train(embeddings.astype('float32'))
+            index.add(embeddings.astype('float32'))
+            
+            # nprobe: cân bằng speed/accuracy, ưu tiên accuracy
+            index.nprobe = min(max(8, optimal_clusters // 8), 64)
+            print(f"   ✅ IndexIVFFlat đã được tạo (nprobe={index.nprobe}, metric=INNER_PRODUCT)")
+        else:
+            # Very large dataset: allow PQ but warn about accuracy loss
+            print("   ⚠️  Dataset >1M vectors -> dùng IndexIVFPQ (compressed) để tiết kiệm bộ nhớ")
+            print("   ⚠️  PQ có thể giảm độ chính xác cho các điều khoản luật gần nghĩa; chỉ dùng khi bắt buộc.")
+            print(f"   PQ parameters: m={PQ_M}, bits={PQ_BITS}")
+            
             quantizer = faiss.IndexFlatIP(dimension)
             index = faiss.IndexIVFPQ(quantizer, dimension, optimal_clusters, PQ_M, PQ_BITS)
             index.metric_type = faiss.METRIC_INNER_PRODUCT
             
-            # Train index
-            print("   🔄 Đang train index...")
+            print("   🔄 Đang train index (IVFPQ)...")
             index.train(embeddings.astype('float32'))
-            
-            # Add vectors
             index.add(embeddings.astype('float32'))
             
-            # Tự động điều chỉnh nprobe
-            index.nprobe = min(optimal_clusters // 4, 50)
-            
-            print(f"   ✅ IndexIVFPQ đã được tạo và train (nprobe={index.nprobe}, metric=INNER_PRODUCT)")
-            print(f"   💾 Memory: ~{n_vectors * dimension * PQ_BITS / 8 / (1024**2):.1f} MB (compressed)")
-        elif use_ivf and n_vectors > optimal_clusters * 10:
-            # Medium to large dataset: sử dụng IndexIVFFlat với Inner Product (cân bằng tốt)
-            print(f"   Sử dụng IndexIVFFlat với {optimal_clusters} clusters (phù hợp cho datasets vừa và lớn)")
-            print("   ⚡ Tối ưu: Normalize + IP = cosine similarity chuẩn")
-            
-            # Sử dụng Inner Product quantizer và metric
-            quantizer = faiss.IndexFlatIP(dimension)
-            index = faiss.IndexIVFFlat(quantizer, dimension, optimal_clusters, faiss.METRIC_INNER_PRODUCT)
-            
-            # Train index
-            print("   🔄 Đang train index...")
-            index.train(embeddings.astype('float32'))
-            
-            # Add vectors
-            index.add(embeddings.astype('float32'))
-            
-            # Tự động điều chỉnh nprobe dựa trên số lượng vectors
-            # nprobe càng lớn thì search càng chính xác nhưng chậm hơn
-            if n_vectors < 10000:
-                index.nprobe = min(optimal_clusters // 2, 20)  # Medium dataset
-            else:
-                index.nprobe = min(optimal_clusters // 4, 50)  # Large dataset: balance speed/accuracy
-            
-            print(f"   ✅ IndexIVFFlat đã được tạo và train (nprobe={index.nprobe}, metric=INNER_PRODUCT)")
-        else:
-            # Fallback: IndexFlatIP
-            print("   Sử dụng IndexFlatIP (Inner Product - exact search)")
-            print("   ⚡ Tối ưu: Normalize + IP = cosine similarity chuẩn")
-            index = faiss.IndexFlatIP(dimension)
-            index.add(embeddings.astype('float32'))
-            print("   ✅ IndexFlatIP đã được tạo")
+            index.nprobe = min(max(16, optimal_clusters // 6), 80)
+            print(f"   ✅ IndexIVFPQ đã được tạo (nprobe={index.nprobe}, metric=INNER_PRODUCT)")
+            print(f"   💾 Approx memory (compressed): ~{n_vectors * dimension * PQ_BITS / 8 / (1024**2):.1f} MB")
         
         return index
     
@@ -1289,7 +1302,7 @@ def process_all_files(data_dir: str = DATA_TEXT_DIR,
         print("📚 Sẽ gom tất cả file thành một index duy nhất")
     print("=" * 60)
     
-    embedding_system = EmbeddingSystem()
+    embedding_system = EmbeddingSystem(load_model=False)
     all_chunks = []
     results_dict = {}  # Dùng cho legacy mode
     

@@ -71,7 +71,7 @@ Thư mục này chứa các module core của hệ thống RAG (Retrieval-Augmen
 **Các hàm chính:**
 - `load_rag_system()`: Load FAISS index và chunks
 - `search_faiss()`: Main search function với multi-stage pipeline
-- `ask_sth()`: Generate answer từ query
+- `ask_sth()`: Generate answer từ query (gọi Groq LLM API)
 - `_re_rank_with_cross_encoder()`: Cross-encoder re-ranking với batching
 - `_check_diversity_constraints()`: Hard/soft diversity filtering
 - `_create_dynamic_prompt()`: Tạo optimized prompt (3-layer)
@@ -80,7 +80,7 @@ Thư mục này chứa các module core của hệ thống RAG (Retrieval-Augmen
 - RRF thay vì normalize + weighted sum (stable ranking)
 - Batch processing cho cross-encoder
 - Cached embeddings theo chunk_id
-- Retry logic với exponential backoff
+- Rate‑limit aware fallback giữa các Groq models (primary/fallback)
 - Prompt optimization (60% token reduction)
 
 ---
@@ -93,8 +93,8 @@ Thư mục này chứa các module core của hệ thống RAG (Retrieval-Augmen
 - Tối ưu chunking cho văn bản pháp luật
 
 **Công nghệ sử dụng:**
-- **Sentence Transformers**: Vietnamese Bi-Encoder model
-- **FAISS**: Vector index (IndexFlatIP, IndexIVFFlat, IndexIVFPQ)
+- **Sentence Transformers**: Bi-Encoder `BAAI/bge-m3` (1024‑dim, normalized embeddings, fp16 trên GPU)
+- **FAISS (CPU)**: Vector index (IndexFlatIP, IndexIVFFlat, IndexIVFPQ)
 - **NumPy**: Array operations
 - **Pickle**: Serialize metadata
 
