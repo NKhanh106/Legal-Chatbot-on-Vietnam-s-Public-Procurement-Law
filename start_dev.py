@@ -1,6 +1,7 @@
 """
 Script để khởi động cả backend và frontend cùng lúc.
 Sử dụng subprocess để chạy cả 2 processes song song.
+Pre-load models trước khi start server để tránh delay khi user đầu tiên gửi query.
 """
 import subprocess
 import sys
@@ -13,6 +14,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).parent.absolute()
 BACKEND_DIR = PROJECT_ROOT / "backend" / "api"
 FRONTEND_DIR = PROJECT_ROOT / "frontend"
+BACKEND_SRC_DIR = PROJECT_ROOT / "backend" / "src"
 
 def check_dependencies():
     """Kiểm tra dependencies cần thiết."""
@@ -79,6 +81,99 @@ def check_dependencies():
         print(f"   ⚠️  npm check failed: {e}, but will try anyway")
     
     return True
+
+def preload_models():
+    """
+    Pre-load tất cả models (bi-encoder, cross-encoder, BM25) trước khi start server.
+    Điều này đảm bảo models được load sẵn, tránh delay khi user đầu tiên gửi query.
+    """
+    print("\n" + "=" * 60)
+    print("🔄 PRE-LOADING MODELS...")
+    print("=" * 60)
+    
+    # Thêm backend/src vào Python path
+    if BACKEND_SRC_DIR.exists():
+        sys.path.insert(0, str(BACKEND_SRC_DIR.parent))
+        sys.path.insert(0, str(BACKEND_SRC_DIR))
+    else:
+        print("   ⚠️  Backend src directory not found!")
+        return False
+    
+    try:
+        # Import RAG system
+        print("   📥 Importing RAG system...")
+        from src import query
+        print("   ✅ RAG system imported")
+        
+        # Kiểm tra xem RAG system đã load index và chunks chưa
+        if not hasattr(query, 'index') or query.index is None:
+            print("   ⚠️  FAISS Index chưa được load")
+        else:
+            print(f"   ✅ FAISS Index: {query.index.ntotal} vectors")
+        
+        if not hasattr(query, 'chunks') or not query.chunks:
+            print("   ⚠️  Chunks chưa được load")
+        else:
+            print(f"   ✅ Chunks: {len(query.chunks)} chunks")
+        
+        # 1. Pre-load bi-encoder (embedding model)
+        print("\n   📥 [1/3] Loading bi-encoder model (BGE-M3)...")
+        try:
+            if hasattr(query, '_load_bi_encoder'):
+                query._load_bi_encoder()
+                if hasattr(query, 'bi_model') and query.bi_model is not None:
+                    print("   ✅ [1/3] Bi-encoder model loaded successfully")
+                else:
+                    print("   ⚠️  [1/3] Bi-encoder model function called but model is None")
+            else:
+                print("   ⚠️  [1/3] _load_bi_encoder function not found")
+        except Exception as e:
+            print(f"   ❌ [1/3] Error loading bi-encoder: {e}")
+        
+        # 2. Pre-load cross-encoder (reranking model)
+        print("\n   📥 [2/3] Loading cross-encoder model (BGE-Reranker)...")
+        try:
+            if hasattr(query, '_load_cross_encoder'):
+                query._load_cross_encoder()
+                if hasattr(query, 'cross_encoder_model') and query.cross_encoder_model is not None:
+                    print("   ✅ [2/3] Cross-encoder model loaded successfully")
+                else:
+                    print("   ⚠️  [2/3] Cross-encoder model function called but model is None")
+            else:
+                print("   ⚠️  [2/3] _load_cross_encoder function not found")
+        except Exception as e:
+            print(f"   ❌ [2/3] Error loading cross-encoder: {e}")
+        
+        # 3. Pre-load BM25 index (cần chunks đã được load)
+        print("\n   📥 [3/3] Building BM25 index...")
+        try:
+            if hasattr(query, 'chunks') and query.chunks and len(query.chunks) > 0:
+                if hasattr(query, '_build_bm25_index'):
+                    query._build_bm25_index()
+                    if hasattr(query, '_bm25_index') and query._bm25_index is not None:
+                        print(f"   ✅ [3/3] BM25 index built successfully ({len(query.chunks)} documents)")
+                    else:
+                        print("   ⚠️  [3/3] BM25 index function called but index is None")
+                else:
+                    print("   ⚠️  [3/3] _build_bm25_index function not found")
+            else:
+                print("   ⚠️  [3/3] Chunks not loaded yet, skipping BM25 index build")
+        except Exception as e:
+            print(f"   ❌ [3/3] Error building BM25 index: {e}")
+        
+        print("\n" + "=" * 60)
+        print("✅ MODELS PRE-LOADING COMPLETED!")
+        print("=" * 60 + "\n")
+        return True
+        
+    except ImportError as e:
+        print(f"   ❌ Error importing RAG system: {e}")
+        print("   ⚠️  Models will be loaded on-demand when first query is received")
+        return False
+    except Exception as e:
+        print(f"   ❌ Critical error during model preloading: {e}")
+        print("   ⚠️  Models will be loaded on-demand when first query is received")
+        return False
 
 def start_backend():
     """Khởi động backend server."""
@@ -247,6 +342,10 @@ def main():
     if not check_dependencies():
         print("\n❌ Dependency check failed. Please install required dependencies.")
         sys.exit(1)
+    
+    # Pre-load models trước khi start backend
+    # Điều này đảm bảo models được load sẵn, tránh delay khi user đầu tiên gửi query
+    preload_models()
     
     # Start backend
     backend_process = start_backend()
