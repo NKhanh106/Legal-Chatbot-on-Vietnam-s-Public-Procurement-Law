@@ -26,7 +26,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Get project root directory
+# Lấy thư mục gốc của dự án
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DOCUMENTS_DIR = os.path.join(PROJECT_ROOT, "documents")
 MARKDOWN_DIR = os.path.join(DOCUMENTS_DIR, "markdown")  # Thư mục lưu markdown từ PDF
@@ -45,7 +45,7 @@ except ImportError as e:
     logger.error("Vui lòng cài đặt: pip install pytesseract pdf2image pillow numpy")
     sys.exit(1)
 
-# Optional imports cho advanced preprocessing (ảnh chụp/scan)
+# Import tùy chọn cho xử lý tiền kỳ nâng cao (ảnh chụp/scan)
 try:
     from scipy import ndimage
     HAS_SCIPY = True
@@ -60,7 +60,7 @@ except ImportError:
     HAS_SKLEARN = False
     logger.debug("⚠️  sklearn không có - deskewing sẽ dùng phương pháp đơn giản hơn")
 
-# Cache cho language detection (tránh gọi subprocess nhiều lần)
+# Cache cho phát hiện ngôn ngữ (tránh gọi subprocess nhiều lần)
 _cached_language = None
 
 def _deskew_image(image: Image.Image, max_angle: float = 5.0) -> Image.Image:
@@ -384,10 +384,10 @@ def read_pdf_to_markdown(
             
             # ========== TIỀN XỬ LÝ ẢNH CHO ẢNH CHỤP/SCAN ==========
             
-            # 1. Grayscale conversion
+            # 1. Chuyển đổi sang ảnh xám
             gray_image = image.convert('L')
             
-            # 2. Noise reduction (quan trọng cho ảnh chụp có nhiễu)
+            # 2. Giảm nhiễu (quan trọng cho ảnh chụp có nhiễu)
             if HAS_SCIPY:
                 # Median filter để loại bỏ nhiễu (tốt cho ảnh chụp)
                 img_array = np.array(gray_image)
@@ -407,11 +407,11 @@ def read_pdf_to_markdown(
                 # Nếu deskewing fail, tiếp tục với ảnh gốc
                 pass
             
-            # 4. Contrast enhancement (tăng độ tương phản)
+            # 4. Tăng độ tương phản (Contrast enhancement)
             enhancer = ImageEnhance.Contrast(gray_image)
             gray_image = enhancer.enhance(1.3)  # Tăng 30% (tăng từ 20% cho ảnh chụp)
             
-            # 5. Brightness adjustment (điều chỉnh độ sáng)
+            # 5. Điều chỉnh độ sáng (Brightness adjustment)
             enhancer = ImageEnhance.Brightness(gray_image)
             # Tự động điều chỉnh brightness dựa trên mean
             try:
@@ -425,7 +425,7 @@ def read_pdf_to_markdown(
             except:
                 pass
             
-            # 6. Binarization: Chuyển sang ảnh nhị phân (đen/trắng) - CẢI THIỆN cho ảnh chụp
+            # 6. Nhị phân hóa: Chuyển sang ảnh nhị phân (đen/trắng) - Cải thiện cho ảnh chụp
             try:
                 img_array = np.array(gray_image)
                 
@@ -481,7 +481,7 @@ def read_pdf_to_markdown(
             
             return (page_num, text)
         
-        # Parallel OCR processing (sử dụng ThreadPoolExecutor)
+        # Xử lý OCR song song (sử dụng ThreadPoolExecutor)
         # Tesseract có thể chạy parallel với thread-safe
         max_workers = min(4, len(images), os.cpu_count() or 1)  # Tối đa 4 workers hoặc số cores
         logger.info(f"   ⚡ Sử dụng {max_workers} workers để OCR song song...")

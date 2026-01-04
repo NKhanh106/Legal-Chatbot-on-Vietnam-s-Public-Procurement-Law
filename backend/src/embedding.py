@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import List, Dict, Tuple, Optional
 # tqdm và json không được sử dụng trong code hiện tại, có thể dùng trong tương lai
 
-# Helper function để lấy short path trên Windows (tránh lỗi Unicode với FAISS)
+# Hàm hỗ trợ lấy đường dẫn ngắn trên Windows (tránh lỗi Unicode với FAISS)
 def get_short_path(long_path: str) -> str:
     """
     Lấy short path (8.3 format) trên Windows để tránh lỗi Unicode với FAISS.
@@ -47,7 +47,7 @@ def get_short_path(long_path: str) -> str:
     # Nếu không thể lấy short path, trả về path gốc
     return long_path
 
-# Get the project root directory
+# Lấy thư mục gốc của dự án
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # DATA_DIR: Thư mục chứa file input (sau khi preprocess, file .txt sẽ ở đây)
 DATA_DIR = os.path.join(PROJECT_ROOT, "data")
@@ -56,7 +56,7 @@ DATA_TEXT_DIR = os.path.join(DATA_DIR, "text")
 # STORE_DIR: Thư mục lưu index và metadata (cùng với data/)
 STORE_DIR = os.path.join(PROJECT_ROOT, "data")
 
-# Configuration
+# Cấu hình
 # Cho phép override qua ENV để dễ thử nghiệm model khác
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL_NAME", "BAAI/bge-m3")
 EMBEDDING_MAX_LENGTH = int(os.getenv("EMBEDDING_MAX_LENGTH", "1024"))
@@ -96,14 +96,14 @@ MAX_CHUNK_SIZE = 1500  # Chunk tối đa để giữ nguyên Điều dài
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 print(f"🖥️ Running on device: {DEVICE}")
 
-# FAISS Index Configuration
+# Cấu hình FAISS Index
 USE_IVF_INDEX = True  # Sử dụng IndexIVFFlat cho hiệu suất tốt hơn với large datasets
 USE_COMPRESSED_INDEX = False  # Sử dụng IndexPQ/IndexIVFPQ cho datasets rất lớn (>100k chunks) - giảm memory
 N_CLUSTERS = 100  # Số clusters cho IVF index (tăng nếu có nhiều chunks)
 PQ_M = 64  # Số subquantizers cho Product Quantization (chỉ dùng khi USE_COMPRESSED_INDEX=True)
 PQ_BITS = 8  # Số bits cho mỗi subquantizer (chỉ dùng khi USE_COMPRESSED_INDEX=True)
 
-# Performance Optimization
+# Tối ưu hóa hiệu suất
 AUTO_BATCH_SIZE = True  # Tự động điều chỉnh batch size
 DEFAULT_BATCH_SIZE = 16  # Giảm để tránh OOM với BGE-M3 (nặng hơn BKAI)
 MAX_BATCH_SIZE = 64  # Giảm trần batch cho model lớn

@@ -15,7 +15,7 @@ import math
 import time
 from functools import lru_cache
 
-# Fix Unicode encoding trên Windows PowerShell
+# Xử lý lỗi Unicode encoding trên Windows PowerShell
 # Set UTF-8 encoding cho stdout/stderr để tránh lỗi khi in emoji
 if sys.platform == 'win32':
     try:
@@ -28,7 +28,7 @@ if sys.platform == 'win32':
         # Fallback: set environment variable
         os.environ['PYTHONIOENCODING'] = 'utf-8'
 
-# BM25 optimization: Use rank-bm25 for fast inverted index search
+# Tối ưu hóa BM25: Sử dụng rank-bm25 để tìm kiếm index đảo ngược nhanh chóng
 try:
     from rank_bm25 import BM25Okapi
     HAS_RANK_BM25 = True
@@ -37,7 +37,7 @@ except ImportError:
     print("⚠️  rank-bm25 not installed. Install with: pip install rank-bm25")
     print("   Falling back to manual BM25 (slower for large datasets)")
 
-# Vietnamese tokenizer (optional, fallback to simple regex if not available)
+# Tokenizer tiếng Việt (tùy chọn, quay về regex đơn giản nếu không có)
 _pyvi_tokenizer = None
 try:
     try:
@@ -61,13 +61,13 @@ if not HAS_PYVI:
     print("⚠️  Vietnamese tokenizer (pyvi/underthesea) không có. Sử dụng regex tokenizer (kém chính xác hơn).")
     print("   Cài đặt: pip install pyvi hoặc pip install underthesea")
 
-# Get the project root directory (parent of backend/src)
+# Lấy thư mục gốc của dự án (cha của backend/src)
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATA_DIR = os.path.join(PROJECT_ROOT, "data")
 CONFIG_DIR = os.path.join(PROJECT_ROOT, "backend", "config")
 sys.path.insert(0, CONFIG_DIR)
 
-# Helper function để lấy short path trên Windows (tránh lỗi Unicode với FAISS)
+# Hàm hỗ trợ lấy đường dẫn ngắn trên Windows (tránh lỗi Unicode với FAISS)
 def get_short_path(long_path: str) -> str:
     """
     Lấy short path (8.3 format) trên Windows để tránh lỗi Unicode với FAISS.
@@ -146,7 +146,7 @@ def safe_read_faiss_index(index_path: str):
         else:
             raise
 
-# Load environment variables from .env.local (project root) if present
+# Cấu hình biến môi trường từ .env.local (gốc dự án) nếu có
 # Sử dụng absolute path để đảm bảo tìm đúng file dù chạy từ đâu
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 env_local_path = os.path.join(PROJECT_ROOT, ".env.local")
@@ -161,7 +161,7 @@ else:
         print(f"⚠️  .env.local not found at: {env_local_path}")
         print("   Please create .env.local file in project root with GROQ_API_KEY")
 
-# Groq client & model configuration
+# Cấu hình client và model Groq
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 if not GROQ_API_KEY:
     print("⚠️  WARNING: GROQ_API_KEY not found! Please set it in environment variables.")
@@ -186,7 +186,7 @@ USE_GPU_FOR_RERANKING = os.getenv("USE_GPU_FOR_RERANKING", "auto").lower()
 # Batch size cho encoding (tăng để tận dụng GPU tốt hơn)
 EMBEDDING_BATCH_SIZE = int(os.getenv("EMBEDDING_BATCH_SIZE", "32"))  # Tăng từ mặc định 8-16 lên 32
 
-# Configuration for Advanced Multi-Stage Retrieval
+# Cấu hình cho hệ thống truy xuất đa tầng nâng cao
 STAGE1_TOP_K = 100  # Số chunks lấy từ FAISS (stage 1) - tăng lên để có nhiều candidates
 STAGE1_BM25_TOP_K = 100  # Số chunks lấy từ BM25 (stage 1) - hybrid search
 STAGE1_HYBRID_TOP_K = 150  # Tổng số chunks sau khi merge FAISS + BM25 (deduplicate)
@@ -203,7 +203,7 @@ USE_DEDUPLICATION = True  # Loại bỏ chunks trùng lặp
 BM25_K1 = 1.5  # BM25 parameter k1
 BM25_B = 0.75  # BM25 parameter b
 
-# Bi-encoder sẽ được load lazy (chỉ khi cần) - TỐI ƯU: Giảm thời gian khởi động
+# Bi-encoder được tải lazy (khi cần thiết) giúp giảm thời gian khởi động
 bi_model = None
 
 # Cross-encoder sẽ được load lazy (chỉ khi cần)
@@ -338,7 +338,7 @@ def load_rag_system(index_name: str = None):
     
     return index, chunks
 
-# Load RAG system
+# Tải hệ thống RAG
 try:
     index, chunks = load_rag_system()
 except FileNotFoundError as e:
@@ -357,7 +357,7 @@ except Exception as e:
     chunks = []
 
 def _load_cross_encoder():
-    """Lazy load cross-encoder model (chỉ load khi cần)."""
+    """Tải model cross-encoder theo cơ chế lazy (chỉ tải khi cần)."""
     global cross_encoder_model
     if cross_encoder_model is None:
         print("🔄 Đang load cross-encoder model cho re-ranking...")
@@ -559,7 +559,7 @@ def _extract_legal_references(query: str) -> Dict:
     
     return references
 
-# BM25 Index (lazy load)
+# BM25 Index (tải lazy)
 _bm25_index = None
 _bm25_doc_freqs = None
 _bm25_idf = None

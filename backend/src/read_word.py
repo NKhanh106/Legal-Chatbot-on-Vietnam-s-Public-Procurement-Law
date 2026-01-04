@@ -17,7 +17,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Get project root directory
+# Lấy thư mục gốc của dự án
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DOCUMENTS_DIR = os.path.join(PROJECT_ROOT, "documents")
 MARKDOWN_DIR = os.path.join(DOCUMENTS_DIR, "markdown")
