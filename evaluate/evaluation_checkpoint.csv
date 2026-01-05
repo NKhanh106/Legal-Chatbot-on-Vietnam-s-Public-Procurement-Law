@@ -1,0 +1,451 @@
+﻿Method,ID,Question,Ground_Truth,Top1_Result,Correct_Retrieval,Faithfulness,Citation_Acc,Latency_ms
+FAISS Only (Retrieval),1,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,9890.94
+FAISS Only (Retrieval),2,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",09_2024_TT-BKHDT_610974,True,N/A,N/A,551.82
+FAISS Only (Retrieval),3,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",22_2023_QH15_518805,True,N/A,N/A,270.71
+FAISS Only (Retrieval),4,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,278.45
+FAISS Only (Retrieval),5,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,245.78
+FAISS Only (Retrieval),6,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,226.15
+FAISS Only (Retrieval),7,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",214_2025_ND-CP_668157,True,N/A,N/A,237.97
+FAISS Only (Retrieval),8,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",09_2024_TT-BKHDT_610974,True,N/A,N/A,233.95
+FAISS Only (Retrieval),9,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,269.34
+FAISS Only (Retrieval),10,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,09_2024_TT-BKHDT_610974,True,N/A,N/A,251.52
+FAISS Only (Retrieval),11,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,250.75
+FAISS Only (Retrieval),12,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",09_2024_TT-BKHDT_610974,True,N/A,N/A,320.79
+FAISS Only (Retrieval),13,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",22_2023_QH15_518805,True,N/A,N/A,313.58
+FAISS Only (Retrieval),14,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,245.4
+FAISS Only (Retrieval),15,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,270.58
+FAISS Only (Retrieval),16,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,391.46
+FAISS Only (Retrieval),17,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",214_2025_ND-CP_668157,True,N/A,N/A,883.18
+FAISS Only (Retrieval),18,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",09_2024_TT-BKHDT_610974,True,N/A,N/A,412.08
+FAISS Only (Retrieval),19,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,317.81
+FAISS Only (Retrieval),20,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,09_2024_TT-BKHDT_610974,True,N/A,N/A,373.49
+FAISS Only (Retrieval),21,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,324.53
+FAISS Only (Retrieval),22,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",09_2024_TT-BKHDT_610974,True,N/A,N/A,284.79
+FAISS Only (Retrieval),23,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",22_2023_QH15_518805,True,N/A,N/A,325.84
+FAISS Only (Retrieval),24,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,316.38
+FAISS Only (Retrieval),25,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,260.91
+FAISS Only (Retrieval),26,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,314.04
+FAISS Only (Retrieval),27,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",214_2025_ND-CP_668157,True,N/A,N/A,305.73
+FAISS Only (Retrieval),28,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",09_2024_TT-BKHDT_610974,True,N/A,N/A,309.57
+FAISS Only (Retrieval),29,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,265.45
+FAISS Only (Retrieval),30,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,09_2024_TT-BKHDT_610974,True,N/A,N/A,296.83
+FAISS Only (Retrieval),31,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,293.88
+FAISS Only (Retrieval),32,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",09_2024_TT-BKHDT_610974,True,N/A,N/A,282.68
+FAISS Only (Retrieval),33,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",22_2023_QH15_518805,True,N/A,N/A,294.94
+FAISS Only (Retrieval),34,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,268.83
+FAISS Only (Retrieval),35,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,263.63
+FAISS Only (Retrieval),36,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,268.46
+FAISS Only (Retrieval),37,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",214_2025_ND-CP_668157,True,N/A,N/A,272.17
+FAISS Only (Retrieval),38,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",09_2024_TT-BKHDT_610974,True,N/A,N/A,268.76
+FAISS Only (Retrieval),39,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,320.49
+FAISS Only (Retrieval),40,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,09_2024_TT-BKHDT_610974,True,N/A,N/A,296.61
+FAISS Only (Retrieval),41,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,291.03
+FAISS Only (Retrieval),42,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",09_2024_TT-BKHDT_610974,True,N/A,N/A,265.92
+FAISS Only (Retrieval),43,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",22_2023_QH15_518805,True,N/A,N/A,603.37
+FAISS Only (Retrieval),44,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,498.27
+FAISS Only (Retrieval),45,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,379.39
+FAISS Only (Retrieval),46,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,314.71
+FAISS Only (Retrieval),47,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",214_2025_ND-CP_668157,True,N/A,N/A,279.65
+FAISS Only (Retrieval),48,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",09_2024_TT-BKHDT_610974,True,N/A,N/A,275.23
+FAISS Only (Retrieval),49,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,374.01
+FAISS Only (Retrieval),50,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,09_2024_TT-BKHDT_610974,True,N/A,N/A,417.11
+FAISS Only (Retrieval),51,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,288.58
+FAISS Only (Retrieval),52,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",09_2024_TT-BKHDT_610974,True,N/A,N/A,269.48
+FAISS Only (Retrieval),53,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",22_2023_QH15_518805,True,N/A,N/A,252.46
+FAISS Only (Retrieval),54,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,275.89
+FAISS Only (Retrieval),55,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,267.78
+FAISS Only (Retrieval),56,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,277.46
+FAISS Only (Retrieval),57,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",214_2025_ND-CP_668157,True,N/A,N/A,268.63
+FAISS Only (Retrieval),58,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",09_2024_TT-BKHDT_610974,True,N/A,N/A,279.28
+FAISS Only (Retrieval),59,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,299.67
+FAISS Only (Retrieval),60,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,09_2024_TT-BKHDT_610974,True,N/A,N/A,277.59
+FAISS Only (Retrieval),61,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,279.21
+FAISS Only (Retrieval),62,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",09_2024_TT-BKHDT_610974,True,N/A,N/A,309.87
+FAISS Only (Retrieval),63,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",22_2023_QH15_518805,True,N/A,N/A,298.61
+FAISS Only (Retrieval),64,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,343.27
+FAISS Only (Retrieval),65,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,302.68
+FAISS Only (Retrieval),66,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,318.88
+FAISS Only (Retrieval),67,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",214_2025_ND-CP_668157,True,N/A,N/A,358.51
+FAISS Only (Retrieval),68,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",09_2024_TT-BKHDT_610974,True,N/A,N/A,319.9
+FAISS Only (Retrieval),69,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,343.89
+FAISS Only (Retrieval),70,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,09_2024_TT-BKHDT_610974,True,N/A,N/A,276.44
+FAISS Only (Retrieval),71,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,336.18
+FAISS Only (Retrieval),72,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",09_2024_TT-BKHDT_610974,True,N/A,N/A,266.75
+FAISS Only (Retrieval),73,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",22_2023_QH15_518805,True,N/A,N/A,302.64
+FAISS Only (Retrieval),74,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,339.96
+FAISS Only (Retrieval),75,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,322.76
+FAISS Only (Retrieval),76,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,357.27
+FAISS Only (Retrieval),77,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",214_2025_ND-CP_668157,True,N/A,N/A,382.51
+FAISS Only (Retrieval),78,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",09_2024_TT-BKHDT_610974,True,N/A,N/A,353.43
+FAISS Only (Retrieval),79,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,446.55
+FAISS Only (Retrieval),80,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,09_2024_TT-BKHDT_610974,True,N/A,N/A,362.26
+FAISS Only (Retrieval),81,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,340.53
+FAISS Only (Retrieval),82,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",09_2024_TT-BKHDT_610974,True,N/A,N/A,517.35
+FAISS Only (Retrieval),83,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",22_2023_QH15_518805,True,N/A,N/A,467.75
+FAISS Only (Retrieval),84,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,364.12
+FAISS Only (Retrieval),85,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,329.95
+FAISS Only (Retrieval),86,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,347.42
+FAISS Only (Retrieval),87,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",214_2025_ND-CP_668157,True,N/A,N/A,329.53
+FAISS Only (Retrieval),88,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",09_2024_TT-BKHDT_610974,True,N/A,N/A,336.42
+FAISS Only (Retrieval),89,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,332.85
+FAISS Only (Retrieval),90,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,09_2024_TT-BKHDT_610974,True,N/A,N/A,316.28
+FAISS Only (Retrieval),91,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,341.37
+FAISS Only (Retrieval),92,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",09_2024_TT-BKHDT_610974,True,N/A,N/A,539.89
+FAISS Only (Retrieval),93,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",22_2023_QH15_518805,True,N/A,N/A,546.95
+FAISS Only (Retrieval),94,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,611.05
+FAISS Only (Retrieval),95,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,507.71
+FAISS Only (Retrieval),96,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,377.06
+FAISS Only (Retrieval),97,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",214_2025_ND-CP_668157,True,N/A,N/A,350.85
+FAISS Only (Retrieval),98,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",09_2024_TT-BKHDT_610974,True,N/A,N/A,337.51
+FAISS Only (Retrieval),99,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,355.32
+FAISS Only (Retrieval),100,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,09_2024_TT-BKHDT_610974,True,N/A,N/A,376.78
+FAISS Only (Retrieval),101,Thông tư 02/2024/TT-BKHĐT quy định về vấn đề gì?,Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,318.71
+FAISS Only (Retrieval),102,Chứng chỉ nghiệp vụ chuyên môn về đấu thầu có thời hạn sử dụng bao lâu?,Điều 3 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,340.51
+FAISS Only (Retrieval),103,Cơ quan nào có thẩm quyền cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu?,Điều 4 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,399.34
+FAISS Only (Retrieval),104,Điều kiện để cá nhân được dự thi cấp chứng chỉ đấu thầu là gì?,Điều 8 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,453.84
+FAISS Only (Retrieval),105,Hình thức thi chứng chỉ nghiệp vụ đấu thầu là gì?,Điều 13 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,344.26
+FAISS Only (Retrieval),106,Thời gian làm bài thi chứng chỉ đấu thầu là bao nhiêu phút?,Điều 16 - Thông tư 02/2024/TT-BKHĐT,22_2023_QH15_518805,True,N/A,N/A,355.65
+FAISS Only (Retrieval),107,Đề thi chứng chỉ đấu thầu bao gồm bao nhiêu câu hỏi?,Điều 16 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,342.58
+FAISS Only (Retrieval),108,"Để đạt yêu cầu cấp chứng chỉ, thí sinh phải đạt bao nhiêu điểm?",Điều 18 - Thông tư 02/2024/TT-BKHĐT,22_2023_QH15_518805,True,N/A,N/A,300.46
+FAISS Only (Retrieval),109,Hồ sơ đề nghị cấp chứng chỉ đấu thầu bao gồm những giấy tờ gì?,Điều 11 - Thông tư 02/2024/TT-BKHĐT,214_2025_ND-CP_668157,True,N/A,N/A,284.72
+FAISS Only (Retrieval),110,Thông tư 05/2024/TT-BKHĐT quy định về nội dung gì?,Thông tư 05/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,281.12
+FAISS Only (Retrieval),111,Chi phí duy trì tên và hồ sơ năng lực nhà thầu trên Hệ thống là bao nhiêu?,Điều 4 - Thông tư 05/2024/TT-BKHĐT,03_CT-BKHDT_415554,True,N/A,N/A,469.32
+FAISS Only (Retrieval),112,Thời hạn nộp chi phí duy trì tên và hồ sơ năng lực là khi nào?,Điều 4 - Thông tư 05/2024/TT-BKHĐT,06_2021_TT-BKHDT_490510,True,N/A,N/A,408.69
+FAISS Only (Retrieval),113,Chi phí nộp hồ sơ dự thầu trên Hệ thống mạng đấu thầu quốc gia là bao nhiêu?,Điều 4 - Thông tư 05/2024/TT-BKHĐT,22_2023_QH15_518805,True,N/A,N/A,424.42
+FAISS Only (Retrieval),114,Mức thu chi phí đối với nhà thầu trúng thầu được tính như thế nào?,Điều 4 - Thông tư 05/2024/TT-BKHĐT,214_2025_ND-CP_668157,True,N/A,N/A,331.59
+FAISS Only (Retrieval),115,Chi phí kết nối chức năng bảo lãnh dự thầu điện tử là bao nhiêu?,Điều 4 - Thông tư 05/2024/TT-BKHĐT,03_CT-BKHDT_415554,False,N/A,N/A,254.85
+FAISS Only (Retrieval),116,Đơn vị nào chịu trách nhiệm thu các chi phí trên Hệ thống mạng đấu thầu quốc gia?,Điều 5 - Thông tư 05/2024/TT-BKHĐT,05_2024_TT-BKHDT_607705,True,N/A,N/A,511.61
+FAISS Only (Retrieval),117,Nhà thầu nước ngoài có phải nộp chi phí trên Hệ thống mạng đấu thầu quốc gia không?,Thông tư 05/2024/TT-BKHĐT,214_2025_ND-CP_668157,False,N/A,N/A,391.49
+FAISS Only (Retrieval),118,"Nếu không nộp chi phí duy trì tên đúng hạn, nhà thầu bị xử lý thế nào?",Điều 6 - Thông tư 05/2024/TT-BKHĐT,06_2021_TT-BKHDT_490510,True,N/A,N/A,315.94
+FAISS Only (Retrieval),119,Chỉ thị 03/CT-BKHĐT năm 2019 nhằm mục đích gì?,Chỉ thị 03/CT-BKHĐT,02_2024_TT-BKHDT_591580,False,N/A,N/A,268.94
+FAISS Only (Retrieval),120,Chỉ thị 03 nghiêm cấm hành vi nào trong lập hồ sơ mời thầu?,Chỉ thị 03/CT-BKHĐT,22_2023_QH15_518805,False,N/A,N/A,252.12
+FAISS Only (Retrieval),121,Cơ quan nào chịu trách nhiệm giám sát công tác đấu thầu tại địa phương theo Chỉ thị 03?,Chỉ thị 03/CT-BKHĐT,79_2025_TT-BTC_668381,False,N/A,N/A,429.97
+FAISS Only (Retrieval),122,Nghị định 09/2022/NĐ-CP hướng dẫn thực hiện đấu thầu theo hiệp định nào?,Nghị định 09/2022/NĐ-CP,17_2025_ND-CP_632484,True,N/A,N/A,316.42
+FAISS Only (Retrieval),123,Phạm vi điều chỉnh của Nghị định 09/2022/NĐ-CP là gì?,Điều 1 - Nghị định 09/2022/NĐ-CP,17_2025_ND-CP_632484,True,N/A,N/A,255.04
+FAISS Only (Retrieval),124,Gói thầu mua sắm hàng hóa an ninh quốc gia có thuộc phạm vi Nghị định 09/2022 không?,Nghị định 09/2022/NĐ-CP,09_2022_ND-CP_500254,True,N/A,N/A,272.14
+FAISS Only (Retrieval),125,Cơ quan mua sắm tập trung cấp quốc gia theo Nghị định 09/2022 là đơn vị nào?,Nghị định 09/2022/NĐ-CP,07_2016_TT-BKHDT_317089,True,N/A,N/A,300.64
+FAISS Only (Retrieval),126,Gói thầu dịch vụ xây dựng tại vùng sâu vùng xa theo Nghị định 09/2022 có ưu đãi gì?,Nghị định 09/2022/NĐ-CP,09_2022_ND-CP_500254,True,N/A,N/A,284.03
+FAISS Only (Retrieval),127,Thông tư 12/2022/TT-BKHĐT hướng dẫn lập hồ sơ cho loại gói thầu nào?,Thông tư 12/2022/TT-BKHĐT,79_2025_TT-BTC_668381,True,N/A,N/A,267.46
+FAISS Only (Retrieval),128,Mẫu hồ sơ mời thầu mua sắm hàng hóa qua mạng (một giai đoạn một túi hồ sơ) là mẫu số mấy?,Thông tư 12/2022/TT-BKHĐT,06_2021_TT-BKHDT_490510,False,N/A,N/A,357.05
+FAISS Only (Retrieval),129,Thông tư 15/2022/TT-BKHĐT áp dụng cho lĩnh vực đấu thầu nào?,Thông tư 15/2022/TT-BKHĐT,79_2025_TT-BTC_668381,False,N/A,N/A,369.65
+FAISS Only (Retrieval),130,"Nếu sửa đổi hồ sơ mời thầu sau khi phát hành (theo TT 15/2022), bên mời thầu phải làm gì?",Thông tư 15/2022/TT-BKHĐT,22_2023_QH15_518805,False,N/A,N/A,432.52
+FAISS Only (Retrieval),131,Thông tư 09/2024/TT-BKHĐT hướng dẫn về thủ tục gì?,Thông tư 09/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,789.36
+FAISS Only (Retrieval),132,Cơ quan nào quản lý Hệ thống thông tin quốc gia về hợp tác xã?,Thông tư 09/2024/TT-BKHĐT,09_2022_ND-CP_500254,True,N/A,N/A,289.89
+FAISS Only (Retrieval),133,Quyết định 16/QĐ-BKHĐT năm 2025 nói về đề án gì?,Quyết định 16/QĐ-BKHĐT,1315_CT-TTg_127435,False,N/A,N/A,274.56
+FAISS Only (Retrieval),134,Mục tiêu đến năm 2030 của Quyết định 16/QĐ-BKHĐT là gì?,Quyết định 16/QĐ-BKHĐT,1315_CT-TTg_127435,False,N/A,N/A,275.43
+FAISS Only (Retrieval),135,Thông tư 07/2016/TT-BKHĐT quy định về vấn đề gì?,Thông tư 07/2016/TT-BKHĐT,12_2022_TT-BKHDT_521153,False,N/A,N/A,370.8
+FAISS Only (Retrieval),136,"Theo Thông tư 07/2016, bên mời thầu có được yêu cầu nộp hồ sơ giấy song song với hồ sơ mạng không?",Thông tư 07/2016/TT-BKHĐT,07_2016_TT-BKHDT_317089,True,N/A,N/A,298.37
+FAISS Only (Retrieval),137,"Trong E-HSMT (Thông tư 07/2016), bảng dữ liệu đấu thầu dùng để làm gì?",Thông tư 07/2016/TT-BKHĐT,214_2025_ND-CP_668157,True,N/A,N/A,434.78
+FAISS Only (Retrieval),138,Thông tư 06/2021/TT-BKHĐT (cũ) quy định về chi phí gì?,Thông tư 06/2021/TT-BKHĐT,05_2024_TT-BKHDT_607705,True,N/A,N/A,325.62
+FAISS Only (Retrieval),139,CPTPP là viết tắt của hiệp định nào?,Nghị định 09/2022/NĐ-CP,09_2022_ND-CP_500254,True,N/A,N/A,241.3
+FAISS Only (Retrieval),140,UKVFTA là hiệp định giữa Việt Nam và nước nào?,Thông tư 12/2022/TT-BKHĐT,09_2022_ND-CP_500254,True,N/A,N/A,218.68
+FAISS Only (Retrieval),141,EVFTA là hiệp định giữa Việt Nam và tổ chức nào?,Thông tư 12/2022/TT-BKHĐT,09_2022_ND-CP_500254,True,N/A,N/A,221.92
+FAISS Only (Retrieval),142,Hồ sơ năng lực nhà thầu trên Hệ thống mạng bao gồm những thông tin gì?,Thông tư 05/2024/TT-BKHĐT (suy luận từ ngữ cảnh),214_2025_ND-CP_668157,False,N/A,N/A,275.97
+FAISS Only (Retrieval),143,Việc thu hồi chứng chỉ nghiệp vụ đấu thầu diễn ra trong trường hợp nào?,Điều 22 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,232.75
+FAISS Only (Retrieval),144,Chứng chỉ hành nghề hoạt động đấu thầu (cũ) còn giá trị sử dụng không?,Thông tư 02/2024/TT-BKHĐT,09_2024_TT-BKHDT_610974,True,N/A,N/A,257.12
+FAISS Only (Retrieval),145,Nhà thầu có được rút hồ sơ dự thầu đã nộp trên mạng không?,Quy định chung,15_2022_TT-BKHDT_521152,False,N/A,N/A,271.22
+FAISS Only (Retrieval),146,Quy định về đấu giá quyền khai thác khoáng sản nằm ở văn bản nào trong danh sách?,Out-of-domain,214_2025_ND-CP_668157,False,N/A,N/A,265.52
+FAISS Only (Retrieval),147,Luật Đất đai 2024 quy định về giá đất như thế nào?,Out-of-domain,22_2023_QH15_518805,False,N/A,N/A,270.67
+FAISS Only (Retrieval),148,Mức phạt vi phạm giao thông đường bộ là bao nhiêu?,Out-of-domain,09_2022_ND-CP_500254,False,N/A,N/A,259.26
+FAISS Only (Retrieval),149,Thuế thu nhập cá nhân đối với người trúng thầu là bao nhiêu?,Out-of-domain,214_2025_ND-CP_668157,False,N/A,N/A,264.7
+FAISS Only (Retrieval),150,Chi phí đăng tải thông báo mời thầu theo Thông tư 06/2021 là bao nhiêu?,Thông tư 06/2021 & 05/2024,05_2024_TT-BKHDT_607705,False,N/A,N/A,235.77
+Hybrid w/o Cross-Encoder,1,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,26596.3
+Hybrid w/o Cross-Encoder,2,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,9693.18
+Hybrid w/o Cross-Encoder,3,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,6354.8
+Hybrid w/o Cross-Encoder,4,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,1775.21
+Hybrid w/o Cross-Encoder,5,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,4675.16
+Hybrid w/o Cross-Encoder,6,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,11360.1
+Hybrid w/o Cross-Encoder,7,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",07_2016_TT-BKHDT_317089,True,N/A,N/A,13609.37
+Hybrid w/o Cross-Encoder,8,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,1227.96
+Hybrid w/o Cross-Encoder,9,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,3832.57
+Hybrid w/o Cross-Encoder,10,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,02_2024_TT-BKHDT_591580,True,N/A,N/A,1080.49
+Hybrid w/o Cross-Encoder,11,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,302.74
+Hybrid w/o Cross-Encoder,12,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,271.17
+Hybrid w/o Cross-Encoder,13,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,266.34
+Hybrid w/o Cross-Encoder,14,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,291.41
+Hybrid w/o Cross-Encoder,15,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,264.44
+Hybrid w/o Cross-Encoder,16,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,255.19
+Hybrid w/o Cross-Encoder,17,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",07_2016_TT-BKHDT_317089,True,N/A,N/A,271.8
+Hybrid w/o Cross-Encoder,18,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,277.88
+Hybrid w/o Cross-Encoder,19,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,270.01
+Hybrid w/o Cross-Encoder,20,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,02_2024_TT-BKHDT_591580,True,N/A,N/A,293.05
+Hybrid w/o Cross-Encoder,21,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,309.04
+Hybrid w/o Cross-Encoder,22,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,301.61
+Hybrid w/o Cross-Encoder,23,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,281.62
+Hybrid w/o Cross-Encoder,24,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,280.52
+Hybrid w/o Cross-Encoder,25,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,271.72
+Hybrid w/o Cross-Encoder,26,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,256.61
+Hybrid w/o Cross-Encoder,27,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",07_2016_TT-BKHDT_317089,True,N/A,N/A,446.57
+Hybrid w/o Cross-Encoder,28,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,307.17
+Hybrid w/o Cross-Encoder,29,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,289.39
+Hybrid w/o Cross-Encoder,30,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,02_2024_TT-BKHDT_591580,True,N/A,N/A,282.67
+Hybrid w/o Cross-Encoder,31,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,288.88
+Hybrid w/o Cross-Encoder,32,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,265.99
+Hybrid w/o Cross-Encoder,33,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,276.37
+Hybrid w/o Cross-Encoder,34,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,277.13
+Hybrid w/o Cross-Encoder,35,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,277.39
+Hybrid w/o Cross-Encoder,36,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,265.58
+Hybrid w/o Cross-Encoder,37,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",07_2016_TT-BKHDT_317089,True,N/A,N/A,258.85
+Hybrid w/o Cross-Encoder,38,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,273.89
+Hybrid w/o Cross-Encoder,39,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,276.53
+Hybrid w/o Cross-Encoder,40,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,02_2024_TT-BKHDT_591580,True,N/A,N/A,294.17
+Hybrid w/o Cross-Encoder,41,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,334.9
+Hybrid w/o Cross-Encoder,42,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,387.01
+Hybrid w/o Cross-Encoder,43,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,277.19
+Hybrid w/o Cross-Encoder,44,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,281.97
+Hybrid w/o Cross-Encoder,45,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,275.3
+Hybrid w/o Cross-Encoder,46,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,275.2
+Hybrid w/o Cross-Encoder,47,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",07_2016_TT-BKHDT_317089,True,N/A,N/A,282.65
+Hybrid w/o Cross-Encoder,48,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,268.39
+Hybrid w/o Cross-Encoder,49,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,274.17
+Hybrid w/o Cross-Encoder,50,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,02_2024_TT-BKHDT_591580,True,N/A,N/A,261.04
+Hybrid w/o Cross-Encoder,51,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,280.16
+Hybrid w/o Cross-Encoder,52,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,262.61
+Hybrid w/o Cross-Encoder,53,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,278.95
+Hybrid w/o Cross-Encoder,54,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,333.81
+Hybrid w/o Cross-Encoder,55,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,271.27
+Hybrid w/o Cross-Encoder,56,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,262.4
+Hybrid w/o Cross-Encoder,57,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",07_2016_TT-BKHDT_317089,True,N/A,N/A,293.51
+Hybrid w/o Cross-Encoder,58,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,276.39
+Hybrid w/o Cross-Encoder,59,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,269.9
+Hybrid w/o Cross-Encoder,60,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,02_2024_TT-BKHDT_591580,True,N/A,N/A,278.35
+Hybrid w/o Cross-Encoder,61,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,295.08
+Hybrid w/o Cross-Encoder,62,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,265.96
+Hybrid w/o Cross-Encoder,63,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,264.48
+Hybrid w/o Cross-Encoder,64,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,275.81
+Hybrid w/o Cross-Encoder,65,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,257.27
+Hybrid w/o Cross-Encoder,66,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,288.56
+Hybrid w/o Cross-Encoder,67,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",07_2016_TT-BKHDT_317089,True,N/A,N/A,287.94
+Hybrid w/o Cross-Encoder,68,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,293.49
+Hybrid w/o Cross-Encoder,69,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,289.27
+Hybrid w/o Cross-Encoder,70,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,02_2024_TT-BKHDT_591580,True,N/A,N/A,317.08
+Hybrid w/o Cross-Encoder,71,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,345.05
+Hybrid w/o Cross-Encoder,72,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,284.2
+Hybrid w/o Cross-Encoder,73,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,304.0
+Hybrid w/o Cross-Encoder,74,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,268.13
+Hybrid w/o Cross-Encoder,75,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,271.46
+Hybrid w/o Cross-Encoder,76,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,247.21
+Hybrid w/o Cross-Encoder,77,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",07_2016_TT-BKHDT_317089,True,N/A,N/A,265.08
+Hybrid w/o Cross-Encoder,78,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,260.02
+Hybrid w/o Cross-Encoder,79,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,288.8
+Hybrid w/o Cross-Encoder,80,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,02_2024_TT-BKHDT_591580,True,N/A,N/A,300.18
+Hybrid w/o Cross-Encoder,81,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,322.49
+Hybrid w/o Cross-Encoder,82,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,278.69
+Hybrid w/o Cross-Encoder,83,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,266.61
+Hybrid w/o Cross-Encoder,84,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,296.71
+Hybrid w/o Cross-Encoder,85,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,267.93
+Hybrid w/o Cross-Encoder,86,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,260.96
+Hybrid w/o Cross-Encoder,87,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",07_2016_TT-BKHDT_317089,True,N/A,N/A,268.8
+Hybrid w/o Cross-Encoder,88,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,261.15
+Hybrid w/o Cross-Encoder,89,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,255.45
+Hybrid w/o Cross-Encoder,90,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,02_2024_TT-BKHDT_591580,True,N/A,N/A,335.7
+Hybrid w/o Cross-Encoder,91,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,376.66
+Hybrid w/o Cross-Encoder,92,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,271.61
+Hybrid w/o Cross-Encoder,93,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,264.35
+Hybrid w/o Cross-Encoder,94,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,306.71
+Hybrid w/o Cross-Encoder,95,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,267.59
+Hybrid w/o Cross-Encoder,96,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,270.24
+Hybrid w/o Cross-Encoder,97,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",07_2016_TT-BKHDT_317089,True,N/A,N/A,275.78
+Hybrid w/o Cross-Encoder,98,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,276.48
+Hybrid w/o Cross-Encoder,99,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,275.27
+Hybrid w/o Cross-Encoder,100,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,02_2024_TT-BKHDT_591580,True,N/A,N/A,301.62
+Hybrid w/o Cross-Encoder,101,Thông tư 02/2024/TT-BKHĐT quy định về vấn đề gì?,Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,127709.11
+Hybrid w/o Cross-Encoder,102,Chứng chỉ nghiệp vụ chuyên môn về đấu thầu có thời hạn sử dụng bao lâu?,Điều 3 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,523.11
+Hybrid w/o Cross-Encoder,103,Cơ quan nào có thẩm quyền cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu?,Điều 4 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,262.78
+Hybrid w/o Cross-Encoder,104,Điều kiện để cá nhân được dự thi cấp chứng chỉ đấu thầu là gì?,Điều 8 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,261.52
+Hybrid w/o Cross-Encoder,105,Hình thức thi chứng chỉ nghiệp vụ đấu thầu là gì?,Điều 13 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,1618.94
+Hybrid w/o Cross-Encoder,106,Thời gian làm bài thi chứng chỉ đấu thầu là bao nhiêu phút?,Điều 16 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,5626.67
+Hybrid w/o Cross-Encoder,107,Đề thi chứng chỉ đấu thầu bao gồm bao nhiêu câu hỏi?,Điều 16 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,4163.6
+Hybrid w/o Cross-Encoder,108,"Để đạt yêu cầu cấp chứng chỉ, thí sinh phải đạt bao nhiêu điểm?",Điều 18 - Thông tư 02/2024/TT-BKHĐT,214_2025_ND-CP_668157,True,N/A,N/A,13137.74
+Hybrid w/o Cross-Encoder,109,Hồ sơ đề nghị cấp chứng chỉ đấu thầu bao gồm những giấy tờ gì?,Điều 11 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,3346.48
+Hybrid w/o Cross-Encoder,110,Thông tư 05/2024/TT-BKHĐT quy định về nội dung gì?,Thông tư 05/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,108732.96
+Hybrid w/o Cross-Encoder,111,Chi phí duy trì tên và hồ sơ năng lực nhà thầu trên Hệ thống là bao nhiêu?,Điều 4 - Thông tư 05/2024/TT-BKHĐT,05_2024_TT-BKHDT_607705,True,N/A,N/A,24703.21
+Hybrid w/o Cross-Encoder,112,Thời hạn nộp chi phí duy trì tên và hồ sơ năng lực là khi nào?,Điều 4 - Thông tư 05/2024/TT-BKHĐT,06_2021_TT-BKHDT_490510,True,N/A,N/A,7538.01
+Hybrid w/o Cross-Encoder,113,Chi phí nộp hồ sơ dự thầu trên Hệ thống mạng đấu thầu quốc gia là bao nhiêu?,Điều 4 - Thông tư 05/2024/TT-BKHĐT,07_2016_TT-BKHDT_317089,True,N/A,N/A,8366.95
+Hybrid w/o Cross-Encoder,114,Mức thu chi phí đối với nhà thầu trúng thầu được tính như thế nào?,Điều 4 - Thông tư 05/2024/TT-BKHĐT,214_2025_ND-CP_668157,True,N/A,N/A,9800.77
+Hybrid w/o Cross-Encoder,115,Chi phí kết nối chức năng bảo lãnh dự thầu điện tử là bao nhiêu?,Điều 4 - Thông tư 05/2024/TT-BKHĐT,05_2024_TT-BKHDT_607705,True,N/A,N/A,9704.26
+Hybrid w/o Cross-Encoder,116,Đơn vị nào chịu trách nhiệm thu các chi phí trên Hệ thống mạng đấu thầu quốc gia?,Điều 5 - Thông tư 05/2024/TT-BKHĐT,214_2025_ND-CP_668157,True,N/A,N/A,7732.21
+Hybrid w/o Cross-Encoder,117,Nhà thầu nước ngoài có phải nộp chi phí trên Hệ thống mạng đấu thầu quốc gia không?,Thông tư 05/2024/TT-BKHĐT,17_2025_ND-CP_632484,True,N/A,N/A,5168.57
+Hybrid w/o Cross-Encoder,118,"Nếu không nộp chi phí duy trì tên đúng hạn, nhà thầu bị xử lý thế nào?",Điều 6 - Thông tư 05/2024/TT-BKHĐT,22_2023_QH15_518805,True,N/A,N/A,5709.52
+Hybrid w/o Cross-Encoder,119,Chỉ thị 03/CT-BKHĐT năm 2019 nhằm mục đích gì?,Chỉ thị 03/CT-BKHĐT,03_CT-BKHDT_415554,False,N/A,N/A,23790.47
+Hybrid w/o Cross-Encoder,120,Chỉ thị 03 nghiêm cấm hành vi nào trong lập hồ sơ mời thầu?,Chỉ thị 03/CT-BKHĐT,25_2020_ND-CP_347400,False,N/A,N/A,10076.8
+Hybrid w/o Cross-Encoder,121,Cơ quan nào chịu trách nhiệm giám sát công tác đấu thầu tại địa phương theo Chỉ thị 03?,Chỉ thị 03/CT-BKHĐT,03_CT-BKHDT_415554,False,N/A,N/A,7570.26
+Hybrid w/o Cross-Encoder,122,Nghị định 09/2022/NĐ-CP hướng dẫn thực hiện đấu thầu theo hiệp định nào?,Nghị định 09/2022/NĐ-CP,12_2022_TT-BKHDT_521153,True,N/A,N/A,113148.3
+Hybrid w/o Cross-Encoder,123,Phạm vi điều chỉnh của Nghị định 09/2022/NĐ-CP là gì?,Điều 1 - Nghị định 09/2022/NĐ-CP,12_2022_TT-BKHDT_521153,True,N/A,N/A,8346.37
+Hybrid w/o Cross-Encoder,124,Gói thầu mua sắm hàng hóa an ninh quốc gia có thuộc phạm vi Nghị định 09/2022 không?,Nghị định 09/2022/NĐ-CP,12_2022_TT-BKHDT_521153,True,N/A,N/A,5793.52
+Hybrid w/o Cross-Encoder,125,Cơ quan mua sắm tập trung cấp quốc gia theo Nghị định 09/2022 là đơn vị nào?,Nghị định 09/2022/NĐ-CP,214_2025_ND-CP_668157,True,N/A,N/A,6122.41
+Hybrid w/o Cross-Encoder,126,Gói thầu dịch vụ xây dựng tại vùng sâu vùng xa theo Nghị định 09/2022 có ưu đãi gì?,Nghị định 09/2022/NĐ-CP,20_2022_TT-BKHDT_531555,True,N/A,N/A,6329.2
+Hybrid w/o Cross-Encoder,127,Thông tư 12/2022/TT-BKHĐT hướng dẫn lập hồ sơ cho loại gói thầu nào?,Thông tư 12/2022/TT-BKHĐT,12_2022_TT-BKHDT_521153,True,N/A,N/A,93895.96
+Hybrid w/o Cross-Encoder,128,Mẫu hồ sơ mời thầu mua sắm hàng hóa qua mạng (một giai đoạn một túi hồ sơ) là mẫu số mấy?,Thông tư 12/2022/TT-BKHĐT,07_2016_TT-BKHDT_317089,True,N/A,N/A,13165.0
+Hybrid w/o Cross-Encoder,129,Thông tư 15/2022/TT-BKHĐT áp dụng cho lĩnh vực đấu thầu nào?,Thông tư 15/2022/TT-BKHĐT,12_2022_TT-BKHDT_521153,False,N/A,N/A,3536.92
+Hybrid w/o Cross-Encoder,130,"Nếu sửa đổi hồ sơ mời thầu sau khi phát hành (theo TT 15/2022), bên mời thầu phải làm gì?",Thông tư 15/2022/TT-BKHĐT,80_2025_TT-BTC_668938,False,N/A,N/A,12423.62
+Hybrid w/o Cross-Encoder,131,Thông tư 09/2024/TT-BKHĐT hướng dẫn về thủ tục gì?,Thông tư 09/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,105082.4
+Hybrid w/o Cross-Encoder,132,Cơ quan nào quản lý Hệ thống thông tin quốc gia về hợp tác xã?,Thông tư 09/2024/TT-BKHĐT,09_2024_TT-BKHDT_610974,True,N/A,N/A,11481.83
+Hybrid w/o Cross-Encoder,133,Quyết định 16/QĐ-BKHĐT năm 2025 nói về đề án gì?,Quyết định 16/QĐ-BKHĐT,1315_CT-TTg_127435,False,N/A,N/A,14141.05
+Hybrid w/o Cross-Encoder,134,Mục tiêu đến năm 2030 của Quyết định 16/QĐ-BKHĐT là gì?,Quyết định 16/QĐ-BKHĐT,02_2024_TT-BKHDT_591580,False,N/A,N/A,16284.17
+Hybrid w/o Cross-Encoder,135,Thông tư 07/2016/TT-BKHĐT quy định về vấn đề gì?,Thông tư 07/2016/TT-BKHĐT,02_2024_TT-BKHDT_591580,False,N/A,N/A,103211.68
+Hybrid w/o Cross-Encoder,136,"Theo Thông tư 07/2016, bên mời thầu có được yêu cầu nộp hồ sơ giấy song song với hồ sơ mạng không?",Thông tư 07/2016/TT-BKHĐT,07_2016_TT-BKHDT_317089,True,N/A,N/A,6726.85
+Hybrid w/o Cross-Encoder,137,"Trong E-HSMT (Thông tư 07/2016), bảng dữ liệu đấu thầu dùng để làm gì?",Thông tư 07/2016/TT-BKHĐT,07_2016_TT-BKHDT_317089,True,N/A,N/A,10543.07
+Hybrid w/o Cross-Encoder,138,Thông tư 06/2021/TT-BKHĐT (cũ) quy định về chi phí gì?,Thông tư 06/2021/TT-BKHĐT,05_2024_TT-BKHDT_607705,True,N/A,N/A,106085.44
+Hybrid w/o Cross-Encoder,139,CPTPP là viết tắt của hiệp định nào?,Nghị định 09/2022/NĐ-CP,09_2022_ND-CP_500254,True,N/A,N/A,14471.93
+Hybrid w/o Cross-Encoder,140,UKVFTA là hiệp định giữa Việt Nam và nước nào?,Thông tư 12/2022/TT-BKHĐT,09_2022_ND-CP_500254,False,N/A,N/A,4675.26
+Hybrid w/o Cross-Encoder,141,EVFTA là hiệp định giữa Việt Nam và tổ chức nào?,Thông tư 12/2022/TT-BKHĐT,12_2022_TT-BKHDT_521153,True,N/A,N/A,1018.16
+Hybrid w/o Cross-Encoder,142,Hồ sơ năng lực nhà thầu trên Hệ thống mạng bao gồm những thông tin gì?,Thông tư 05/2024/TT-BKHĐT (suy luận từ ngữ cảnh),07_2016_TT-BKHDT_317089,True,N/A,N/A,2280.34
+Hybrid w/o Cross-Encoder,143,Việc thu hồi chứng chỉ nghiệp vụ đấu thầu diễn ra trong trường hợp nào?,Điều 22 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,1109.69
+Hybrid w/o Cross-Encoder,144,Chứng chỉ hành nghề hoạt động đấu thầu (cũ) còn giá trị sử dụng không?,Thông tư 02/2024/TT-BKHĐT,105_2025_TT-BTC_679653,True,N/A,N/A,2271.33
+Hybrid w/o Cross-Encoder,145,Nhà thầu có được rút hồ sơ dự thầu đã nộp trên mạng không?,Quy định chung,25_2020_ND-CP_347400,False,N/A,N/A,6365.87
+Hybrid w/o Cross-Encoder,146,Quy định về đấu giá quyền khai thác khoáng sản nằm ở văn bản nào trong danh sách?,Out-of-domain,25_2020_ND-CP_347400,False,N/A,N/A,12027.5
+Hybrid w/o Cross-Encoder,147,Luật Đất đai 2024 quy định về giá đất như thế nào?,Out-of-domain,25_2020_ND-CP_347400,False,N/A,N/A,103691.86
+Hybrid w/o Cross-Encoder,148,Mức phạt vi phạm giao thông đường bộ là bao nhiêu?,Out-of-domain,09_2022_ND-CP_500254,False,N/A,N/A,9877.95
+Hybrid w/o Cross-Encoder,149,Thuế thu nhập cá nhân đối với người trúng thầu là bao nhiêu?,Out-of-domain,214_2025_ND-CP_668157,False,N/A,N/A,9873.82
+Hybrid w/o Cross-Encoder,150,Chi phí đăng tải thông báo mời thầu theo Thông tư 06/2021 là bao nhiêu?,Thông tư 06/2021 & 05/2024,06_2021_TT-BKHDT_490510,False,N/A,N/A,5387.59
+Hybrid w/ Cross-Encoder,1,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,17557.07
+Hybrid w/ Cross-Encoder,2,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,5439.97
+Hybrid w/ Cross-Encoder,3,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,4510.78
+Hybrid w/ Cross-Encoder,4,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,2311.62
+Hybrid w/ Cross-Encoder,5,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,6765.73
+Hybrid w/ Cross-Encoder,6,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,3013.15
+Hybrid w/ Cross-Encoder,7,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",58_2016_TT-BTC_308392,True,N/A,N/A,5170.71
+Hybrid w/ Cross-Encoder,8,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,8358.77
+Hybrid w/ Cross-Encoder,9,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,4878.52
+Hybrid w/ Cross-Encoder,10,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,02_2024_TT-BKHDT_591580,True,N/A,N/A,4456.04
+Hybrid w/ Cross-Encoder,11,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,3016.95
+Hybrid w/ Cross-Encoder,12,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,3321.75
+Hybrid w/ Cross-Encoder,13,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,3730.85
+Hybrid w/ Cross-Encoder,14,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,2526.77
+Hybrid w/ Cross-Encoder,15,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,6092.52
+Hybrid w/ Cross-Encoder,16,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,2184.27
+Hybrid w/ Cross-Encoder,17,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",58_2016_TT-BTC_308392,True,N/A,N/A,2211.23
+Hybrid w/ Cross-Encoder,18,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,2324.5
+Hybrid w/ Cross-Encoder,19,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,1433.94
+Hybrid w/ Cross-Encoder,20,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,02_2024_TT-BKHDT_591580,True,N/A,N/A,2289.66
+Hybrid w/ Cross-Encoder,21,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,2362.83
+Hybrid w/ Cross-Encoder,22,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,3065.12
+Hybrid w/ Cross-Encoder,23,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,3134.09
+Hybrid w/ Cross-Encoder,24,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,2250.12
+Hybrid w/ Cross-Encoder,25,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,3978.39
+Hybrid w/ Cross-Encoder,26,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,1443.93
+Hybrid w/ Cross-Encoder,27,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",58_2016_TT-BTC_308392,True,N/A,N/A,2221.5
+Hybrid w/ Cross-Encoder,28,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,2347.93
+Hybrid w/ Cross-Encoder,29,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,1419.59
+Hybrid w/ Cross-Encoder,30,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,02_2024_TT-BKHDT_591580,True,N/A,N/A,2274.0
+Hybrid w/ Cross-Encoder,31,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,2352.21
+Hybrid w/ Cross-Encoder,32,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,3080.18
+Hybrid w/ Cross-Encoder,33,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,3134.39
+Hybrid w/ Cross-Encoder,34,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,2264.82
+Hybrid w/ Cross-Encoder,35,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,3418.99
+Hybrid w/ Cross-Encoder,36,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,1452.73
+Hybrid w/ Cross-Encoder,37,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",58_2016_TT-BTC_308392,True,N/A,N/A,2237.92
+Hybrid w/ Cross-Encoder,38,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,2334.0
+Hybrid w/ Cross-Encoder,39,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,1425.54
+Hybrid w/ Cross-Encoder,40,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,02_2024_TT-BKHDT_591580,True,N/A,N/A,2281.68
+Hybrid w/ Cross-Encoder,41,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,2364.76
+Hybrid w/ Cross-Encoder,42,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,3083.52
+Hybrid w/ Cross-Encoder,43,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,3153.58
+Hybrid w/ Cross-Encoder,44,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,2263.83
+Hybrid w/ Cross-Encoder,45,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,3407.86
+Hybrid w/ Cross-Encoder,46,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,1461.39
+Hybrid w/ Cross-Encoder,47,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",58_2016_TT-BTC_308392,True,N/A,N/A,2273.41
+Hybrid w/ Cross-Encoder,48,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,2353.15
+Hybrid w/ Cross-Encoder,49,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,1449.94
+Hybrid w/ Cross-Encoder,50,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,02_2024_TT-BKHDT_591580,True,N/A,N/A,2304.04
+Hybrid w/ Cross-Encoder,51,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,2377.72
+Hybrid w/ Cross-Encoder,52,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,3093.0
+Hybrid w/ Cross-Encoder,53,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,3146.0
+Hybrid w/ Cross-Encoder,54,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,2280.27
+Hybrid w/ Cross-Encoder,55,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,3433.44
+Hybrid w/ Cross-Encoder,56,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,1466.03
+Hybrid w/ Cross-Encoder,57,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",58_2016_TT-BTC_308392,True,N/A,N/A,2261.45
+Hybrid w/ Cross-Encoder,58,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,2353.18
+Hybrid w/ Cross-Encoder,59,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,1471.13
+Hybrid w/ Cross-Encoder,60,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,02_2024_TT-BKHDT_591580,True,N/A,N/A,2295.92
+Hybrid w/ Cross-Encoder,61,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,2380.31
+Hybrid w/ Cross-Encoder,62,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,3087.36
+Hybrid w/ Cross-Encoder,63,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,3151.44
+Hybrid w/ Cross-Encoder,64,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,2276.24
+Hybrid w/ Cross-Encoder,65,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,3422.71
+Hybrid w/ Cross-Encoder,66,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,1452.23
+Hybrid w/ Cross-Encoder,67,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",58_2016_TT-BTC_308392,True,N/A,N/A,2254.99
+Hybrid w/ Cross-Encoder,68,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,2415.39
+Hybrid w/ Cross-Encoder,69,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,1463.66
+Hybrid w/ Cross-Encoder,70,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,02_2024_TT-BKHDT_591580,True,N/A,N/A,2303.97
+Hybrid w/ Cross-Encoder,71,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,2401.46
+Hybrid w/ Cross-Encoder,72,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,3105.74
+Hybrid w/ Cross-Encoder,73,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,3148.4
+Hybrid w/ Cross-Encoder,74,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,2301.57
+Hybrid w/ Cross-Encoder,75,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,3431.41
+Hybrid w/ Cross-Encoder,76,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,1469.66
+Hybrid w/ Cross-Encoder,77,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",58_2016_TT-BTC_308392,True,N/A,N/A,2246.55
+Hybrid w/ Cross-Encoder,78,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,2383.09
+Hybrid w/ Cross-Encoder,79,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,1451.67
+Hybrid w/ Cross-Encoder,80,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,02_2024_TT-BKHDT_591580,True,N/A,N/A,2305.15
+Hybrid w/ Cross-Encoder,81,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,2400.61
+Hybrid w/ Cross-Encoder,82,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,3124.57
+Hybrid w/ Cross-Encoder,83,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,3160.78
+Hybrid w/ Cross-Encoder,84,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,2254.17
+Hybrid w/ Cross-Encoder,85,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,3418.44
+Hybrid w/ Cross-Encoder,86,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,1461.58
+Hybrid w/ Cross-Encoder,87,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",58_2016_TT-BTC_308392,True,N/A,N/A,2245.36
+Hybrid w/ Cross-Encoder,88,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,2374.55
+Hybrid w/ Cross-Encoder,89,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,1452.36
+Hybrid w/ Cross-Encoder,90,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,02_2024_TT-BKHDT_591580,True,N/A,N/A,2336.21
+Hybrid w/ Cross-Encoder,91,Một cá nhân đã có chứng chỉ nghiệp vụ đấu thầu nhưng đã hết hạn thì có được tiếp tục tham gia hoạt động đấu thầu không?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 10",02_2024_TT-BKHDT_591580,True,N/A,N/A,2383.59
+Hybrid w/ Cross-Encoder,92,Điều kiện để được dự thi và được cấp chứng chỉ nghiệp vụ đấu thầu có giống nhau không?,"Thông tư 02/2024/TT-BKHĐT – Điều 8, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,3098.71
+Hybrid w/ Cross-Encoder,93,Trường hợp nào cá nhân không được cấp chứng chỉ nghiệp vụ đấu thầu dù đã tham gia khóa đào tạo?,"Thông tư 02/2024/TT-BKHĐT – Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,3157.83
+Hybrid w/ Cross-Encoder,94,Cá nhân có hành vi gian lận trong thi cử có được cấp lại chứng chỉ nghiệp vụ đấu thầu không?,Thông tư 02/2024/TT-BKHĐT – Điều 12,02_2024_TT-BKHDT_591580,True,N/A,N/A,2295.45
+Hybrid w/ Cross-Encoder,95,Sau bao lâu kể từ ngày được cấp thì chứng chỉ nghiệp vụ đấu thầu hết giá trị sử dụng?,Thông tư 02/2024/TT-BKHĐT – Điều 10,02_2024_TT-BKHDT_591580,True,N/A,N/A,3441.55
+Hybrid w/ Cross-Encoder,96,Việc đào tạo kiến thức đấu thầu có thể thực hiện qua hình thức học từ xa hay không?,Thông tư 02/2024/TT-BKHĐT – Điều 4,02_2024_TT-BKHDT_591580,True,N/A,N/A,1479.61
+Hybrid w/ Cross-Encoder,97,Một cá nhân muốn tham gia trực tiếp hoạt động đấu thầu thì cần đáp ứng những yêu cầu pháp lý nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 3, Điều 7, Điều 8, Điều 10",58_2016_TT-BTC_308392,True,N/A,N/A,2248.26
+Hybrid w/ Cross-Encoder,98,Quy trình từ đào tạo đến khi được cấp chứng chỉ nghiệp vụ đấu thầu gồm những bước chính nào?,"Thông tư 02/2024/TT-BKHĐT – Điều 4, Điều 7, Điều 8",02_2024_TT-BKHDT_591580,True,N/A,N/A,2367.8
+Hybrid w/ Cross-Encoder,99,Cơ quan nào vừa có thẩm quyền tổ chức thi vừa có thẩm quyền cấp chứng chỉ nghiệp vụ đấu thầu?,"Thông tư 02/2024/TT-BKHĐT – Điều 6, Điều 7",02_2024_TT-BKHDT_591580,True,N/A,N/A,1464.32
+Hybrid w/ Cross-Encoder,100,"Trong trường hợp mất chứng chỉ nghiệp vụ đấu thầu, cá nhân cần đáp ứng điều kiện gì để được cấp lại?",Thông tư 02/2024/TT-BKHĐT – Điều 11,02_2024_TT-BKHDT_591580,True,N/A,N/A,2326.83
+Hybrid w/ Cross-Encoder,101,Thông tư 02/2024/TT-BKHĐT quy định về vấn đề gì?,Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,102014.61
+Hybrid w/ Cross-Encoder,102,Chứng chỉ nghiệp vụ chuyên môn về đấu thầu có thời hạn sử dụng bao lâu?,Điều 3 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,3886.71
+Hybrid w/ Cross-Encoder,103,Cơ quan nào có thẩm quyền cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu?,Điều 4 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,3356.14
+Hybrid w/ Cross-Encoder,104,Điều kiện để cá nhân được dự thi cấp chứng chỉ đấu thầu là gì?,Điều 8 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,2508.23
+Hybrid w/ Cross-Encoder,105,Hình thức thi chứng chỉ nghiệp vụ đấu thầu là gì?,Điều 13 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,1747.85
+Hybrid w/ Cross-Encoder,106,Thời gian làm bài thi chứng chỉ đấu thầu là bao nhiêu phút?,Điều 16 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,3046.16
+Hybrid w/ Cross-Encoder,107,Đề thi chứng chỉ đấu thầu bao gồm bao nhiêu câu hỏi?,Điều 16 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,2189.01
+Hybrid w/ Cross-Encoder,108,"Để đạt yêu cầu cấp chứng chỉ, thí sinh phải đạt bao nhiêu điểm?",Điều 18 - Thông tư 02/2024/TT-BKHĐT,214_2025_ND-CP_668157,True,N/A,N/A,6169.15
+Hybrid w/ Cross-Encoder,109,Hồ sơ đề nghị cấp chứng chỉ đấu thầu bao gồm những giấy tờ gì?,Điều 11 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,2066.85
+Hybrid w/ Cross-Encoder,110,Thông tư 05/2024/TT-BKHĐT quy định về nội dung gì?,Thông tư 05/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,94260.53
+Hybrid w/ Cross-Encoder,111,Chi phí duy trì tên và hồ sơ năng lực nhà thầu trên Hệ thống là bao nhiêu?,Điều 4 - Thông tư 05/2024/TT-BKHĐT,05_2024_TT-BKHDT_607705,True,N/A,N/A,8393.35
+Hybrid w/ Cross-Encoder,112,Thời hạn nộp chi phí duy trì tên và hồ sơ năng lực là khi nào?,Điều 4 - Thông tư 05/2024/TT-BKHĐT,06_2021_TT-BKHDT_490510,True,N/A,N/A,6438.85
+Hybrid w/ Cross-Encoder,113,Chi phí nộp hồ sơ dự thầu trên Hệ thống mạng đấu thầu quốc gia là bao nhiêu?,Điều 4 - Thông tư 05/2024/TT-BKHĐT,07_2016_TT-BKHDT_317089,True,N/A,N/A,3529.89
+Hybrid w/ Cross-Encoder,114,Mức thu chi phí đối với nhà thầu trúng thầu được tính như thế nào?,Điều 4 - Thông tư 05/2024/TT-BKHĐT,214_2025_ND-CP_668157,True,N/A,N/A,5599.7
+Hybrid w/ Cross-Encoder,115,Chi phí kết nối chức năng bảo lãnh dự thầu điện tử là bao nhiêu?,Điều 4 - Thông tư 05/2024/TT-BKHĐT,05_2024_TT-BKHDT_607705,True,N/A,N/A,5469.47
+Hybrid w/ Cross-Encoder,116,Đơn vị nào chịu trách nhiệm thu các chi phí trên Hệ thống mạng đấu thầu quốc gia?,Điều 5 - Thông tư 05/2024/TT-BKHĐT,214_2025_ND-CP_668157,True,N/A,N/A,4683.54
+Hybrid w/ Cross-Encoder,117,Nhà thầu nước ngoài có phải nộp chi phí trên Hệ thống mạng đấu thầu quốc gia không?,Thông tư 05/2024/TT-BKHĐT,17_2025_ND-CP_632484,True,N/A,N/A,4206.85
+Hybrid w/ Cross-Encoder,118,"Nếu không nộp chi phí duy trì tên đúng hạn, nhà thầu bị xử lý thế nào?",Điều 6 - Thông tư 05/2024/TT-BKHĐT,214_2025_ND-CP_668157,True,N/A,N/A,8882.58
+Hybrid w/ Cross-Encoder,119,Chỉ thị 03/CT-BKHĐT năm 2019 nhằm mục đích gì?,Chỉ thị 03/CT-BKHĐT,03_CT-BKHDT_415554,False,N/A,N/A,17264.0
+Hybrid w/ Cross-Encoder,120,Chỉ thị 03 nghiêm cấm hành vi nào trong lập hồ sơ mời thầu?,Chỉ thị 03/CT-BKHĐT,25_2020_ND-CP_347400,False,N/A,N/A,6807.61
+Hybrid w/ Cross-Encoder,121,Cơ quan nào chịu trách nhiệm giám sát công tác đấu thầu tại địa phương theo Chỉ thị 03?,Chỉ thị 03/CT-BKHĐT,03_CT-BKHDT_415554,False,N/A,N/A,7248.96
+Hybrid w/ Cross-Encoder,122,Nghị định 09/2022/NĐ-CP hướng dẫn thực hiện đấu thầu theo hiệp định nào?,Nghị định 09/2022/NĐ-CP,12_2022_TT-BKHDT_521153,True,N/A,N/A,98762.74
+Hybrid w/ Cross-Encoder,123,Phạm vi điều chỉnh của Nghị định 09/2022/NĐ-CP là gì?,Điều 1 - Nghị định 09/2022/NĐ-CP,12_2022_TT-BKHDT_521153,True,N/A,N/A,27493.63
+Hybrid w/ Cross-Encoder,124,Gói thầu mua sắm hàng hóa an ninh quốc gia có thuộc phạm vi Nghị định 09/2022 không?,Nghị định 09/2022/NĐ-CP,12_2022_TT-BKHDT_521153,True,N/A,N/A,6336.83
+Hybrid w/ Cross-Encoder,125,Cơ quan mua sắm tập trung cấp quốc gia theo Nghị định 09/2022 là đơn vị nào?,Nghị định 09/2022/NĐ-CP,20_2022_TT-BKHDT_531555,True,N/A,N/A,8053.6
+Hybrid w/ Cross-Encoder,126,Gói thầu dịch vụ xây dựng tại vùng sâu vùng xa theo Nghị định 09/2022 có ưu đãi gì?,Nghị định 09/2022/NĐ-CP,20_2022_TT-BKHDT_531555,True,N/A,N/A,7596.71
+Hybrid w/ Cross-Encoder,127,Thông tư 12/2022/TT-BKHĐT hướng dẫn lập hồ sơ cho loại gói thầu nào?,Thông tư 12/2022/TT-BKHĐT,12_2022_TT-BKHDT_521153,True,N/A,N/A,92835.38
+Hybrid w/ Cross-Encoder,128,Mẫu hồ sơ mời thầu mua sắm hàng hóa qua mạng (một giai đoạn một túi hồ sơ) là mẫu số mấy?,Thông tư 12/2022/TT-BKHĐT,07_2016_TT-BKHDT_317089,True,N/A,N/A,11230.58
+Hybrid w/ Cross-Encoder,129,Thông tư 15/2022/TT-BKHĐT áp dụng cho lĩnh vực đấu thầu nào?,Thông tư 15/2022/TT-BKHĐT,12_2022_TT-BKHDT_521153,False,N/A,N/A,11837.91
+Hybrid w/ Cross-Encoder,130,"Nếu sửa đổi hồ sơ mời thầu sau khi phát hành (theo TT 15/2022), bên mời thầu phải làm gì?",Thông tư 15/2022/TT-BKHĐT,80_2025_TT-BTC_668938,False,N/A,N/A,5331.17
+Hybrid w/ Cross-Encoder,131,Thông tư 09/2024/TT-BKHĐT hướng dẫn về thủ tục gì?,Thông tư 09/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,101809.18
+Hybrid w/ Cross-Encoder,132,Cơ quan nào quản lý Hệ thống thông tin quốc gia về hợp tác xã?,Thông tư 09/2024/TT-BKHĐT,09_2024_TT-BKHDT_610974,True,N/A,N/A,7317.07
+Hybrid w/ Cross-Encoder,133,Quyết định 16/QĐ-BKHĐT năm 2025 nói về đề án gì?,Quyết định 16/QĐ-BKHĐT,16_QD-BKHDT_642026,False,N/A,N/A,14539.49
+Hybrid w/ Cross-Encoder,134,Mục tiêu đến năm 2030 của Quyết định 16/QĐ-BKHĐT là gì?,Quyết định 16/QĐ-BKHĐT,16_QD-BKHDT_642026,False,N/A,N/A,22469.23
+Hybrid w/ Cross-Encoder,135,Thông tư 07/2016/TT-BKHĐT quy định về vấn đề gì?,Thông tư 07/2016/TT-BKHĐT,02_2024_TT-BKHDT_591580,False,N/A,N/A,98269.2
+Hybrid w/ Cross-Encoder,136,"Theo Thông tư 07/2016, bên mời thầu có được yêu cầu nộp hồ sơ giấy song song với hồ sơ mạng không?",Thông tư 07/2016/TT-BKHĐT,07_2016_TT-BKHDT_317089,True,N/A,N/A,5795.08
+Hybrid w/ Cross-Encoder,137,"Trong E-HSMT (Thông tư 07/2016), bảng dữ liệu đấu thầu dùng để làm gì?",Thông tư 07/2016/TT-BKHĐT,79_2025_TT-BTC_668381,True,N/A,N/A,9216.09
+Hybrid w/ Cross-Encoder,138,Thông tư 06/2021/TT-BKHĐT (cũ) quy định về chi phí gì?,Thông tư 06/2021/TT-BKHĐT,05_2024_TT-BKHDT_607705,True,N/A,N/A,106716.03
+Hybrid w/ Cross-Encoder,139,CPTPP là viết tắt của hiệp định nào?,Nghị định 09/2022/NĐ-CP,09_2022_ND-CP_500254,True,N/A,N/A,6637.58
+Hybrid w/ Cross-Encoder,140,UKVFTA là hiệp định giữa Việt Nam và nước nào?,Thông tư 12/2022/TT-BKHĐT,20_2022_TT-BKHDT_531555,False,N/A,N/A,8087.65
+Hybrid w/ Cross-Encoder,141,EVFTA là hiệp định giữa Việt Nam và tổ chức nào?,Thông tư 12/2022/TT-BKHĐT,12_2022_TT-BKHDT_521153,True,N/A,N/A,5048.09
+Hybrid w/ Cross-Encoder,142,Hồ sơ năng lực nhà thầu trên Hệ thống mạng bao gồm những thông tin gì?,Thông tư 05/2024/TT-BKHĐT (suy luận từ ngữ cảnh),07_2016_TT-BKHDT_317089,True,N/A,N/A,13838.91
+Hybrid w/ Cross-Encoder,143,Việc thu hồi chứng chỉ nghiệp vụ đấu thầu diễn ra trong trường hợp nào?,Điều 22 - Thông tư 02/2024/TT-BKHĐT,02_2024_TT-BKHDT_591580,True,N/A,N/A,3285.18
+Hybrid w/ Cross-Encoder,144,Chứng chỉ hành nghề hoạt động đấu thầu (cũ) còn giá trị sử dụng không?,Thông tư 02/2024/TT-BKHĐT,105_2025_TT-BTC_679653,True,N/A,N/A,4633.83
+Hybrid w/ Cross-Encoder,145,Nhà thầu có được rút hồ sơ dự thầu đã nộp trên mạng không?,Quy định chung,25_2020_ND-CP_347400,False,N/A,N/A,6284.02
+Hybrid w/ Cross-Encoder,146,Quy định về đấu giá quyền khai thác khoáng sản nằm ở văn bản nào trong danh sách?,Out-of-domain,25_2020_ND-CP_347400,False,N/A,N/A,6573.35
+Hybrid w/ Cross-Encoder,147,Luật Đất đai 2024 quy định về giá đất như thế nào?,Out-of-domain,47_CT-TTg_637375,False,N/A,N/A,104809.62
+Hybrid w/ Cross-Encoder,148,Mức phạt vi phạm giao thông đường bộ là bao nhiêu?,Out-of-domain,09_2022_ND-CP_500254,False,N/A,N/A,6701.67
+Hybrid w/ Cross-Encoder,149,Thuế thu nhập cá nhân đối với người trúng thầu là bao nhiêu?,Out-of-domain,214_2025_ND-CP_668157,False,N/A,N/A,13774.47
+Hybrid w/ Cross-Encoder,150,Chi phí đăng tải thông báo mời thầu theo Thông tư 06/2021 là bao nhiêu?,Thông tư 06/2021 & 05/2024,06_2021_TT-BKHDT_490510,False,N/A,N/A,19517.96

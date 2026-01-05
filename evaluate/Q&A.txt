@@ -1,0 +1,51 @@
+ID,Câu hỏi,Câu trả lời mong đợi (Ground Truth),Nguồn tài liệu,Loại câu hỏi
+1,Thông tư 02/2024/TT-BKHĐT quy định về vấn đề gì?,Quy định hoạt động đào tạo, bồi dưỡng kiến thức và thi, cấp, thu hồi chứng chỉ nghiệp vụ chuyên môn về đấu thầu.,Thông tư 02/2024/TT-BKHĐT,Định nghĩa
+2,Chứng chỉ nghiệp vụ chuyên môn về đấu thầu có thời hạn sử dụng bao lâu?,Chứng chỉ có thời hạn sử dụng 05 năm kể từ ngày cấp.,Điều 3 - Thông tư 02/2024/TT-BKHĐT,Số liệu
+3,Cơ quan nào có thẩm quyền cấp chứng chỉ nghiệp vụ chuyên môn về đấu thầu?,Cục Quản lý đấu thầu (Bộ KH&ĐT) và Sở Kế hoạch và Đầu tư các tỉnh/thành phố.,Điều 4 - Thông tư 02/2024/TT-BKHĐT,Tổ chức
+4,Điều kiện để cá nhân được dự thi cấp chứng chỉ đấu thầu là gì?,Có năng lực hành vi dân sự; không bị truy cứu trách nhiệm hình sự; Tốt nghiệp đại học trở lên; Đã học lớp bồi dưỡng đấu thầu.,Điều 8 - Thông tư 02/2024/TT-BKHĐT,Quy định
+5,Hình thức thi chứng chỉ nghiệp vụ đấu thầu là gì?,Thi trắc nghiệm trên máy tính.,Điều 13 - Thông tư 02/2024/TT-BKHĐT,Quy trình
+6,Thời gian làm bài thi chứng chỉ đấu thầu là bao nhiêu phút?,60 phút.,Điều 16 - Thông tư 02/2024/TT-BKHĐT,Số liệu
+7,Đề thi chứng chỉ đấu thầu bao gồm bao nhiêu câu hỏi?,50 câu hỏi trắc nghiệm.,Điều 16 - Thông tư 02/2024/TT-BKHĐT,Số liệu
+8,Để đạt yêu cầu cấp chứng chỉ, thí sinh phải đạt bao nhiêu điểm?,Đạt tối thiểu 80% tổng số điểm.,Điều 18 - Thông tư 02/2024/TT-BKHĐT,Điều kiện
+9,Hồ sơ đề nghị cấp chứng chỉ đấu thầu bao gồm những giấy tờ gì?,Đơn đăng ký; Ảnh màu; Bản sao văn bằng tốt nghiệp; Giấy tờ tùy thân (CCCD/Hộ chiếu).,Điều 11 - Thông tư 02/2024/TT-BKHĐT,Hồ sơ
+10,Thông tư 05/2024/TT-BKHĐT quy định về nội dung gì?,Quy định quản lý và sử dụng các chi phí trong lựa chọn nhà thầu, nhà đầu tư trên Hệ thống mạng đấu thầu quốc gia.,Thông tư 05/2024/TT-BKHĐT,Định nghĩa
+11,Chi phí duy trì tên và hồ sơ năng lực nhà thầu trên Hệ thống là bao nhiêu?,330.000 đồng cho 01 năm (đã bao gồm thuế GTGT).,Điều 4 - Thông tư 05/2024/TT-BKHĐT,Số liệu
+12,Thời hạn nộp chi phí duy trì tên và hồ sơ năng lực là khi nào?,Trước ngày 01 tháng 4 hằng năm (trừ năm thực hiện đăng ký).,Điều 4 - Thông tư 05/2024/TT-BKHĐT,Thời gian
+13,Chi phí nộp hồ sơ dự thầu trên Hệ thống mạng đấu thầu quốc gia là bao nhiêu?,330.000 đồng trên mỗi gói thầu (đã bao gồm thuế GTGT).,Điều 4 - Thông tư 05/2024/TT-BKHĐT,Số liệu
+14,Mức thu chi phí đối với nhà thầu trúng thầu được tính như thế nào?,0,02% giá trúng thầu; tối thiểu 330.000 đồng, tối đa 30.000.000 đồng.,Điều 4 - Thông tư 05/2024/TT-BKHĐT,Công thức
+15,Chi phí kết nối chức năng bảo lãnh dự thầu điện tử là bao nhiêu?,Theo thỏa thuận giữa tổ chức tín dụng và Doanh nghiệp dự án e-GP (hoặc quy định cụ thể của NH), nhưng Thông tư 05 quy định việc THU khoản này.,Điều 4 - Thông tư 05/2024/TT-BKHĐT,Chi phí
+16,Đơn vị nào chịu trách nhiệm thu các chi phí trên Hệ thống mạng đấu thầu quốc gia?,Trung tâm Đấu thầu qua mạng quốc gia (hoặc Doanh nghiệp dự án e-GP).,Điều 5 - Thông tư 05/2024/TT-BKHĐT,Tổ chức
+17,Nhà thầu nước ngoài có phải nộp chi phí trên Hệ thống mạng đấu thầu quốc gia không?,Có, nhà thầu nước ngoài tham gia đấu thầu qua mạng phải thực hiện nghĩa vụ tài chính như nhà thầu trong nước.,Thông tư 05/2024/TT-BKHĐT,Đối tượng
+18,Nếu không nộp chi phí duy trì tên đúng hạn, nhà thầu bị xử lý thế nào?,Bị tạm ngừng tài khoản trên Hệ thống mạng đấu thầu quốc gia.,Điều 6 - Thông tư 05/2024/TT-BKHĐT,Chế tài
+19,Chỉ thị 03/CT-BKHĐT năm 2019 nhằm mục đích gì?,Chấn chỉnh công tác đấu thầu, tăng cường hiệu lực, hiệu quả và đẩy lùi tình trạng tiêu cực, vi phạm.,Chỉ thị 03/CT-BKHĐT,Mục đích
+20,Chỉ thị 03 nghiêm cấm hành vi nào trong lập hồ sơ mời thầu?,Nghiêm cấm "cài cắm" các điều kiện nhằm hạn chế sự tham gia của nhà thầu hoặc tạo lợi thế cho nhà thầu cụ thể.,Chỉ thị 03/CT-BKHĐT,Hành vi cấm
+21,Cơ quan nào chịu trách nhiệm giám sát công tác đấu thầu tại địa phương theo Chỉ thị 03?,Sở Kế hoạch và Đầu tư.,Chỉ thị 03/CT-BKHĐT,Tổ chức
+22,Nghị định 09/2022/NĐ-CP hướng dẫn thực hiện đấu thầu theo hiệp định nào?,Hiệp định CPTPP, EVFTA và UKVFTA.,Nghị định 09/2022/NĐ-CP,Pháp lý
+23,Phạm vi điều chỉnh của Nghị định 09/2022/NĐ-CP là gì?,Các gói thầu thuộc phạm vi điều chỉnh của Hiệp định CPTPP, EVFTA, UKVFTA (thường là gói thầu quy mô lớn).,Điều 1 - Nghị định 09/2022/NĐ-CP,Phạm vi
+24,Gói thầu mua sắm hàng hóa an ninh quốc gia có thuộc phạm vi Nghị định 09/2022 không?,Có thể được loại trừ nếu xét thấy cần thiết để bảo vệ an ninh thiết yếu.,Nghị định 09/2022/NĐ-CP,Ngoại lệ
+25,Cơ quan mua sắm tập trung cấp quốc gia theo Nghị định 09/2022 là đơn vị nào?,Trung tâm Đấu thầu qua mạng quốc gia (Bộ Kế hoạch và Đầu tư).,Nghị định 09/2022/NĐ-CP,Tổ chức
+26,Gói thầu dịch vụ xây dựng tại vùng sâu vùng xa theo Nghị định 09/2022 có ưu đãi gì?,Có thể được áp dụng các biện pháp ưu đãi trong đấu thầu.,Nghị định 09/2022/NĐ-CP,Chính sách
+27,Thông tư 12/2022/TT-BKHĐT hướng dẫn lập hồ sơ cho loại gói thầu nào?,Gói thầu mua sắm hàng hóa thuộc phạm vi Hiệp định CPTPP, EVFTA, UKVFTA.,Thông tư 12/2022/TT-BKHĐT,Phạm vi
+28,Mẫu hồ sơ mời thầu mua sắm hàng hóa qua mạng (một giai đoạn một túi hồ sơ) là mẫu số mấy?,Mẫu số 01 (Thông tư 12/2022/TT-BKHĐT).,Thông tư 12/2022/TT-BKHĐT,Biểu mẫu
+29,Thông tư 15/2022/TT-BKHĐT áp dụng cho lĩnh vực đấu thầu nào?,Lĩnh vực xây lắp thuộc phạm vi Hiệp định CPTPP, EVFTA, UKVFTA.,Thông tư 15/2022/TT-BKHĐT,Phạm vi
+30,Nếu sửa đổi hồ sơ mời thầu sau khi phát hành (theo TT 15/2022), bên mời thầu phải làm gì?,Phải dành cho nhà thầu một khoảng thời gian hợp lý để chuẩn bị hồ sơ dự thầu.,Thông tư 15/2022/TT-BKHĐT,Quy trình
+31,Thông tư 09/2024/TT-BKHĐT hướng dẫn về thủ tục gì?,Đăng ký tổ hợp tác, hợp tác xã, liên hiệp hợp tác xã.,Thông tư 09/2024/TT-BKHĐT,Thủ tục
+32,Cơ quan nào quản lý Hệ thống thông tin quốc gia về hợp tác xã?,Bộ Kế hoạch và Đầu tư.,Thông tư 09/2024/TT-BKHĐT,Tổ chức
+33,Quyết định 16/QĐ-BKHĐT năm 2025 nói về đề án gì?,Đề án tư liệu hóa và chuyển đổi số trong hệ thống thống kê quốc gia.,Quyết định 16/QĐ-BKHĐT,Định nghĩa
+34,Mục tiêu đến năm 2030 của Quyết định 16/QĐ-BKHĐT là gì?,100% tài liệu, báo cáo thống kê được số hóa, chỉ mục.,Quyết định 16/QĐ-BKHĐT,Mục tiêu
+35,Thông tư 07/2016/TT-BKHĐT quy định về vấn đề gì?,Lập hồ sơ mời thầu, hồ sơ yêu cầu mua sắm hàng hóa đối với đấu thầu qua mạng.,Thông tư 07/2016/TT-BKHĐT,Phạm vi
+36,Theo Thông tư 07/2016, bên mời thầu có được yêu cầu nộp hồ sơ giấy song song với hồ sơ mạng không?,Không (trừ trường hợp đặc biệt), khuyến khích tối đa hóa việc thực hiện qua mạng.,Thông tư 07/2016/TT-BKHĐT,Quy định
+37,Trong E-HSMT (Thông tư 07/2016), bảng dữ liệu đấu thầu dùng để làm gì?,Cụ thể hóa các quy định của chỉ dẫn nhà thầu cho phù hợp với gói thầu cụ thể.,Thông tư 07/2016/TT-BKHĐT,Định nghĩa
+38,Thông tư 06/2021/TT-BKHĐT (cũ) quy định về chi phí gì?,Chi phí đăng ký, đăng tải thông tin, lựa chọn nhà thầu trên Hệ thống mạng đấu thầu quốc gia (Lưu ý: Đã có TT 05/2024 mới hơn).,Thông tư 06/2021/TT-BKHĐT,Lịch sử
+39,CPTPP là viết tắt của hiệp định nào?,Hiệp định Đối tác Toàn diện và Tiến bộ xuyên Thái Bình Dương.,Nghị định 09/2022/NĐ-CP,Định nghĩa
+40,UKVFTA là hiệp định giữa Việt Nam và nước nào?,Liên hiệp Vương quốc Anh và Bắc Ai-len.,Thông tư 12/2022/TT-BKHĐT,Định nghĩa
+41,EVFTA là hiệp định giữa Việt Nam và tổ chức nào?,Liên minh Châu Âu (EU).,Thông tư 12/2022/TT-BKHĐT,Định nghĩa
+42,Hồ sơ năng lực nhà thầu trên Hệ thống mạng bao gồm những thông tin gì?,Thông tin chung, năng lực tài chính, kinh nghiệm thực hiện hợp đồng, nhân sự chủ chốt, thiết bị.,Thông tư 05/2024/TT-BKHĐT (suy luận từ ngữ cảnh),Hồ sơ
+43,Việc thu hồi chứng chỉ nghiệp vụ đấu thầu diễn ra trong trường hợp nào?,Cá nhân vi phạm quy định pháp luật đấu thầu hoặc kê khai không trung thực trong hồ sơ đề nghị cấp.,Điều 22 - Thông tư 02/2024/TT-BKHĐT,Chế tài
+44,Chứng chỉ hành nghề hoạt động đấu thầu (cũ) còn giá trị sử dụng không?,Được tiếp tục sử dụng đến khi hết thời hạn ghi trên chứng chỉ (theo quy định chuyển tiếp).,Thông tư 02/2024/TT-BKHĐT,Chuyển tiếp
+45,Nhà thầu có được rút hồ sơ dự thầu đã nộp trên mạng không?,Được, nếu rút trước thời điểm đóng thầu.,Quy định chung (Luật Đấu thầu - được tham chiếu trong các TT),Quy trình
+46,Quy định về đấu giá quyền khai thác khoáng sản nằm ở văn bản nào trong danh sách?,Không có văn bản nào trong danh sách quy định về khoáng sản.,Out-of-domain,Negative Test
+47,Luật Đất đai 2024 quy định về giá đất như thế nào?,Tài liệu cung cấp không chứa thông tin về Luật Đất đai.,Out-of-domain,Negative Test
+48,Mức phạt vi phạm giao thông đường bộ là bao nhiêu?,Tài liệu cung cấp không chứa thông tin về Luật Giao thông.,Out-of-domain,Negative Test
+49,Thuế thu nhập cá nhân đối với người trúng thầu là bao nhiêu?,Tài liệu cung cấp không quy định về Thuế thu nhập cá nhân.,Out-of-domain,Negative Test
+50,Chi phí đăng tải thông báo mời thầu theo Thông tư 06/2021 là bao nhiêu?,(Câu hỏi kiểm tra kiến thức cũ) Quy định cũ là 300.000đ/lần, nhưng hiện nay áp dụng theo TT 05/2024 (miễn phí đăng tải thông báo, chỉ thu phí dự thầu/trúng thầu).,Thông tư 06/2021 & 05/2024,So sánh

@@ -10,34 +10,34 @@ import json
 import time
 from typing import Generator
 
-# Add backend/src to path
+# Thêm backend/src vào path
 BACKEND_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(BACKEND_ROOT)
 sys.path.insert(0, BACKEND_ROOT)
 sys.path.insert(0, os.path.join(BACKEND_ROOT, "src"))
 
-# Import RAG system
+# Import hệ thống RAG
 try:
     from src import query
 except ImportError:
-    # Fallback import
+    # Import dự phòng
     import query
 
 app = Flask(__name__)
-# Enable CORS for React frontend với cấu hình chi tiết
+# Cấu hình CORS cho React frontend
 CORS(app, 
      origins=["http://localhost:5173", "http://127.0.0.1:5173"],
      allow_headers=["Content-Type", "Authorization"],
      methods=["GET", "POST", "OPTIONS"],
      supports_credentials=True)
 
-# Configuration
+# Cấu hình
 API_PORT = int(os.getenv("API_PORT", 5000))
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
 @app.route("/health", methods=["GET"])
 def health_check():
-    """Health check endpoint."""
+    """Endpoint kiểm tra sức khỏe của hệ thống."""
     return jsonify({
         "status": "healthy",
         "service": "Legal Chatbot API",
@@ -47,7 +47,7 @@ def health_check():
 @app.route("/api/chat", methods=["POST"])
 def chat():
     """
-    Chat endpoint với RAG.
+    Endpoint Chat với RAG.
     
     Request body:
     {
@@ -72,9 +72,9 @@ def chat():
         
         # Sử dụng RAG system để tạo câu trả lời
         if stream:
-            # Streaming response
+            # Phản hồi dạng streaming
             def generate():
-                # Gọi RAG system với metadata và conversation history
+                # Gọi hệ thống RAG với metadata và lịch sử chat
                 # TỐI ƯU: Không cần tìm kiếm context riêng vì ask_sth đã tự tìm kiếm
                 result = query.ask_sth(
                     user_message, 
@@ -84,13 +84,13 @@ def chat():
                 )
                 answer = result.get("answer", "")
                 
-                # Simulate streaming bằng cách chia nhỏ response
+                # Mô phỏng streaming bằng cách chia nhỏ phản hồi
                 # Chia thành các chunk nhỏ để frontend có thể hiển thị từng phần
                 # QUAN TRỌNG: Giữ nguyên xuống dòng (\n) và markdown formatting
                 import re
                 # Chia text thành các chunk, giữ nguyên \n và markdown
                 # Chia theo từ nhưng giữ nguyên whitespace (bao gồm \n)
-                words = re.split(r'(\s+)', answer)  # Split nhưng giữ lại whitespace
+                words = re.split(r'(\s+)', answer)  # Tách từ nhưng giữ lại khoảng trắng
                 chunk_size = 10  # Số từ mỗi chunk
                 for i in range(0, len(words), chunk_size):
                     chunk_parts = words[i:i+chunk_size]
@@ -112,7 +112,7 @@ def chat():
                 }
             )
         else:
-            # Non-streaming response với metadata đầy đủ
+            # Phản hồi không streaming với đầy đủ metadata
             result = query.ask_sth(
                 user_message, 
                 return_metadata=True, 
@@ -140,7 +140,7 @@ def chat():
 @app.route("/api/search", methods=["POST"])
 def search():
     """
-    Semantic search endpoint.
+    Endpoint tìm kiếm ngữ nghĩa (Semantic search).
     
     Request body:
     {
@@ -178,7 +178,7 @@ def search():
 
 @app.route("/api/status", methods=["GET"])
 def status():
-    """Get system status."""
+    """Lấy trạng thái hệ thống."""
     try:
         # Kiểm tra xem RAG system có sẵn sàng không
         test_query = "test"

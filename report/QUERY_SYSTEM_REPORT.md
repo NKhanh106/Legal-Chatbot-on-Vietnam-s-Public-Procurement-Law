@@ -227,7 +227,7 @@ STAGE1_TOP_K = 100          # FAISS candidates
 STAGE1_BM25_TOP_K = 100     # BM25 candidates
 STAGE1_HYBRID_TOP_K = 150   # After merge
 STAGE2_TOP_K = 30           # After cross-encoder
-STAGE3_TOP_K = 15           # After keyword+metadata
+STAGE3_TOP_K = 60           # Scoring Candidates (Increased to 60 to prevent premature cutoff)
 STAGE4_TOP_K = 10           # After diversity
 FINAL_TOP_K = 3             # Final results
 
@@ -259,7 +259,9 @@ User Query
     ↓
 [Stage 2: Cross-Encoder Re-ranking] (30 candidates)
     ↓
-[Stage 3: Keyword + Metadata Scoring] (15 candidates)
+[Stage 2: Cross-Encoder Re-ranking] (30 candidates)
+    ↓
+[Stage 3: Keyword + Metadata Scoring] (60 candidates)
     ↓
 [Stage 4: Diversity Filtering] (10 candidates)
     ↓
@@ -378,29 +380,31 @@ Return Answer + Metadata
 - Nếu không → tăng semantic weight
 
 **Final Score**:
+**Final Score Calculation (Updated)**:
+- **Optimization**: Boost `hybrid_score` (RRF) lên **25.0 lần** để cân bằng range điểm [0,1].
+- **Adaptive Logic**: Giảm Keyword weight để tránh nhiễu, tăng Semantic weight.
+
 ```python
 # Nếu có mention điều khoản:
-# cross_weight = 0.45 (hoặc 0.20 nếu fallback bi-encoder)
+# cross_weight = 0.20 (giảm do fallback) hoặc 0.45
 # remaining_weight = 1.0 - cross_weight
-# Weights gốc: 0.20 (hybrid) + 0.08 (keyword) + 0.15 (metadata) + 0.07 (number) = 0.50
-# Normalize: (0.20/0.50) * remaining_weight, (0.08/0.50) * remaining_weight, ...
+# Weights mới: 0.40 (hybrid) + 0.10 (keyword) + 0.20 (metadata) + 0.10 (number)
 stage3_score = (
     cross_weight * cross_score_norm +
-    (0.20 / 0.50) * remaining_weight * hybrid_score +
-    (0.08 / 0.50) * remaining_weight * keyword_score +
-    (0.15 / 0.50) * remaining_weight * metadata_score +
-    (0.07 / 0.50) * remaining_weight * number_score
+    0.40 * hybrid_score_boosted +   # Tăng mạnh Hybrid (x25)
+    0.10 * keyword_score +          # Giảm Keyword (từ 0.12)
+    0.20 * metadata_score +
+    0.10 * number_score
 )
 
 # Nếu không có mention điều khoản:
-# cross_weight = 0.50 (hoặc 0.25 nếu fallback bi-encoder)
-# Weights: 0.50 + 0.25 + 0.12 + 0.05 + 0.08 = 1.0 (đã đúng, không cần normalize)
+# Weights: 0.55 (hybrid) + 0.10 (keyword) + 0.05 (metadata) + 0.05 (number)
 stage3_score = (
     cross_weight * cross_score_norm +
-    0.25 * hybrid_score +
-    0.12 * keyword_score +
+    0.55 * hybrid_score_boosted +   # Hybrid (RRF) là tín hiệu đáng tin cậy nhất
+    0.10 * keyword_score +
     0.05 * metadata_score +
-    0.08 * number_score
+    0.05 * number_score
 )
 ```
 

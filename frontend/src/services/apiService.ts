@@ -4,11 +4,11 @@
  */
 import { Message } from "../types";
 
-// Get API URL from environment or use default
-// Vite exposes env variables via import.meta.env
+// Lấy API URL từ biến môi trường hoặc dùng mặc định
+// Vite expose biến môi trường qua import.meta.env
 // Trong development, sử dụng relative path để dùng Vite proxy
-// Trong production, sử dụng full URL từ env hoặc default
-// @ts-ignore - Vite environment variables
+// Trong production, sử dụng full URL từ biến môi trường hoặc mặc định
+// @ts-ignore - Biến môi trường Vite
 const getApiBaseUrl = () => {
   // @ts-ignore
   if (import.meta.env?.VITE_API_URL) {
@@ -41,7 +41,7 @@ export const streamChatResponse = async (
       role: msg.role,
       content: msg.content
     }));
-    
+
     // Gửi request đến backend API
     const response = await fetch(`${API_BASE_URL}/api/chat`, {
       method: "POST",
@@ -51,7 +51,7 @@ export const streamChatResponse = async (
       body: JSON.stringify({
         message: newMessage,
         history: conversationHistory, // Gửi conversation history
-        stream: true, // Request streaming response
+        stream: true, // Yêu cầu phản hồi dạng streaming
       }),
     });
 
@@ -72,7 +72,7 @@ export const streamChatResponse = async (
 
     while (true) {
       const { done, value } = await reader.read();
-      
+
       if (done) break;
 
       buffer += decoder.decode(value, { stream: true });
@@ -82,7 +82,7 @@ export const streamChatResponse = async (
       for (const line of lines) {
         if (line.startsWith("data: ")) {
           const data = line.slice(6);
-          
+
           if (data === "[DONE]") {
             return fullText;
           }
@@ -90,18 +90,18 @@ export const streamChatResponse = async (
           try {
             const parsed = JSON.parse(data);
             if (parsed.chunk) {
-              // Accumulate chunks (not replace)
+              // Tích lũy chunks (không thay thế)
               fullText += parsed.chunk;
               onChunk(fullText);
             } else if (parsed.sources || parsed.confidence !== undefined) {
-              // Send final metadata (sources and confidence)
+              // Gửi metadata cuối cùng (nguồn và độ tin cậy)
               onChunk(fullText, parsed.sources, parsed.confidence);
             } else if (parsed.metadata) {
-              // Alternative metadata format
+              // Định dạng metadata thay thế
               onChunk(fullText, parsed.metadata.sources, parsed.metadata.confidence);
             }
           } catch (e) {
-            // Ignore parse errors
+            // Bỏ qua lỗi parse
           }
         }
       }
@@ -115,7 +115,7 @@ export const streamChatResponse = async (
 };
 
 /**
- * Non-streaming chat response (fallback)
+ * Phản hồi chat không streaming (dự phòng)
  */
 export const chatResponse = async (
   message: string

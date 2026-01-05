@@ -13,9 +13,9 @@ interface ChatAreaProps {
 
 export const ChatArea: React.FC<ChatAreaProps> = ({ messages, loadingState, onSend }) => {
   const bottomRef = useRef<HTMLDivElement>(null);
-  // Track like/dislike status for each message (by message id)
+  // Theo dõi trạng thái thích/không thích cho từng tin nhắn (theo ID tin nhắn)
   const [messageFeedback, setMessageFeedback] = useState<Record<string, 'like' | 'dislike' | null>>({});
-  // Track copy notification
+  // Theo dõi thông báo sao chép
   const [showCopyNotification, setShowCopyNotification] = useState(false);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ export const ChatArea: React.FC<ChatAreaProps> = ({ messages, loadingState, onSe
       }, 2000);
     } catch (err) {
       console.error('Failed to copy text:', err);
-      // Fallback cho trình duyệt cũ
+      // Dự phòng cho trình duyệt cũ
       const textArea = document.createElement('textarea');
       textArea.value = text;
       textArea.style.position = 'fixed';
@@ -84,7 +84,7 @@ export const ChatArea: React.FC<ChatAreaProps> = ({ messages, loadingState, onSe
 
   return (
     <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 w-full relative">
-      {/* Copy notification toast */}
+      {/* Thông báo sao chép */}
       {showCopyNotification && (
         <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-[#2f2f2f] text-white px-4 py-2 rounded-lg shadow-lg z-50 animate-fade-in">
           <span className="text-sm">Đã sao chép thành công</span>
@@ -94,106 +94,103 @@ export const ChatArea: React.FC<ChatAreaProps> = ({ messages, loadingState, onSe
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`flex gap-4 mb-6 md:mb-8 group ${
-              msg.role === 'user' ? 'justify-end' : 'justify-start'
-            }`}
+            className={`flex gap-4 mb-6 md:mb-8 group ${msg.role === 'user' ? 'justify-end' : 'justify-start'
+              }`}
           >
-             {/* Model Avatar */}
+            {/* Avatar máy */}
             {msg.role === 'model' && (
               <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center flex-shrink-0 self-start border border-white/10">
-                 <img src="/logo.png" className="w-5 h-5" alt="Logo" />
+                <img src="/logo.png" className="w-5 h-5" alt="Logo" />
               </div>
             )}
 
-            {/* Message Content */}
+            {/* Nội dung tin nhắn */}
             <div className={`relative max-w-[85%] md:max-w-[90%] ${msg.role === 'user' ? 'bg-[#2f2f2f] rounded-3xl px-5 py-2.5' : ''}`}>
-               {msg.role === 'user' ? (
-                   <p className="whitespace-pre-wrap text-white leading-7">{msg.content}</p>
-               ) : (
-                   <div className="text-gray-100 leading-7">
-                        {/* Hiển thị loading indicator nếu message rỗng và đang streaming */}
-                        {!msg.content && loadingState === 'streaming' ? (
-                            <div className="flex items-center gap-1 h-8">
-                                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-                            </div>
-                        ) : msg.content ? (
-                            <>
-                                {/* Render markdown với formatting */}
-                                <div className="font-light text-[0.95rem] md:text-[1rem] markdown-content">
-                                    <ReactMarkdown
-                                        remarkPlugins={[remarkGfm]}
-                                        components={{
-                                            // Paragraph: Giữ nguyên xuống dòng và khoảng cách
-                                            p: ({node, ...props}) => <p className="mb-4 last:mb-0 whitespace-pre-wrap" style={{ whiteSpace: 'pre-wrap' }} {...props} />,
-                                            // Strong/Bold: Tô đậm với màu trắng
-                                            strong: ({node, ...props}) => <strong className="text-white font-semibold" style={{ fontWeight: 600 }} {...props} />,
-                                            // Lists
-                                            ul: ({node, ...props}) => <ul className="list-disc list-inside mb-4 space-y-2 ml-4" {...props} />,
-                                            ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-4 space-y-2 ml-4" {...props} />,
-                                            li: ({node, ...props}) => <li className="ml-2" {...props} />,
-                                            // Headings
-                                            h2: ({node, ...props}) => <h2 className="text-xl font-semibold mt-6 mb-3 text-gray-100 first:mt-0" {...props} />,
-                                            h3: ({node, ...props}) => <h3 className="text-lg font-semibold mt-5 mb-2 text-gray-100" {...props} />,
-                                            // Code
-                                            code: ({node, inline, ...props}: any) => 
-                                                inline ? (
-                                                    <code className="bg-[#2f2f2f] px-1.5 py-0.5 rounded text-sm text-gray-200 font-mono" {...props} />
-                                                ) : (
-                                                    <code className="block bg-[#2f2f2f] p-3 rounded text-sm text-gray-200 font-mono my-3 overflow-x-auto" {...props} />
-                                                ),
-                                            // Blockquote
-                                            blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-gray-500 pl-4 italic my-4 text-gray-300" {...props} />,
-                                            // Line breaks
-                                            br: ({node, ...props}) => <br className="block my-2" {...props} />,
-                                        }}
-                                    >
-                                    {msg.content}
-                                    </ReactMarkdown>
-                                </div>
-                                
-                                {/* Action buttons for model response */}
-                                <div className="flex items-center gap-2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <button 
-                                        onClick={() => handleCopy(msg.content)}
-                                        className="p-1 text-gray-500 hover:text-gray-300 rounded transition-colors"
-                                        title="Copy to clipboard"
-                                    >
-                                        <Copy className="w-4 h-4" />
-                                    </button>
-                                    <button 
-                                        onClick={() => handleLike(msg.id)}
-                                        className={`p-1 rounded transition-colors ${
-                                            messageFeedback[msg.id] === 'like' 
-                                                ? 'text-white' 
-                                                : 'text-gray-500 hover:text-gray-300'
-                                        }`}
-                                        title="Like this response"
-                                    >
-                                        <ThumbsUp className={`w-4 h-4 ${messageFeedback[msg.id] === 'like' ? 'fill-current' : ''}`} />
-                                    </button>
-                                    <button 
-                                        onClick={() => handleDislike(msg.id)}
-                                        className={`p-1 rounded transition-colors ${
-                                            messageFeedback[msg.id] === 'dislike' 
-                                                ? 'text-white' 
-                                                : 'text-gray-500 hover:text-gray-300'
-                                        }`}
-                                        title="Dislike this response"
-                                    >
-                                        <ThumbsDown className={`w-4 h-4 ${messageFeedback[msg.id] === 'dislike' ? 'fill-current' : ''}`} />
-                                    </button>
-                                </div>
-                            </>
-                        ) : null}
-                   </div>
-               )}
+              {msg.role === 'user' ? (
+                <p className="whitespace-pre-wrap text-white leading-7">{msg.content}</p>
+              ) : (
+                <div className="text-gray-100 leading-7">
+                  {/* Hiển thị loading indicator nếu message rỗng và đang streaming */}
+                  {!msg.content && loadingState === 'streaming' ? (
+                    <div className="flex items-center gap-1 h-8">
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                    </div>
+                  ) : msg.content ? (
+                    <>
+                      {/* Render markdown với formatting */}
+                      <div className="font-light text-[0.95rem] md:text-[1rem] markdown-content">
+                        <ReactMarkdown
+                          remarkPlugins={[remarkGfm]}
+                          components={{
+                            // Paragraph: Giữ nguyên xuống dòng và khoảng cách
+                            p: ({ node, ...props }) => <p className="mb-4 last:mb-0 whitespace-pre-wrap" style={{ whiteSpace: 'pre-wrap' }} {...props} />,
+                            // Strong/Bold: Tô đậm với màu trắng
+                            strong: ({ node, ...props }) => <strong className="text-white font-semibold" style={{ fontWeight: 600 }} {...props} />,
+                            // Danh sách
+                            ul: ({ node, ...props }) => <ul className="list-disc list-inside mb-4 space-y-2 ml-4" {...props} />,
+                            ol: ({ node, ...props }) => <ol className="list-decimal list-inside mb-4 space-y-2 ml-4" {...props} />,
+                            li: ({ node, ...props }) => <li className="ml-2" {...props} />,
+                            // Tiêu đề
+                            h2: ({ node, ...props }) => <h2 className="text-xl font-semibold mt-6 mb-3 text-gray-100 first:mt-0" {...props} />,
+                            h3: ({ node, ...props }) => <h3 className="text-lg font-semibold mt-5 mb-2 text-gray-100" {...props} />,
+                            // Mã nguồn
+                            code: ({ node, inline, ...props }: any) =>
+                              inline ? (
+                                <code className="bg-[#2f2f2f] px-1.5 py-0.5 rounded text-sm text-gray-200 font-mono" {...props} />
+                              ) : (
+                                <code className="block bg-[#2f2f2f] p-3 rounded text-sm text-gray-200 font-mono my-3 overflow-x-auto" {...props} />
+                              ),
+                            // Trích dẫn
+                            blockquote: ({ node, ...props }) => <blockquote className="border-l-4 border-gray-500 pl-4 italic my-4 text-gray-300" {...props} />,
+                            // Ngắt dòng
+                            br: ({ node, ...props }) => <br className="block my-2" {...props} />,
+                          }}
+                        >
+                          {msg.content}
+                        </ReactMarkdown>
+                      </div>
+
+                      {/* Nút chức năng cho phản hồi của máy */}
+                      <div className="flex items-center gap-2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button
+                          onClick={() => handleCopy(msg.content)}
+                          className="p-1 text-gray-500 hover:text-gray-300 rounded transition-colors"
+                          title="Copy to clipboard"
+                        >
+                          <Copy className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => handleLike(msg.id)}
+                          className={`p-1 rounded transition-colors ${messageFeedback[msg.id] === 'like'
+                              ? 'text-white'
+                              : 'text-gray-500 hover:text-gray-300'
+                            }`}
+                          title="Like this response"
+                        >
+                          <ThumbsUp className={`w-4 h-4 ${messageFeedback[msg.id] === 'like' ? 'fill-current' : ''}`} />
+                        </button>
+                        <button
+                          onClick={() => handleDislike(msg.id)}
+                          className={`p-1 rounded transition-colors ${messageFeedback[msg.id] === 'dislike'
+                              ? 'text-white'
+                              : 'text-gray-500 hover:text-gray-300'
+                            }`}
+                          title="Dislike this response"
+                        >
+                          <ThumbsDown className={`w-4 h-4 ${messageFeedback[msg.id] === 'dislike' ? 'fill-current' : ''}`} />
+                        </button>
+                      </div>
+                    </>
+                  ) : null}
+                </div>
+              )}
             </div>
 
-            {/* User Avatar (Only needed if we want to show it on the right) */}
-            {/* The user avatar in standard chat UI usually isn't shown next to the bubble, or is implied. 
-                But let's stick to the request image style which doesn't explicitly show avatars for user bubbles usually. */}
+            {/* Avatar người dùng (Chỉ cần nếu muốn hiển thị bên phải) */}
+            {/* Avatar người dùng trong giao diện chat chuẩn thường không hiển thị cạnh bong bóng chat, hoặc được ngầm hiểu. 
+                Nhưng hãy giữ theo phong cách hình ảnh yêu cầu không hiển thị avatar rõ ràng cho bong bóng chat người dùng. */}
           </div>
         ))}
         <div ref={bottomRef} />

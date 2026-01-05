@@ -12,6 +12,7 @@ Thư mục này chứa các module core của hệ thống RAG (Retrieval-Augmen
 | `read_pdf.py` | Đọc PDF với OCR | pytesseract, pdf2image, PIL | ⭐⭐⭐⭐ |
 | `read_word.py` | Đọc Word documents | python-docx, docx2txt | ⭐⭐⭐ |
 | `correction.py` | Sửa lỗi OCR | Regex, Pattern matching | ⭐⭐⭐ |
+| `evaluate.py` | Đánh giá hiệu năng RAG (Recall, MAP, MRR) | LLM Judge, Seaborn | ⭐⭐⭐⭐ |
 | `deploy.py` | Utilities cho deployment | - | ⭐⭐⭐ |
 
 ---
@@ -38,6 +39,7 @@ Thư mục này chứa các module core của hệ thống RAG (Retrieval-Augmen
    - FAISS semantic search: Tìm chunks tương tự về ngữ nghĩa
    - BM25 keyword search: Tìm chunks có từ khóa chính xác
    - RRF fusion: Kết hợp ranks từ 2 phương pháp
+   - **Optimization**: Boost RRF score (nhân 25.0) để tăng semantic signal
    - Output: ~150 candidates
 
 2. **Stage 2: Cross-Encoder Re-ranking**
@@ -50,7 +52,8 @@ Thư mục này chứa các module core của hệ thống RAG (Retrieval-Augmen
    - Tính keyword score (từ khóa trong query)
    - Tính metadata score (điều khoản, chương được mention)
    - Adaptive weights dựa trên query type
-   - Output: ~15 scored chunks
+   - **Optimization**: Limit tăng lên 60 chunks (tránh bottleneck)
+   - Output: ~15 scored chunks (cũ), nay là 60 để lọc kỹ hơn
 
 4. **Stage 4: Diversity Filtering**
    - Hard constraint: Skip nếu ≥2 chunks từ cùng điều khoản
@@ -78,10 +81,37 @@ Thư mục này chứa các module core của hệ thống RAG (Retrieval-Augmen
 
 **Tối ưu hóa:**
 - RRF thay vì normalize + weighted sum (stable ranking)
+- **Boost Hybrid Score**: Tăng trọng số RRF (x25) để cân bằng với Keyword score
+- **Increased Limits**: Stage 3 limit tăng lên 60 (gấp 3 top_k) để tránh cắt bỏ sớm tài liệu tiềm năng
+- **Adaptive Weights**: Điều chỉnh trọng số Cross-Encoder khi fallback hoặc tín hiệu yếu
 - Batch processing cho cross-encoder
 - Cached embeddings theo chunk_id
 - Rate‑limit aware fallback giữa các Groq models (primary/fallback)
 - Prompt optimization (60% token reduction)
+
+---
+
+### 1a. `evaluate.py` - RAG Evaluation System
+
+**Công dụng:**
+- Đánh giá hiệu năng của hệ thống RAG theo các metrics chuẩn
+- So sánh các phương pháp tìm kiếm khác nhau (A/B testing)
+- Visualization kết quả bằng biểu đồ
+
+**Các Metrics:**
+- **Recall@K (R@K)**: Tỷ lệ tìm thấy tài liệu đúng trong top K kết quả. Đo lường khả năng tìm kiếm.
+- **MAP@K (Mean Average Precision)**: Đo lường độ chính xác trung bình, quan tâm đến thứ hạng.
+- **MRR (Mean Reciprocal Rank)**: Điểm số dựa trên thứ hạng của kết quả đúng đầu tiên.
+
+**Các Phương pháp Đánh giá:**
+1. **FAISS Only**: Tìm kiếm thuần Semantic (Baseline).
+2. **Hybrid w/o Cross-Encoder**: FAISS + BM25 + RRF (Đánh giá hiệu quả của Cross-Encoder).
+3. **Hybrid w/ Cross-Encoder**: Full pipeline (Production mode).
+
+**Tính năng đặc biệt:**
+- **Fair Evaluation**: Tự động tắt các bộ lọc Diversity và Deduplication khi đánh giá để đo lường sức mạnh tìm kiếm thô (Raw Retrieval Power).
+- **Metadata Handling**: Hỗ trợ flatten metadata để so khớp chính xác với Ground Truth.
+- **Visualization**: Tự động vẽ biểu đồ so sánh R@20 giữa các phương pháp.
 
 ---
 

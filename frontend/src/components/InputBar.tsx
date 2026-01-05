@@ -40,7 +40,7 @@ export const InputBar: React.FC<InputBarProps> = ({ onSend, isLoading }) => {
         <button className="p-2 text-gray-400 hover:text-white transition-colors rounded-full hover:bg-white/10 mr-2 flex-shrink-0">
           <Paperclip className="w-5 h-5" />
         </button>
-        
+
         <textarea
           ref={textareaRef}
           value={input}
@@ -53,24 +53,23 @@ export const InputBar: React.FC<InputBarProps> = ({ onSend, isLoading }) => {
         />
 
         <div className="flex items-center gap-2 ml-2 flex-shrink-0 pb-1">
-            {/* Mock Mic button - visuals only */}
-            {!input && (
-                <button className="p-2 bg-transparent text-gray-400 rounded-full hover:bg-white/10 transition-colors">
-                    <Mic className="w-5 h-5" />
-                </button>
-            )}
-            
-            <button
-                onClick={handleSend}
-                disabled={!input.trim() || isLoading}
-                className={`p-2 rounded-full transition-colors ${
-                input.trim() 
-                    ? 'bg-white text-black hover:bg-gray-200' 
-                    : 'bg-[#676767] text-gray-900 cursor-not-allowed opacity-50'
-                }`}
-            >
-                <ArrowUp className="w-5 h-5" />
+          {/* Nút Mic giả lập - chỉ để hiển thị */}
+          {!input && (
+            <button className="p-2 bg-transparent text-gray-400 rounded-full hover:bg-white/10 transition-colors">
+              <Mic className="w-5 h-5" />
             </button>
+          )}
+
+          <button
+            onClick={handleSend}
+            disabled={!input.trim() || isLoading}
+            className={`p-2 rounded-full transition-colors ${input.trim()
+                ? 'bg-white text-black hover:bg-gray-200'
+                : 'bg-[#676767] text-gray-900 cursor-not-allowed opacity-50'
+              }`}
+          >
+            <ArrowUp className="w-5 h-5" />
+          </button>
         </div>
       </div>
       <div className="text-center mt-2 text-xs text-gray-500">

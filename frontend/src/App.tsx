@@ -7,7 +7,7 @@ import { ChatSession, Message, LoadingState } from './types';
 import { streamChatResponse, generateTitle } from './services/apiService';
 import { PanelLeft, SquarePen } from 'lucide-react';
 
-// Helper for unique ID since we can't import uuid package in this strict env without adding it to package.json which isn't available here
+// Helper tạo ID duy nhất vì không thể import uuid trong môi trường nghiêm ngặt này
 const generateId = () => Date.now().toString(36) + Math.random().toString(36).substr(2);
 
 const App: React.FC = () => {
@@ -16,7 +16,7 @@ const App: React.FC = () => {
   const [loadingState, setLoadingState] = useState<LoadingState>('idle');
   const [isSidebarOpen, setSidebarOpen] = useState(true);
 
-  // Load from local storage on mount (optional mock)
+  // Tải dữ liệu từ local storage khi khởi tạo
   useEffect(() => {
     const saved = localStorage.getItem('bid_law_chats');
     if (saved) {
@@ -24,7 +24,7 @@ const App: React.FC = () => {
     }
   }, []);
 
-  // Save to local storage
+  // Lưu vào local storage
   useEffect(() => {
     localStorage.setItem('bid_law_chats', JSON.stringify(sessions));
   }, [sessions]);
@@ -54,8 +54,8 @@ const App: React.FC = () => {
 
   const updateSessionTitle = (sessionId: string, title: string) => {
     setSessions(prev => prev.map(s => {
-        if (s.id === sessionId) return { ...s, title };
-        return s;
+      if (s.id === sessionId) return { ...s, title };
+      return s;
     }));
   };
 
@@ -68,10 +68,10 @@ const App: React.FC = () => {
       isNewChat = true;
     }
 
-    // Double check existence (edge case)
+    // Kiểm tra kỹ sự tồn tại (trường hợp biên)
     const currentSession = sessions.find(s => s.id === activeSessionId) || { messages: [] };
-    
-    // Add User Message
+
+    // Thêm tin nhắn của người dùng
     const userMsg: Message = {
       id: generateId(),
       role: 'user',
@@ -81,17 +81,17 @@ const App: React.FC = () => {
 
     const updatedMessages = [...currentSession.messages, userMsg];
     updateSessionMessages(activeSessionId, updatedMessages);
-    
-    // Optimistic Title Generation for new chats
+
+    // Tạo tiêu đề tối ưu cho đoạn chat mới
     if (isNewChat || currentSession.messages.length === 0) {
-        generateTitle(text).then(title => {
-            if(activeSessionId) updateSessionTitle(activeSessionId, title);
-        });
+      generateTitle(text).then(title => {
+        if (activeSessionId) updateSessionTitle(activeSessionId, title);
+      });
     }
 
     setLoadingState('streaming');
 
-    // Create placeholder for model message
+    // Tạo placeholder cho tin nhắn của model
     const modelMsgId = generateId();
     const modelMsgPlaceholder: Message = {
       id: modelMsgId,
@@ -99,17 +99,17 @@ const App: React.FC = () => {
       content: '', // Will start empty
       timestamp: Date.now() + 1,
     };
-    
+
     // We don't add the empty message to state immediately to avoid an empty bubble flash, 
     // or we can add it and rely on streaming to fill it. 
-    // Let's add it so the UI scrolls down.
+    // Thêm placeholder để UI cuộn xuống dưới
     updateSessionMessages(activeSessionId, [...updatedMessages, modelMsgPlaceholder]);
 
     try {
       await streamChatResponse(updatedMessages, text, (accumulatedText) => {
         setSessions(prev => prev.map(s => {
           if (s.id === activeSessionId) {
-            const msgs = s.messages.map(m => 
+            const msgs = s.messages.map(m =>
               m.id === modelMsgId ? { ...m, content: accumulatedText } : m
             );
             return { ...s, messages: msgs };
@@ -129,14 +129,14 @@ const App: React.FC = () => {
         timestamp: Date.now(),
       };
       // Remove the stalled placeholder and add error
-      // Note: In a real app we'd want to keep partial response if any
-       setSessions(prev => prev.map(s => {
-          if (s.id === activeSessionId) {
-            const msgs = s.messages.filter(m => m.id !== modelMsgId);
-            return { ...s, messages: [...msgs, errorMsg] };
-          }
-          return s;
-        }));
+      // Lưu ý: Trong ứng dụng thực tế nên giữ lại phản hồi một phần nếu có
+      setSessions(prev => prev.map(s => {
+        if (s.id === activeSessionId) {
+          const msgs = s.messages.filter(m => m.id !== modelMsgId);
+          return { ...s, messages: [...msgs, errorMsg] };
+        }
+        return s;
+      }));
     }
   };
 
@@ -144,63 +144,63 @@ const App: React.FC = () => {
 
   return (
     <div className="flex h-screen w-full bg-[#212121] text-gray-100 font-sans overflow-hidden">
-      {/* Sidebar - Hidden on mobile unless toggled */}
+      {/* Sidebar - Ẩn trên mobile trừ khi được bật */}
       <div className={`${isSidebarOpen ? 'fixed inset-0 z-50 md:static md:inset-auto md:z-auto' : 'hidden'} md:block`}>
-          <div className="absolute inset-0 bg-black/50 md:hidden" onClick={() => setSidebarOpen(false)}></div>
-          <Sidebar 
-            sessions={sessions}
-            currentSessionId={currentSessionId}
-            onSelectSession={(id) => {
-                setCurrentSessionId(id);
-                setSidebarOpen(false); // Close on mobile selection
-            }}
-            onNewChat={() => {
-                createNewChat();
-                setSidebarOpen(false);
-            }}
-            isOpen={isSidebarOpen}
-            toggleSidebar={() => setSidebarOpen(!isSidebarOpen)}
-          />
+        <div className="absolute inset-0 bg-black/50 md:hidden" onClick={() => setSidebarOpen(false)}></div>
+        <Sidebar
+          sessions={sessions}
+          currentSessionId={currentSessionId}
+          onSelectSession={(id) => {
+            setCurrentSessionId(id);
+            setSidebarOpen(false); // Close on mobile selection
+          }}
+          onNewChat={() => {
+            createNewChat();
+            setSidebarOpen(false);
+          }}
+          isOpen={isSidebarOpen}
+          toggleSidebar={() => setSidebarOpen(!isSidebarOpen)}
+        />
       </div>
 
-      {/* Main Content */}
+      {/* Nội dung chính */}
       <div className="flex-1 flex flex-col h-full relative min-w-0">
-        
-        {/* Mobile Header / Top Bar */}
+
+        {/* Header Mobile / Thanh công cụ */}
         <div className="sticky top-0 z-10 flex items-center justify-between p-3 md:p-4 text-gray-300 bg-[#212121]">
-            <div className="flex items-center gap-2">
-                <button 
-                    onClick={() => setSidebarOpen(!isSidebarOpen)} 
-                    className="p-2 hover:bg-[#2f2f2f] rounded-lg transition-colors text-gray-400 hover:text-white"
-                    title={isSidebarOpen ? "Đóng sidebar" : "Mở sidebar"}
-                >
-                    <PanelLeft className="w-6 h-6" />
-                </button>
-                <div className="font-semibold text-lg text-gray-200 cursor-pointer flex items-center gap-1 hover:bg-[#2f2f2f] px-3 py-1 rounded-lg">
-                    Luật Đấu Thầu
-                    <span className="text-xs bg-yellow-600/20 text-yellow-500 px-1.5 py-0.5 rounded ml-2 border border-yellow-600/30">Beta</span>
-                </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setSidebarOpen(!isSidebarOpen)}
+              className="p-2 hover:bg-[#2f2f2f] rounded-lg transition-colors text-gray-400 hover:text-white"
+              title={isSidebarOpen ? "Đóng sidebar" : "Mở sidebar"}
+            >
+              <PanelLeft className="w-6 h-6" />
+            </button>
+            <div className="font-semibold text-lg text-gray-200 cursor-pointer flex items-center gap-1 hover:bg-[#2f2f2f] px-3 py-1 rounded-lg">
+              Luật Đấu Thầu
+              <span className="text-xs bg-yellow-600/20 text-yellow-500 px-1.5 py-0.5 rounded ml-2 border border-yellow-600/30">Beta</span>
             </div>
-            
-            <div className="flex items-center gap-2">
-                <button 
-                  onClick={createNewChat} 
-                  className="md:hidden p-2 hover:bg-[#2f2f2f] rounded-lg text-gray-400"
-                >
-                    <SquarePen className="w-6 h-6" />
-                </button>
-            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={createNewChat}
+              className="md:hidden p-2 hover:bg-[#2f2f2f] rounded-lg text-gray-400"
+            >
+              <SquarePen className="w-6 h-6" />
+            </button>
+          </div>
         </div>
 
-        {/* Chat Area */}
-        <ChatArea 
+        {/* Khu vực Chat */}
+        <ChatArea
           messages={activeSession?.messages || []}
           loadingState={loadingState}
           onSend={handleSend}
         />
 
-        {/* Input Area */}
-        <InputBar 
+        {/* Khu vực Nhập liệu */}
+        <InputBar
           onSend={handleSend}
           isLoading={loadingState !== 'idle'}
         />

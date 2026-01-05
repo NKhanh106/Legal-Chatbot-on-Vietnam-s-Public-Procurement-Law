@@ -15,11 +15,13 @@
 - **⚡ Streaming Responses**: Real-time response streaming from backend API
 - **🎯 Advanced Search**: 
   - FAISS-based vector search (Inner Product metric)
-  - RRF (Reciprocal Rank Fusion) for hybrid search (stable across queries)
+  - RRF (Reciprocal Rank Fusion) with **score boosting** for better semantic signal
   - Optimized BM25 keyword search with inverted index (O(1) lookup)
-  - Batched cross-encoder re-ranking with fallback support
+  - Batched cross-encoder re-ranking with fallback support and **adaptive weights**
+  - **Dynamic Limits**: Increased candidates flow (60 items) to prevent premature filtering
   - Hard/soft diversity constraints for better result variety
 - **📝 Optimized Prompting**: 3-layer prompt architecture (System/Style/Task) for efficient token usage
+- **📊 Comprehensive Evaluation System**: Automated benchmarking with Recall@K, MAP, and MRR metrics to validate RAG performance.
 
 ## 🏗️ Architecture
 
@@ -65,6 +67,7 @@ Frontend Display
    - `read_pdf.py` - PDF OCR and extraction (optimized for Vietnamese)
    - `read_word.py` - Word document processing (.docx/.doc) with structure preservation
    - `correction.py` - OCR error correction (optional)
+   - `evaluate.py` - Comprehensive RAG evaluation and benchmarking system
 
 ## 📁 Project Structure
 
@@ -107,10 +110,7 @@ Frontend Display
 │   ├── tsconfig.json
 │   └── vite.config.ts
 │
-├── scripts/                  # Utility scripts
-│   ├── start_server.bat      # Windows startup
-│   └── start_server.sh       # Linux/Mac startup
-│
+
 ├── documents/                # Source documents
 │   ├── *.pdf                # PDF documents
 │   ├── *.docx, *.doc        # Word documents
@@ -250,12 +250,6 @@ Press `Ctrl+C` to stop both servers.
 #### Start Backend Server Only
 
 ```bash
-# Windows
-scripts\start_server.bat
-
-# Linux/Mac
-bash scripts/start_server.sh
-
 # Or manually
 python backend/api/server.py
 ```
@@ -347,6 +341,28 @@ python backend/src/embedding.py
 The index files will be saved in `data/` directory:
 - `data/faiss_index.index` - FAISS vector index
 - `data/chunks_meta.pkl` - Metadata (chunks, sources, etc.)
+
+## 📊 Evaluation & Benchmarking
+
+The project includes a robust evaluation system (`evaluate.py`) to measure the performance of the RAG pipeline using ground truth data.
+
+### Running the Evaluation
+
+```bash
+python backend/src/evaluate.py
+```
+
+This script performs a "Fair Test" comparing:
+1.  **FAISS Only**: Raw semantic search (Baseline).
+2.  **Hybrid w/o Cross-Encoder**: FAISS + BM25 + RRF (to measure Reranker impact).
+3.  **Hybrid w/ Cross-Encoder**: The full production pipeline.
+
+### Metrics Explained
+- **Recall@20 (R@20)**: The percentage of queries where the CORRECT document is found within the top 20 results. This is the most critical metric for retrieval.
+- **MAP@20**: Mean Average Precision. Punishes the system if the correct result is lower in the list.
+- **MRR**: Mean Reciprocal Rank. Similar to MAP but focuses on the *first* correct result.
+
+**Note on Fair Evaluation**: The evaluation script automatically disables "Diversity" and "Deduplication" filters to measure the raw retrieval power (Reach/Recall) of the system without UX-focused filtering logic.
 
 ### Running Tests
 

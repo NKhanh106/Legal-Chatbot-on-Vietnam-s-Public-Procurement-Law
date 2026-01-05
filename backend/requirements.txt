@@ -9,26 +9,22 @@ sentence-transformers>=2.2.2  # For semantic search embeddings
 faiss-cpu>=1.7.4  # Windows-friendly; on Linux CUDA, you can swap to faiss-gpu
 huggingface_hub[hf_xet]>=0.24.0  # Hugging Face hub with xet support
 
-# Streamlit for deployment
-streamlit>=1.28.0
-
 # Flask API Server
 flask>=3.0.0
 flask-cors>=4.0.0
 
-# PDF processing with docling (modern OCR solution)
-docling>=1.0.0
+# PDF processing (pytesseract + pdf2image)
+pytesseract>=0.3.10
+pdf2image>=1.16.3
 Pillow>=10.0.0
+
+# Advanced Image Preprocessing (for read_pdf.py)
+scipy>=1.10.0  # For noise reduction and advanced filters
+scikit-learn>=1.2.0  # For deskewing (PCA)
 
 # Word document processing
 python-docx>=1.1.0  # For reading .docx files (REQUIRED)
 docx2txt>=0.8  # For reading .doc files (REQUIRED for .doc support)
-# Note: textract is optional but requires system dependencies, so commented out
-# textract>=1.6.0  # Alternative for .doc files (optional, fallback)
-
-# OCR với pytesseract (hỗ trợ tiếng Việt tốt hơn)
-pytesseract>=0.3.10
-pdf2image>=1.16.3
 
 # Vietnamese tokenizer (optional, cho BM25 tốt hơn)
 # Chọn một trong hai:
@@ -52,4 +48,9 @@ ipykernel>=6.25.0
 
 # Groq LLM API
 groq>=0.5.0
+
+# Evaluation & Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+openpyxl>=3.1.0 # For reading Excel files
 
